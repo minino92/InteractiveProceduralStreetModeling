@@ -1,0 +1,8 @@
+C:\Users\valimo\Desktop\Synthèses images\modelisation et animations\BC et OT\projet\implementation\InteractiveProceduralStreetModeling\IPSM\IPSM\bin\Debug\IPSM.exe.config
+C:\Users\valimo\Desktop\Synthèses images\modelisation et animations\BC et OT\projet\implementation\InteractiveProceduralStreetModeling\IPSM\IPSM\bin\Debug\IPSM.exe
+C:\Users\valimo\Desktop\Synthèses images\modelisation et animations\BC et OT\projet\implementation\InteractiveProceduralStreetModeling\IPSM\IPSM\bin\Debug\IPSM.pdb
+C:\Users\valimo\Desktop\Synthèses images\modelisation et animations\BC et OT\projet\implementation\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.IPSM.resources
+C:\Users\valimo\Desktop\Synthèses images\modelisation et animations\BC et OT\projet\implementation\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.Properties.Resources.resources
+C:\Users\valimo\Desktop\Synthèses images\modelisation et animations\BC et OT\projet\implementation\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.csproj.GenerateResource.Cache
+C:\Users\valimo\Desktop\Synthèses images\modelisation et animations\BC et OT\projet\implementation\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.exe
+C:\Users\valimo\Desktop\Synthèses images\modelisation et animations\BC et OT\projet\implementation\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.pdb
