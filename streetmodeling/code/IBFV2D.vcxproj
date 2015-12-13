@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C31A964A-4802-4CD3-A835-0C23F959645F}</ProjectGuid>
+    <Keyword>MFCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>Debug\</OutDir>
+    <IntDir>Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\valimo\Desktop\Synthèses images\modelisation et animations\BC et OT\streetmodeling\code;$(IncludePath)</IncludePath>
+    <ReferencePath>C:\Users\valimo\Desktop\Synthèses images\modelisation et animations\BC et OT\streetmodeling\code\lib\glut;$(ReferencePath)</ReferencePath>
+    <LibraryPath>C:\Users\valimo\Desktop\Synthèses images\modelisation et animations\BC et OT\streetmodeling\code\lib\glut;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>Release\</OutDir>
+    <IntDir>Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+    </Midl>
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="SaveProjectSetting.cpp" />
+    <ClCompile Include="SaveProjSettingDlg.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="BuildMCG.cpp" />
+    <ClCompile Include="CalDeformation.cpp" />
+    <ClCompile Include="CalDivandCurl.cpp" />
+    <ClCompile Include="ClosedStreamlineTracing.cpp" />
+    <ClCompile Include="ConleyRelationGraph.cpp" />
+    <ClCompile Include="LocalTracing.cpp" />
+    <ClCompile Include="Taustep.cpp" />
+    <ClCompile Include="tensoranalysis.cpp" />
+    <ClCompile Include="VFAnalysis.cpp" />
+    <ClCompile Include="FindSCC.cpp" />
+    <ClCompile Include="FindSepAttPoints.cpp" />
+    <ClCompile Include="LimitCycleDetect.cpp" />
+    <ClCompile Include="NewLimitCycleDetect.cpp" />
+    <ClCompile Include="SCCCycleDetect.cpp" />
+    <ClCompile Include="Temp_LimitcycleDetect.cpp" />
+    <ClCompile Include="AddNoise.cpp" />
+    <ClCompile Include="LimitCycleEdit.cpp" />
+    <ClCompile Include="LocalRegionEdit.cpp" />
+    <ClCompile Include="PairCancellationModule.cpp" />
+    <ClCompile Include="regionsmooth_quad.cpp" />
+    <ClCompile Include="RegionSmoothing.cpp" />
+    <ClCompile Include="SeparatrixEdit.cpp" />
+    <ClCompile Include="topologyedit.cpp" />
+    <ClCompile Include="PlyLoader.cpp" />
+    <ClCompile Include="Polygon3D.cpp" />
+    <ClCompile Include="ComputeRoadVis.cpp" />
+    <ClCompile Include="ConleyGraphView.cpp" />
+    <ClCompile Include="Evenstreamlines.cpp" />
+    <ClCompile Include="GlView.cpp" />
+    <ClCompile Include="LoadMaps.cpp" />
+    <ClCompile Include="tensorvis.cpp" />
+    <ClCompile Include="TraceBall.cpp" />
+    <ClCompile Include="IBFV2D.cpp" />
+    <ClCompile Include="IBFVDlg.cpp" />
+    <ClCompile Include="MajRoadSettingDlg.cpp" />
+    <ClCompile Include="MinRoadSetDlg.cpp" />
+    <ClCompile Include="MyDlg1.cpp" />
+    <ClCompile Include="MyDlg2.cpp" />
+    <ClCompile Include="MyTabCtrl.cpp" />
+    <ClCompile Include="NoiseCtrlPanel.cpp" />
+    <ClCompile Include="SeedPtCtrlDlg.cpp" />
+    <ClCompile Include="StreetEditPanel.cpp" />
+    <ClCompile Include="StreetNetPanel.cpp" />
+    <ClCompile Include="BmpProcess.cpp" />
+    <ClCompile Include="ImgBoundaryExtract.cpp" />
+    <ClCompile Include="Numerical.cpp" />
+    <ClCompile Include="SCCVerify.cpp" />
+    <ClCompile Include="BoundaryBasedTenGen.cpp" />
+    <ClCompile Include="HermiteCurve.cpp" />
+    <ClCompile Include="LimitCycleCreator.cpp" />
+    <ClCompile Include="ScalarDesign.cpp" />
+    <ClCompile Include="SketchDesign.cpp" />
+    <ClCompile Include="tensordesign.cpp" />
+    <ClCompile Include="VFSynthesis.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="SaveProjectSetting.h" />
+    <ClInclude Include="SaveProjSettingDlg.h" />
+    <ClInclude Include="shareinterfacevars.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="VFDataStructure.h" />
+    <ClInclude Include="CalDeformation.h" />
+    <ClInclude Include="ClosedStreamlineTracing.h" />
+    <ClInclude Include="ConleyRelationGraph.h" />
+    <ClInclude Include="LocalTracing.h" />
+    <ClInclude Include="Taumap.h" />
+    <ClInclude Include="tensoranalysis.h" />
+    <ClInclude Include="VFAnalysis.h" />
+    <ClInclude Include="FindSCC.h" />
+    <ClInclude Include="FindSepAttPoints.h" />
+    <ClInclude Include="LimitCycleDetect.h" />
+    <ClInclude Include="NewLimitCycleDetect.h" />
+    <ClInclude Include="SCCCycleDetect.h" />
+    <ClInclude Include="Test_LimitcycleDetect.h" />
+    <ClInclude Include="BoundaryBasedTenGen.h" />
+    <ClInclude Include="HermiteCurve.h" />
+    <ClInclude Include="LimitCycleCreator.h" />
+    <ClInclude Include="ScalarDesign.h" />
+    <ClInclude Include="SketchDesign.h" />
+    <ClInclude Include="tensordesign.h" />
+    <ClInclude Include="VFSynthesis.h" />
+    <ClInclude Include="LimitCycleEdit.h" />
+    <ClInclude Include="LocalRegionEdit.h" />
+    <ClInclude Include="PairCancellationModule.h" />
+    <ClInclude Include="regionsmooth_quad.h" />
+    <ClInclude Include="RegionSmoothing.h" />
+    <ClInclude Include="SeparatrixEdit.h" />
+    <ClInclude Include="topologyedit.h" />
+    <ClInclude Include="PlyLoader.h" />
+    <ClInclude Include="Polygon3D.h" />
+    <ClInclude Include="ComputeRoadVis.h" />
+    <ClInclude Include="ConleyGraphView.h" />
+    <ClInclude Include="Evenlystreamlines.h" />
+    <ClInclude Include="GlView.h" />
+    <ClInclude Include="LoadMaps.h" />
+    <ClInclude Include="tensorvis.h" />
+    <ClInclude Include="TraceBall.h" />
+    <ClInclude Include="BmpProcess.h" />
+    <ClInclude Include="ImgBoundaryExtract.h" />
+    <ClInclude Include="Numerical.h" />
+    <ClInclude Include="PerlinNoise.h" />
+    <ClInclude Include="ppm.h" />
+    <ClInclude Include="IBFV2D.h" />
+    <ClInclude Include="IBFVDlg.h" />
+    <ClInclude Include="MajRoadSettingDlg.h" />
+    <ClInclude Include="MinRoadSetDlg.h" />
+    <ClInclude Include="MyDlg1.h" />
+    <ClInclude Include="MyDlg2.h" />
+    <ClInclude Include="MyTabCtrl.h" />
+    <ClInclude Include="NoiseCtrlPanel.h" />
+    <ClInclude Include="SeedPtCtrlDlg.h" />
+    <ClInclude Include="StreetEditPanel.h" />
+    <ClInclude Include="StreetNetPanel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\IBFV2D.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="IBFV2D.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\IBFV2D.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\IBFV2D.manifest">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="IBFV2D.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

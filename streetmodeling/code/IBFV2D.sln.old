@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IBFV2D", "IBFV2D.vcproj", "{C31A964A-4802-4CD3-A835-0C23F959645F}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{C31A964A-4802-4CD3-A835-0C23F959645F}.Debug.ActiveCfg = Debug|Win32
+		{C31A964A-4802-4CD3-A835-0C23F959645F}.Debug.Build.0 = Debug|Win32
+		{C31A964A-4802-4CD3-A835-0C23F959645F}.Release.ActiveCfg = Release|Win32
+		{C31A964A-4802-4CD3-A835-0C23F959645F}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

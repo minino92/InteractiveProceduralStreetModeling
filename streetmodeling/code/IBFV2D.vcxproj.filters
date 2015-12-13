@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Analysis">
+      <UniqueIdentifier>{27ffc2b2-4f27-45c0-8a7c-b1576bfdf60f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Analysis\PeriodicOrbits">
+      <UniqueIdentifier>{8ff013b7-14cb-4a85-ad4e-d02e233bd330}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Editing">
+      <UniqueIdentifier>{04ec2b67-6070-40c0-90c4-a712d35c78e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Geometry">
+      <UniqueIdentifier>{814e68eb-dbb2-4642-98f9-3379963c5a6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Visualization">
+      <UniqueIdentifier>{7507e93b-2a21-4858-b4d4-16ee285c60c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MFCInterface">
+      <UniqueIdentifier>{92731a08-75a2-4ea8-877f-caf99d7a46a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Others">
+      <UniqueIdentifier>{d49baef8-d25f-4519-b3ab-2bb80b216131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Creation">
+      <UniqueIdentifier>{2d833fd1-e907-4461-9e06-7682f9958d64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Analysis">
+      <UniqueIdentifier>{72aafa73-7abe-4d0d-888e-9707ea429bfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Analysis\PeriodicOrbit">
+      <UniqueIdentifier>{b99f1503-04e2-48b4-8a0e-3cb83c7cd2da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\creation">
+      <UniqueIdentifier>{29ccbaf2-6fe3-424e-a520-5a5f9a158ab8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Editing">
+      <UniqueIdentifier>{ce0e7c90-1782-4b6a-afc6-560ef341d1af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Geometry">
+      <UniqueIdentifier>{f9e436a6-bac7-447f-ac5a-faf54016c1cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Visualization">
+      <UniqueIdentifier>{bd82521a-c808-47d4-a174-eff94f725244}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Others">
+      <UniqueIdentifier>{bb0de4ce-074e-4cb4-8b42-607087334509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MFCInterface">
+      <UniqueIdentifier>{674affd7-aa76-40e5-bd83-e4e5c19c36c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SaveProjectSetting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveProjSettingDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildMCG.cpp">
+      <Filter>Source Files\Analysis</Filter>
+    </ClCompile>
+    <ClCompile Include="CalDeformation.cpp">
+      <Filter>Source Files\Analysis</Filter>
+    </ClCompile>
+    <ClCompile Include="CalDivandCurl.cpp">
+      <Filter>Source Files\Analysis</Filter>
+    </ClCompile>
+    <ClCompile Include="ClosedStreamlineTracing.cpp">
+      <Filter>Source Files\Analysis</Filter>
+    </ClCompile>
+    <ClCompile Include="ConleyRelationGraph.cpp">
+      <Filter>Source Files\Analysis</Filter>
+    </ClCompile>
+    <ClCompile Include="LocalTracing.cpp">
+      <Filter>Source Files\Analysis</Filter>
+    </ClCompile>
+    <ClCompile Include="Taustep.cpp">
+      <Filter>Source Files\Analysis</Filter>
+    </ClCompile>
+    <ClCompile Include="tensoranalysis.cpp">
+      <Filter>Source Files\Analysis</Filter>
+    </ClCompile>
+    <ClCompile Include="VFAnalysis.cpp">
+      <Filter>Source Files\Analysis</Filter>
+    </ClCompile>
+    <ClCompile Include="FindSCC.cpp">
+      <Filter>Source Files\Analysis\PeriodicOrbits</Filter>
+    </ClCompile>
+    <ClCompile Include="FindSepAttPoints.cpp">
+      <Filter>Source Files\Analysis\PeriodicOrbits</Filter>
+    </ClCompile>
+    <ClCompile Include="LimitCycleDetect.cpp">
+      <Filter>Source Files\Analysis\PeriodicOrbits</Filter>
+    </ClCompile>
+    <ClCompile Include="NewLimitCycleDetect.cpp">
+      <Filter>Source Files\Analysis\PeriodicOrbits</Filter>
+    </ClCompile>
+    <ClCompile Include="SCCCycleDetect.cpp">
+      <Filter>Source Files\Analysis\PeriodicOrbits</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp_LimitcycleDetect.cpp">
+      <Filter>Source Files\Analysis\PeriodicOrbits</Filter>
+    </ClCompile>
+    <ClCompile Include="AddNoise.cpp">
+      <Filter>Source Files\Editing</Filter>
+    </ClCompile>
+    <ClCompile Include="LimitCycleEdit.cpp">
+      <Filter>Source Files\Editing</Filter>
+    </ClCompile>
+    <ClCompile Include="LocalRegionEdit.cpp">
+      <Filter>Source Files\Editing</Filter>
+    </ClCompile>
+    <ClCompile Include="PairCancellationModule.cpp">
+      <Filter>Source Files\Editing</Filter>
+    </ClCompile>
+    <ClCompile Include="regionsmooth_quad.cpp">
+      <Filter>Source Files\Editing</Filter>
+    </ClCompile>
+    <ClCompile Include="RegionSmoothing.cpp">
+      <Filter>Source Files\Editing</Filter>
+    </ClCompile>
+    <ClCompile Include="SeparatrixEdit.cpp">
+      <Filter>Source Files\Editing</Filter>
+    </ClCompile>
+    <ClCompile Include="topologyedit.cpp">
+      <Filter>Source Files\Editing</Filter>
+    </ClCompile>
+    <ClCompile Include="PlyLoader.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon3D.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="ComputeRoadVis.cpp">
+      <Filter>Source Files\Visualization</Filter>
+    </ClCompile>
+    <ClCompile Include="ConleyGraphView.cpp">
+      <Filter>Source Files\Visualization</Filter>
+    </ClCompile>
+    <ClCompile Include="Evenstreamlines.cpp">
+      <Filter>Source Files\Visualization</Filter>
+    </ClCompile>
+    <ClCompile Include="GlView.cpp">
+      <Filter>Source Files\Visualization</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadMaps.cpp">
+      <Filter>Source Files\Visualization</Filter>
+    </ClCompile>
+    <ClCompile Include="tensorvis.cpp">
+      <Filter>Source Files\Visualization</Filter>
+    </ClCompile>
+    <ClCompile Include="TraceBall.cpp">
+      <Filter>Source Files\Visualization</Filter>
+    </ClCompile>
+    <ClCompile Include="IBFV2D.cpp">
+      <Filter>Source Files\MFCInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="IBFVDlg.cpp">
+      <Filter>Source Files\MFCInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="MajRoadSettingDlg.cpp">
+      <Filter>Source Files\MFCInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="MinRoadSetDlg.cpp">
+      <Filter>Source Files\MFCInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="MyDlg1.cpp">
+      <Filter>Source Files\MFCInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="MyDlg2.cpp">
+      <Filter>Source Files\MFCInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTabCtrl.cpp">
+      <Filter>Source Files\MFCInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="NoiseCtrlPanel.cpp">
+      <Filter>Source Files\MFCInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="SeedPtCtrlDlg.cpp">
+      <Filter>Source Files\MFCInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="StreetEditPanel.cpp">
+      <Filter>Source Files\MFCInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="StreetNetPanel.cpp">
+      <Filter>Source Files\MFCInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="BmpProcess.cpp">
+      <Filter>Source Files\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgBoundaryExtract.cpp">
+      <Filter>Source Files\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="Numerical.cpp">
+      <Filter>Source Files\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="SCCVerify.cpp">
+      <Filter>Source Files\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="BoundaryBasedTenGen.cpp">
+      <Filter>Source Files\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="HermiteCurve.cpp">
+      <Filter>Source Files\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="LimitCycleCreator.cpp">
+      <Filter>Source Files\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="ScalarDesign.cpp">
+      <Filter>Source Files\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="SketchDesign.cpp">
+      <Filter>Source Files\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="tensordesign.cpp">
+      <Filter>Source Files\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="VFSynthesis.cpp">
+      <Filter>Source Files\Creation</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveProjectSetting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveProjSettingDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shareinterfacevars.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VFDataStructure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CalDeformation.h">
+      <Filter>Header Files\Analysis</Filter>
+    </ClInclude>
+    <ClInclude Include="ClosedStreamlineTracing.h">
+      <Filter>Header Files\Analysis</Filter>
+    </ClInclude>
+    <ClInclude Include="ConleyRelationGraph.h">
+      <Filter>Header Files\Analysis</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalTracing.h">
+      <Filter>Header Files\Analysis</Filter>
+    </ClInclude>
+    <ClInclude Include="Taumap.h">
+      <Filter>Header Files\Analysis</Filter>
+    </ClInclude>
+    <ClInclude Include="tensoranalysis.h">
+      <Filter>Header Files\Analysis</Filter>
+    </ClInclude>
+    <ClInclude Include="VFAnalysis.h">
+      <Filter>Header Files\Analysis</Filter>
+    </ClInclude>
+    <ClInclude Include="FindSCC.h">
+      <Filter>Header Files\Analysis\PeriodicOrbit</Filter>
+    </ClInclude>
+    <ClInclude Include="FindSepAttPoints.h">
+      <Filter>Header Files\Analysis\PeriodicOrbit</Filter>
+    </ClInclude>
+    <ClInclude Include="LimitCycleDetect.h">
+      <Filter>Header Files\Analysis\PeriodicOrbit</Filter>
+    </ClInclude>
+    <ClInclude Include="NewLimitCycleDetect.h">
+      <Filter>Header Files\Analysis\PeriodicOrbit</Filter>
+    </ClInclude>
+    <ClInclude Include="SCCCycleDetect.h">
+      <Filter>Header Files\Analysis\PeriodicOrbit</Filter>
+    </ClInclude>
+    <ClInclude Include="Test_LimitcycleDetect.h">
+      <Filter>Header Files\Analysis\PeriodicOrbit</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundaryBasedTenGen.h">
+      <Filter>Header Files\creation</Filter>
+    </ClInclude>
+    <ClInclude Include="HermiteCurve.h">
+      <Filter>Header Files\creation</Filter>
+    </ClInclude>
+    <ClInclude Include="LimitCycleCreator.h">
+      <Filter>Header Files\creation</Filter>
+    </ClInclude>
+    <ClInclude Include="ScalarDesign.h">
+      <Filter>Header Files\creation</Filter>
+    </ClInclude>
+    <ClInclude Include="SketchDesign.h">
+      <Filter>Header Files\creation</Filter>
+    </ClInclude>
+    <ClInclude Include="tensordesign.h">
+      <Filter>Header Files\creation</Filter>
+    </ClInclude>
+    <ClInclude Include="VFSynthesis.h">
+      <Filter>Header Files\creation</Filter>
+    </ClInclude>
+    <ClInclude Include="LimitCycleEdit.h">
+      <Filter>Header Files\Editing</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalRegionEdit.h">
+      <Filter>Header Files\Editing</Filter>
+    </ClInclude>
+    <ClInclude Include="PairCancellationModule.h">
+      <Filter>Header Files\Editing</Filter>
+    </ClInclude>
+    <ClInclude Include="regionsmooth_quad.h">
+      <Filter>Header Files\Editing</Filter>
+    </ClInclude>
+    <ClInclude Include="RegionSmoothing.h">
+      <Filter>Header Files\Editing</Filter>
+    </ClInclude>
+    <ClInclude Include="SeparatrixEdit.h">
+      <Filter>Header Files\Editing</Filter>
+    </ClInclude>
+    <ClInclude Include="topologyedit.h">
+      <Filter>Header Files\Editing</Filter>
+    </ClInclude>
+    <ClInclude Include="PlyLoader.h">
+      <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon3D.h">
+      <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="ComputeRoadVis.h">
+      <Filter>Header Files\Visualization</Filter>
+    </ClInclude>
+    <ClInclude Include="ConleyGraphView.h">
+      <Filter>Header Files\Visualization</Filter>
+    </ClInclude>
+    <ClInclude Include="Evenlystreamlines.h">
+      <Filter>Header Files\Visualization</Filter>
+    </ClInclude>
+    <ClInclude Include="GlView.h">
+      <Filter>Header Files\Visualization</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadMaps.h">
+      <Filter>Header Files\Visualization</Filter>
+    </ClInclude>
+    <ClInclude Include="tensorvis.h">
+      <Filter>Header Files\Visualization</Filter>
+    </ClInclude>
+    <ClInclude Include="TraceBall.h">
+      <Filter>Header Files\Visualization</Filter>
+    </ClInclude>
+    <ClInclude Include="BmpProcess.h">
+      <Filter>Header Files\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgBoundaryExtract.h">
+      <Filter>Header Files\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Numerical.h">
+      <Filter>Header Files\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="PerlinNoise.h">
+      <Filter>Header Files\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="ppm.h">
+      <Filter>Header Files\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="IBFV2D.h">
+      <Filter>Header Files\MFCInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="IBFVDlg.h">
+      <Filter>Header Files\MFCInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="MajRoadSettingDlg.h">
+      <Filter>Header Files\MFCInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="MinRoadSetDlg.h">
+      <Filter>Header Files\MFCInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="MyDlg1.h">
+      <Filter>Header Files\MFCInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="MyDlg2.h">
+      <Filter>Header Files\MFCInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTabCtrl.h">
+      <Filter>Header Files\MFCInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="NoiseCtrlPanel.h">
+      <Filter>Header Files\MFCInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="SeedPtCtrlDlg.h">
+      <Filter>Header Files\MFCInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="StreetEditPanel.h">
+      <Filter>Header Files\MFCInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="StreetNetPanel.h">
+      <Filter>Header Files\MFCInterface</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\IBFV2D.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="IBFV2D.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\IBFV2D.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\IBFV2D.manifest" />
+  </ItemGroup>
+</Project>

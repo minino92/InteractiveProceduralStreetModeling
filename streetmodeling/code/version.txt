@@ -1,0 +1,650 @@
+In this version, we try the get_Cover_tri routine instead of just get the strip, it seems working well for at least two complex designed fields.
+
+We also partially implemented the construction of MCG.
+
+Add a routine that can remove all the outgoing edges of a specified node in the directed graph which can be used to adjust the \tau tracing in different flow regions.
+
+Try to calculate the approximate curl and divergence around a vertex and based on them to get the adaptive \tau.
+
+This is also a backup version before I create a new data structure to store the MCG nodes and edges.
+
+And I will also add a new member for the SCC component data set to mark the index of node in the MCG this SCC associated with.
+
+
+03/03/07
+
+
+The data structure for MCG has been designed and the MCG construction has been implemented partially.
+
+The judge of the type of MCG now can work but not fully since I use only boundary nodes for each Morse set, which means that it will hide some issue there.
+
+The finding of MCG edges has some problem which we can not find the edges correctly, some edges will link the two Morse sets which are not direct neighbors in the original graph!
+
+In this version, we also improve tau tracing as follows:
+1) use gt+= t in the integration routine to record the totally tau step instead of the uniform integration number.
+2) add another adaptive step by tracing the center of each triangle at the same time when we trace each triangle. If the new obtained image point of the original center does not fall in the hull of the image of the original triangle, we shorten the original \tau by a half and do the tracing again until it satisfies the condition.
+
+3) design a routine to judge whether an obtained region is good or not, but I haven't used it in any place now. The criterion I use now is the number of fixed points in one Morse set. The ideal case is 0(only periodic orbit) or 1. If the number is larger than 1, we need to use larger \tau to refine the region!
+
+If the region is ring-like region and has been classified as a saddle, then there must be at least two periodic orbits in there and we may need a larger \tau to separate them if we can
+(if the region has one triangle that all its three vertices are on the boundary, then there is no hope that we can separate the two regions!).
+
+Other issue:
+
+The region for saddle (here we mean a fixed point) seems not correct! It is always included by other nearby highly curled feature. Is this correct or not? Need to fix it right now!
+
+03/13/07
+
+
+In this version, we implement a new $\tau$ map construction algorithm. In this algorithm, we perform tracing for each vertex and keep track of the end triangle T. If it is backward tracing, then we add edges from the end triangle T to the triangles of the one-ring neighborhood of the vertex; if it is forward tracing, reverse the direction of these edges.
+
+It works relatively well for fixed points but not periodic orbits, since discontinuity happens again!!! It seems has some relation with the divergence of the flow.
+
+To show the divergence in the flow, we add a routine to do it.
+
+To let user control the curl of a designed periodic orbit, we add a coefficient to let user control.
+
+!!We change the recursive DFS algorithm to non-recursive one!
+
+We allow user to visualize the path between two triangles in the same SCC!
+
+We show all the edges of a triangle in the directed graph and their ending triangles.
+
+The adaptive framework for tau map construction is under developing...
+
+/--------------------------------------------------------------/
+Now, we implement the new idea of finding the edges in the tau map. We first trace each vertex V backward w.r.t time tau, if it falls in triangle T, we build edges from T to the triangles of the one-ring neighbors of V. Then, we trace forward and find the image of V in triangle T'. Then, we build the edges from the triangles of the one-ring neighbors of V to T'. This method is relatively faster than the original convex hull reconstruction. But it will introduce some holes/discontinuity in the continuous image. For instance, if a triangle is mapped to a narrow band in the triangle (say a portion of an attracting periodic orbit), then the backward image will never find the edges from the triangles that contain the periodic orbit to the original triangle. Here, we use the idea of adpative sampling on edges.
+
+Why sampling edges is sufficient? We don't have a solid proof now. But due to the dual of differential forms in R^2 space, the dual of a point is a surface and the dual of a surface is a point. The backward and forward tracing starts from the vertices and ends in some triangle will take care of the duel between 0-forms and 2-forms, but may miss the mapping between 1-forms and 1-forms. Therefore, sampling edges is proposed to handle 1-forms.
+
+The idea of adaptive sampling on edges is as follows.
+We first trace from the two vertices of each edge.
+If the two ending triangles are the same or they share one same edge, then we do not need more operations on that.
+If it is not, it means that we need to put more samples on the edges to get the continuous image (should be a connected triangle strip). The method we use is binary search along the edge and put more samples accordingly (the implementation is a recursive algorithm).
+
+
+Besides this new idea, we also try to use lower order integrator to do the $\tau$ tracing. Currently used integrator is second order Runge-Kutta method without correction.
+
+We also update the accumulation of integration step by using the accumulation of the integral length (sum up all the lengths of the line segments along the trajectory). The reason I use it is that I am still not very sure about which values I should sum up to get the integration time in Adaptive 4.5 Runge-Kutta from Numerical Recipe.
+
+We also update the interface of user input tau to be "double". Now user can specify a smaller "tau" than 1. It seems that after using the integral length, we can set smaller taus but still get the similar results.
+
+One more thing we need to take care of is that we still need to set a maximum integration steps to avoid infinite integration!
+
+
+One other issue, after using the new idea, the judgement of the types of the obtained Morse sets is not so reliable any more!!! We need to find out why?
+
+We also try to prevent the tracing of a trajectory from crossing a separation or attachement like triangle, but it does not work well!
+
+03/21/07
+
+
+
+-----------------------------------------------------
+
+
+
+In this version, not much change has been made.
+This is the version for vis2007 submission.
+
+And it contains a new functionality to load the formula
+for Taylor vortex flow generation.
+
+This is also a backup version before I applied the idea
+of Matrix decomposition to the field and visualize
+different regions of the flow.
+It is a different region segmentation of the flow other
+than Morse decomposition.
+
+
+
+04/11/07
+
+
+
+
+-------------------------------------------------------
+
+
+
+In this version, we have added three analytical examples to demonstrate the uncertainty of the flow simulation and vector field analysis.
+Before making any further change based on the talk, I make this backup. After that, I will change the spatial tau back to temporal tau again!
+
+
+
+Guoning Chen
+07/05/2007
+
+
+
+
+---------------------------------------------------------
+
+
+
+In this version, we have modified the generation and analysis code to allow the system to analyze non-normalized vector fields. The problems of visualizing non-normalized vector fields include the IBFV quality and the trajectory calculation. Currently, I use two variables to store the non-normalized vector value and normalized vector value for each vertex. The normalized vector value is used for IBFV visualization only. The non-normalized vector value will be used to performance analysis of the vector field, including the fixed point extraction, trajectory calculation and periodic orbit extraction, MCG/ECG construction. 
+
+I have modified the fixed point extraction to use local vector fields of the singular triangles to compute the fixed point information (type, location). It seems working well.
+
+I also find the problem of calculating the trajectory using non-normalized vector fields. If we use 4.5 RK, we usually will obtain the wrong trajectories (i.e. some trajectories will intersect to each other). Current solution to this problem is to scale every vector value with constant scalar, say 0.0001 for design vector fields, and (/max_mag*0.06) for formula based analytical vector fields.
+
+I have also modified the computation of the start points of separatrices. The current calculation accounts for the size of the triangle where each saddle locates (we use the 1/4*the shortest length of the triangle).
+
+
+
+
+Guoning Chen
+07/22/07
+
+
+
+
+-------------------------------------------------------------
+
+
+
+In this version, there is no big change. This is the backup version before I try Bob's required comparison.
+
+
+
+
+Guoning Chen
+07/30/07
+
+
+
+
+------------------------------------------------------------------
+
+
+
+In this version, I have tried Bob's different tracing scheme.
+I have also included the interface that user can choose between spatial tau and temporal tau,
+normalized vector field and non-normalized vector field.
+User can also choose among different numerical integration scheme.
+I also implemented the visualization of the density map of the samples in the flow domain.
+visualize the relationship between temporal tau and spatial tau.
+
+This is also a backup version before I try to visualize the connection between 
+Morse sets in the flow images.
+
+
+
+Guoning Chen
+
+08/29/2007
+
+
+
+------------------------------------------------------------------
+
+
+In this version, we include the tensor field generation using the given vector field. That is, we calculate the gradient of the given vector field to obtain a tensor field.
+We implement the IBFV based tensor field visualization, but we still have artifacts during the visualization now.
+We will move on to the tensor field analysis soon.
+
+
+
+Guoning Chen
+
+09/18/2007
+
+
+
+------------------------------------------------------------------
+
+
+
+In this version, I have successfully implemented the IBFV based tensor field visualization. I am thinking about how to improve the quality/contrast of the output visualization. But I will move on to the tensor field analysis first.
+
+
+
+Guoning Chen
+
+09/18/2007(2)
+
+
+
+------------------------------------------------------------------
+
+
+
+In this version, we have partially implemented the degenerate point extraction. The extraction of the triangles that contain the degenerate point is carried out by using the tensor index theory (accumulating the angle variant of the tensor along a triangle boundary).
+I have also partially implemented the separatrix directions calculation using the deviators of the three vertices of each triangle that contains degenerate point/singularity. The solution of the cubic function seems not quite correct. Therefore, the obtain directions are not completely correct yet, especially for the wedge!!!
+I have partially implemented the tracing in tensor field. The tracing may go backward !!
+
+
+Guoning Chen
+
+09/20/2007
+
+
+
+
+------------------------------------------------------------------
+
+
+
+In this version, we have implemented the editing of the design elements (singular only). We will move on to the regular element design and editing and then we can implement the constrained optimization method to create a tensor field.
+
+
+
+
+Guoning Chen
+
+09/21/2007
+
+
+
+
+------------------------------------------------------------------
+
+
+
+In this version, we have implemented the design of the regular elements. NOTE: the design of higher order elements still have problem, I need to think it very very carefully. One way is that we can use similar method of creating a simple vector field by specifying the Jacobian of the vector field.
+
+
+
+
+Guoning Chen
+
+09/22/2007(1)
+
+
+
+
+------------------------------------------------------------------
+
+
+
+In this version, we have implemented the design and editing of regular element. The remaining problem is when we add the second and later regular elements, the directions of the new elements are not correct (usually perpendicular to the correct direction).
+We will move on to the constrained optimization method for creating a tensor field.
+
+
+
+
+Guoning Chen
+
+09/22/2007(2)
+
+
+
+------------------------------------------------------------------
+
+
+
+In this version, we have updated the tensor field design using quad mesh. The design of singular elements (wedges, trisectors) and regular elements has been implemented properly, except for the higher order elements (nodes, centers, saddles). We have adopted the new method (appears in Eugene's tensor field design paper) to calculate eigen vectors. We have fulfilled the tracing of one streamline under the quad mesh. We are now moving on to the even streamline placements under quad mesh. We will reuse some code from the placement under triangular mesh.
+
+
+
+Guoning Chen
+
+09/27/2007
+
+
+
+------------------------------------------------------------------
+
+
+
+In this version, we have implemented the even tensor line placement and improved the tensor line tracing. I have also coded the fast marching method but haven't tested it yet. Next, I will improve the method/approach of computing seed point and ordering the seed points to improve the tracing quality. NOTE: tracing under horizontal field will have problem!
+
+
+
+Guoning Chen
+
+10/02/2007
+
+
+
+------------------------------------------------------------------
+
+
+
+In this version, we have successfully implemented the generation of street network (a standard graph has been constructed, user should be able to modify the graph interactively) making use of the evenly placed tensor lines. We now move on to the brush interface issue.
+Question: How can we control the selection of seeds (implicitly using population density map or geography map; explicitly by clicking the positions in the map)?
+
+
+
+Guoning Chen
+
+10/03/2007
+
+
+-
+
+-----------------------------------------------------------------
+
+
+
+In this version, we have implemented the constrained optimization. That is, user selects a region then perform the constrained Laplacian smoothing. We have also implemented the fast marching on the regular quad mesh. By the way, we have partially fixed the problem of the visualization of the street intersections. The problem still exists. We may consider to draw the streets from the intersections instead of following the tensor line segment ordering. We now can move on to two things: load the geograph file and extract the boundaries from it, then identify the interior; implement the brush interface!
+
+
+
+Guoning Chen
+
+10/08/2007
+
+
+
+
+------------------------------------------------------------------
+
+
+
+In this version, we have fixed the problem of visualization of street intersections. The problem was caused by the direction of major and minor fields are not consistent everywhere of the tensor field domain! We have implemented the brush stroke interface. But the user interface is not very friendly right now. BTW, the higher order singular element issue has also been fixed! The remaining issues include: intersection calculation has exceptions; tracing under local tensor field calculation is not completely correct yet!
+Next step: (1) load the maps (population density map, geographics map) use them to guide the construction of tensor field (constrained optimization), then user can perform cancellation or smoothing; (2) graph level editing (which allows user to decide the connection between two intersections, divide a connection into several parts).
+
+
+
+Guoning Chen
+
+10/13/2007
+
+
+
+
+------------------------------------------------------------------
+
+
+
+In this version, we have changed the interface for this project. We will add a functionality to ask the user whether they like the brush stroke result as part of the city design.
+
+
+
+Guoning Chen
+
+10/14/2007
+
+
+------------------------------------------------------------------
+
+
+
+In this version, I have fixed a bug in even streamline placement and solve the problem of tracing regular tensor field.
+The remaining problems: the editing of singular element (i.e. rotation) is not correct ;
+the intersection of the tensor lines of the regular field (aligned with axis) is not correct due to the fact that the line segment information was not written into the right cells!
+
+Guoning Chen
+10/16/2007
+
+------------------------------------------------------------------
+
+
+
+This is a more stable version, in which I have fixed the major memory issues. We will try to fixed the issue of higher order singular element editing (especially rotation). But I will add an interface for user to control the density of tensor line placement first!
+
+Guoning Chen
+10/23/2007 
+
+
+------------------------------------------------------------------
+
+
+
+This is a backup version before I went to Vis07. In this version, I have included a simple interface that allows users to control the density of the tensor line placement. Two separate density can be set for major and minor direction, respectively. I have also included the functionality of loading a map and design a tensor field based on the loaded map. The problem is that the design of tensor field can not performance automatically since we can't detect the continuous boundary of the map now. This will be our next goal. The second goal is to finish the graph level editing, such as splitting, merging, canceling street segments (i.e., edges in the obtained directed graph).
+
+Guoning Chen
+11/06/2007 
+
+------------------------------------------------------------------
+
+
+
+From this version, we change the interface of the tool and hide the functionality of vector field design. Till this point, I have merged most functionality into the new interface, now I will move on to the loading of the city map throught the menu. 
+
+Guoning Chen
+11/08/2007 
+
+
+------------------------------------------------------------------
+
+
+
+In this version, we have partially implemented the boundary detection using the techniques from image processing (thank you William). This is also a backup before I rearrange the group of radio for designing. 
+
+Guoning Chen
+11/12/2007 
+
+------------------------------------------------------------------
+
+
+
+In this version, we have implemented the boundary detection using the techniques from image processing (thank you William). I have fixed the problem of the radio interface. I have allowed the closed loop to be formed during the tensor line tracing. Now I need to move on to the two layer tensor field design and seed points control. 
+
+Guoning Chen
+11/16/2007 
+
+
+------------------------------------------------------------------
+
+
+
+In this version, we have partially implemented the generation of a tensor field according to the loaded map. The issue is the generated tensor field seems not smooth! We now move to different level tracing. First level: highways, second level: major roads and third level: minor roads.
+
+Guoning Chen
+11/17/2007 
+
+
+------------------------------------------------------------------
+
+
+
+In this version, we have partially implemented the removement of dead end. Currently, I implement the backtrack to the closest intersection. The forward searching still has problem and being hidden now. 
+I have also partially implemented the searching of the blocks after getting the street graph. Currently, the method is based on 
+the (inner) normal constrained searching. It seems that it still will miss some blocks if the dangling edges exist. But after removing those dangling edges, this method will fail to find out all the blocks. P.S. the rebuilding of the re-organized tensor line sequences may have some issue. :( 
+
+Guoning Chen
+11/20/2007 
+
+
+------------------------------------------------------------------
+
+
+
+In this version, I have partially implemented the sketch-based tensor field design. The idea is user first sketch some highway 
+network, then the program will extract the subregions surrounded by this network. Then, user can design tensor field in those
+small regions, respectively. Currently, we still have problem to extract the proper region from the user sketched network.
+
+One other possible solution is that user can specify the sketch network using other tool and then our system can load the result
+as certain image format (say .bmp) and classify the regions according to the color values they have. But we still need to extract
+the highway network!
+
+Guoning Chen
+11/25/2007 
+
+
+------------------------------------------------------------------
+
+
+
+In this version, I have partially implemented the sketch-based tensor field design. The subregions have been colored in different
+colors which will be used to classfy the vertices of the underlying mesh.
+ Currently, we still have problem to extract the proper region from the user sketched network.
+And we also have issues about the correct coloring based on the boundaries formed by the sketches (not straight line now :).
+
+
+
+Guoning Chen
+11/26/2007 
+
+
+------------------------------------------------------------------
+
+
+
+Currently, I have fixed one bug that when including the sketch as a set of major roads, the removing dead end will fail!
+
+
+
+Guoning Chen
+11/27/2007 
+
+------------------------------------------------------------------
+
+
+
+This is a relatively stable version. I have fixed some bugs that appeared during the meeting with Peter and
+made the suggested changes (thank you, Peter!)
+I still need to change the interface of the "visualization" tab. This will make the visualization of different maps
+and the IBFV-style tensor field more convenient.
+
+
+Guoning Chen
+11/28/2007 
+
+
+------------------------------------------------------------------
+
+
+
+In this version, I have partially fixed some issues that appeared during the meeting with Peter, such as some inconsistence of checkboxes evens; combined with previous tensor field for the brush stroke interface; rename some functionality; add the street network output functionality. We now need to move on to the reorganization of "visualization" tab.
+
+
+Guoning Chen
+12/03/2007 
+
+
+
+------------------------------------------------------------------
+
+
+
+In this version, I have reorganized the "visualization" tab. Now I will move on to the tracing of the major roads.
+
+
+Guoning Chen
+12/04/2007 
+
+
+------------------------------------------------------------------
+
+
+
+In this version, I have successfully implemented the tracing of major roads combined with other types of roads (including highways, minor roads). Current method is a naive method without using any heuristics information. And the seeding scheme will be my next task.
+
+
+Guoning Chen
+12/04/2007 (2) 
+
+
+------------------------------------------------------------------
+
+
+
+In this version, I have successfully fixed some major issues of zoom in/out and panning for the image containing texture. Now we can perform editing (including creation) on the field after zoom in/out or panning. I also solved the problem of initial graph editing, i.e. moving selected intersections to new location.
+
+
+Guoning Chen
+12/06/2007 
+
+------------------------------------------------------------------
+
+
+
+In this version, I have partially implemented the removal of the sub-graph inside a user specified region. User can continue to design a new tensor field inside the specified region without affecting the other part of the field. We now need to move on to update the whole graph based on the local tensor field inside the region.
+
+
+Guoning Chen
+12/11/2007 
+
+
+------------------------------------------------------------------
+
+
+
+In this version, I have included the Perlin noise function and use it to jitter the obtained roads (either the whole roads or the roads inside a user specified region). Current parameters can produce descent result.
+I have tested a lot about the merging of the new piece of street network with the original street network. Not very successful, it works descently.
+One more issue, we need to improve the visualization quality (check!!)
+
+
+Guoning Chen
+12/18/2007 
+
+------------------------------------------------------------------
+
+
+
+In this version, I have tried many ways to edit the loaded map with boundaries being considered during the region segmentation. It seems that the program has a serious bug about the converting of the boundaries into the trajectories (mapboundarylist-->sketchlines). Currently, I disable this functionality and leave it for future exploration.
+
+Now I am trying to solve the problem of major road placement based on a global field. We already have the functionality to allow user to sketch highway network, we can do the similar things for the major roads. But we need more smoothed tool to sketch the major roads! After obtaining the major road network, we can still perform the region segmentation and design local tensor fields inside the sub-regions, respectively. We will need a stable region segmentation algorithm for sure! 
+
+I am planning to let user design smooth major roads (using Hermite curver interpolation) and allow user to edit the obtained road. User can also choose not to use smoothed curve but the hand drawn curves only.
+
+I am also planning to modify the current seeding scheme along the boundary, I will move the seeds inward a little to guarantee the longer road along the coast lines.
+
+To allow user to specify whether the sketch roads (major/highway) will contain a bridge (crossing the water) or not.
+
+
+Fix following issues:
+
+Block extraction;
+Rebuild the street graph after removing part of the graph;
+Remove/avoid too close parallel road using direction checking;
+Other user interface issues.
+
+Guoning Chen
+12/26/2007 
+
+
+------------------------------------------------------------------
+
+
+
+In this version, I have tried to design the scalar field. I am using the rainbow-like color coding to visualize the scalar field. The scalar field is computed using the similar idea of combination of several basis fields.
+I have also used the obtained scalar field to guide the generation of an asymmetric tensor field successfully.
+I have tried to increase the size of filter of the mean-filter algorithm, it can now remove the smaller water regions and clean out some tiny features of the generated tensor field.
+I have moved the seeds along the water boundary inward a little bit (say, the interval of two nearby grid points).
+
+Guoning Chen
+12/30/2007 
+
+
+------------------------------------------------------------------
+
+
+
+This is a relatively stable version. In this version, I have fixed as many bugs as I can find. Now I can move on to the remaining issues: 
+region segmentation and block extraction;
+concave region rendering;
+
+connect the ends of the major roads if those ends are not at the boundaries of the mesh.
+
+Others (perhaps Peter's algorithm?)
+
+Guoning Chen
+1/3/2008 
+
+------------------------------------------------------------------
+
+
+
+This is a relatively stable version. In this version, I have fixed some remaining bugs and it possibly still contains many.
+One big improvement of this version is the generation of the major road network. Now I can say most of them are connected :).
+The post process to clean the dead ends of the major road network still has problem :(.
+I have also changed the algorithm used to judge whether a minor road is too close and parallel to a nearby major road. Now we have fewer overlapped road but introduce some discontinuity which will be fixed later.
+
+Remaining big issue:
+The seed points along major road are not good, we need to use fewer seeds to avoid the non-uniformed placement!
+The current graph computation is not complete, we can not handle the cases that two major (or minor) tensor lines intersect!
+
+Smaller issues:
+We need an algorithm to connect the minor road during tracing!
+We need better inferface for user to control the major roads and seed points!
+
+Finally, the last big topic is:
+Upstream editing which I already have some functionality can be extended to fullfil that :).
+
+Keep up the good work!
+
+Guoning Chen
+1/11/2008 
+
+------------------------------------------------------------------
+
+
+
+In this version, we have partially solved the local editing problem.
+
+Guoning Chen
+1/20/2008

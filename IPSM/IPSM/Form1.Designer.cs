@@ -81,6 +81,7 @@
             this.Name = "IPSM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "IPSM";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.IPSM_FormClosing);
             this.Load += new System.EventHandler(this.IPSM_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.IPSM_Paint);
             this.tableLayoutPanel1.ResumeLayout(false);
