@@ -17,11 +17,15 @@ namespace WindowsFormsApplication1
     {
         private Graphics g;
         private float[] centreP;
-        private string path = @"Datas\coeur_5.txt";
+        private string path = @"Datas\cercle_5.txt";
+        private List<PointF> points;
+        private List<PointF> points_octants;
         public Form1()
         {
             InitializeComponent();
             centreP = new float[] { Width / 2, Height / 2 };
+            points = new List<PointF>();
+            points_octants = new List<PointF>();
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -42,10 +46,23 @@ namespace WindowsFormsApplication1
                         foreach (Match ms in m)
                         {
                             float[] position = ChangeBase(float.Parse(ms.Groups["x"].Value), float.Parse(ms.Groups["y"].Value));
-                            map.SetPixel((int)position[0],(int) position[1], Color.Red);
+                            if (float.Parse(ms.Groups["x"].Value) >= 0 && float.Parse(ms.Groups["y"].Value) >= 0)
+                            {
+                                map.SetPixel((int)position[0], (int)position[1], Color.Red);
+                            }
+                            else
+                                map.SetPixel((int)position[0],(int) position[1], Color.Black);
+                            //points.Add(new PointF(position[0], position[1]));
+                            if (float.Parse(ms.Groups["x"].Value) >= 0 && float.Parse(ms.Groups["y"].Value) >= 0)
+                            {
+                                points_octants.Add(new PointF(float.Parse(ms.Groups["x"].Value), float.Parse(ms.Groups["y"].Value)));
+                            }      
+                            points.Add(new PointF(float.Parse(ms.Groups["x"].Value), float.Parse(ms.Groups["y"].Value)));
                         }
                         
                     }
+                    //segmentNaiveLine(new PointF(0, 0), new PointF(25, 25), 3, 8,-4, map);
+                    premierOctant(points_octants.ToArray(),map);
                     g.DrawImage(map, new Point(0, 0));
                 }
             }
@@ -65,8 +82,8 @@ namespace WindowsFormsApplication1
         {            
             float[] res = new float[2];
             //u=(5,0,0) et v=(0,-5,0) => 1px -> x unité
-            float[] u =new float[]{5,0,0};
-            float[] v=new float[]{0,-5,0};
+            float[] u =new float[]{10,0,0};
+            float[] v=new float[]{0,-10,0};
             float[] w=new float[]{0,0,0};//car on est en 2D
             res[0] = u[0] * x + v[0] * y + centreP[0];
             res[1] = u[1] * x + v[1] * y + centreP[1];
@@ -75,10 +92,10 @@ namespace WindowsFormsApplication1
         /// <summary>
         /// A segment of a naive line
         /// </summary>
-        private void segmentNaiveLine(PointF x0,PointF x1,int a,int b,Bitmap m)
+        private void segmentNaiveLine(PointF x0,PointF x1,int a,int b,int mu,Bitmap m)
         {
             PointF current = x0;
-            int r = (int)(a * x0.X - b * x0.Y );
+            int r = (int)(a * x0.X - b * x0.Y -mu);
             while (current.X < x1.X)
             {
                 if (r >= (b - a))
@@ -92,7 +109,58 @@ namespace WindowsFormsApplication1
                 }
                 current.X += 1;
                 float[] position = ChangeBase(current.X, (int)current.Y);
-                m.SetPixel((int)position[0], (int)position[1], Color.Black);
+                //difference leaning points
+                int xx = (int)position[0];
+                int yy = (int)position[1];
+                //points d'appui cf thèse partie 3.2
+                if (a * current.X - b * current.Y == mu)
+                {
+                    m.SetPixel(xx, yy, Color.Black);
+                }
+                else if (a * current.X - b * current.Y == (mu + b - 1))
+                {
+                    m.SetPixel(xx, yy, Color.Blue);
+                }
+                else m.SetPixel(xx, yy, Color.Red);
+            }
+        }
+        private void premierOctant(PointF[] E,Bitmap map)
+        {
+            //premier octant
+            int a = 0, b = 1, mu = 0,i=1;
+            PointF m = E[0];//1er points de E
+            PointF s0 = m, i0 = m;//points d'appui initial sup et inf
+            PointF p = new PointF();
+            bool segment = false;
+            int r;
+            while (i < E.Length)
+            {
+                m = E[i];
+                r =(int) (a * m.X - b * m.Y);
+                segment = r >= mu - 1 && r <= mu+b;
+                if (r == mu - 1 || r == mu + b)
+                {
+                    if (r == mu - 1)
+                    {
+                        p.X = s0.X;
+                        p.Y = s0.Y;
+                        i0.X = m.X - b;
+                        i0.Y = m.Y - a - 1;
+                    }
+                    else if (r == mu + b)
+                    {
+                        p.X = i0.X;
+                        p.Y = i0.Y;
+                        s0.X = m.X - b;
+                        s0.Y = m.Y - a + 1;
+                    }
+                    b =(int)( m.X - p.X);
+                    a=(int)(m.Y-p.Y);
+                    mu =(int)( a * s0.X - b * s0.Y);
+                    float[] position = ChangeBase(p.X, p.Y);
+                    map.SetPixel((int)position[0],(int) position[1], Color.Black);
+                }
+                i++;
             }
         }
     }
