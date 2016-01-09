@@ -139,6 +139,7 @@ void MyDlg1::DoDataExchange(CDataExchange* pDX)
 	DDX_Radio(pDX, IDC_RADIO_SCALARMAXIMUM, m_rdScalarSingularElem);
 	DDX_Check(pDX, IDC_CHECK_DESIGNSCALARFIELD, m_chkEnableHeighfieldDesignOn);
 	DDX_Check(pDX, IDC_CHECK_SHOWSEGMENTGRAPH, m_chkShowSegmentGraphOn);
+	DDX_Control(pDX, IDC_BUTTON_CLEARSKETCHES, Trace);
 }
 
 

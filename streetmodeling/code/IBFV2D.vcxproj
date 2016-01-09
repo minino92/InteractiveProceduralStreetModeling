@@ -46,9 +46,9 @@
     <OutDir>Debug\</OutDir>
     <IntDir>Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\valimo\Desktop\Synthèses images\modelisation et animations\BC et OT\streetmodeling\code;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\LaptopMSI\OneDrive\els meus documents\Aria\_Master\Modélisation et Animation\git\InteractiveProceduralStreetModeling\streetmodeling\code;$(IncludePath)</IncludePath>
     <ReferencePath>C:\Users\valimo\Desktop\Synthèses images\modelisation et animations\BC et OT\streetmodeling\code\lib\glut;$(ReferencePath)</ReferencePath>
-    <LibraryPath>C:\Users\valimo\Desktop\Synthèses images\modelisation et animations\BC et OT\streetmodeling\code\lib\glut;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\LaptopMSI\OneDrive\els meus documents\Aria\_Master\Modélisation et Animation\git\InteractiveProceduralStreetModeling\streetmodeling\code\lib\glut;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>Release\</OutDir>

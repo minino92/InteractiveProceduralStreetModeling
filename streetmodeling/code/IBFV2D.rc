@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -72,8 +70,7 @@ IDR_MAINFRAME           ICON                    "res\\IBFV2D.ico"
 //
 
 IDD_ABOUTBOX DIALOGEX 0, 0, 235, 55
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About IBFV2D"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
@@ -83,306 +80,213 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,178,7,50,16,WS_GROUP
 END
 
-IDD_IBFV2D_DIALOG DIALOGEX 0, 0, 791, 518
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_FIXEDSYS | WS_VISIBLE | 
-    WS_CAPTION | WS_SYSMENU
+IDD_IBFV2D_DIALOG DIALOGEX 0, 0, 482, 472
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_FIXEDSYS | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_OVERLAPPEDWINDOW | WS_EX_STATICEDGE | WS_EX_APPWINDOW
-CAPTION "Street Modeller"
-MENU IDR_DIALOG_MENU
+CAPTION "IPSM"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "Exit",IDOK,755,494,29,17
+    DEFPUSHBUTTON   "Exit",IDOK,445,448,29,17,NOT WS_VISIBLE
     PUSHBUTTON      "Cancel",IDCANCEL,418,387,30,16,NOT WS_VISIBLE
-    CONTROL         "",IDC_MYTAB,"SysTabControl32",0x0,554,7,230,473
+    CONTROL         "",IDC_MYTAB,"SysTabControl32",NOT WS_VISIBLE,350,7,6,458
     CONTROL         "",IDC_OPENGLWIN,"Static",SS_BLACKFRAME,7,7,341,312
-    PUSHBUTTON      "Reset",IDC_BUTTON_CLEARALL,548,494,53,17
-    PUSHBUTTON      "Save current project...",IDC_BUTTON_SAVEPROJECT,602,494,
-                    84,17
-    PUSHBUTTON      "Load a project...",IDC_BUTTON_LOADPROJECT,686,494,69,17
+    PUSHBUTTON      "Reset",IDC_BUTTON_CLEARALL,421,448,53,17,NOT WS_VISIBLE
+    PUSHBUTTON      "Save current project...",IDC_BUTTON_SAVEPROJECT,390,448,84,17,NOT WS_VISIBLE
+    PUSHBUTTON      "Load a project...",IDC_BUTTON_LOADPROJECT,405,448,69,17,NOT WS_VISIBLE
+    PUSHBUTTON      "Create Streets",IDC_BUTTON_PLACETENSORLINES,83,423,60,19
+    CONTROL         "Tensor field",IDC_CHECK_TENSORDESIGNON,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,425,75,10
+    CONTROL         "Center",IDC_RADIO_ADDACENTER,"Button",BS_AUTORADIOBUTTON,12,447,38,10
+    CONTROL         "Reg",IDC_RADIO_ADDAREGULAR,"Button",BS_AUTORADIOBUTTON,12,437,29,10
 END
 
 IDD_DIALOG1 DIALOGEX 0, 0, 232, 471
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    GROUPBOX        "Design Element",IDC_STATIC,7,4,211,184
-    CONTROL         "Design tensor field",IDC_CHECK_TENSORDESIGNON,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,20,75,10
-    GROUPBOX        "Edit Element",IDC_STATIC,7,285,211,48
-    CONTROL         "Move an element",IDC_CHECK_MOVEELEM,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,23,295,71,10
-    CONTROL         "Edit an element",IDC_CHECK_EDITANELEM,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,23,307,65,10
-    CONTROL         "Remove elements",IDC_CHECK_REMOVEELEM,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,23,319,73,10
-    GROUPBOX        "Brush stroke interface",IDC_STATIC,7,194,211,85
-    CONTROL         "Activate Brush stroke interface",
-                    IDC_CHECK_ACTIVATEBRUSH,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,23,205,115,10
-    LTEXT           "Brush width (# of grid intervals)",IDC_STATIC,35,218,
-                    103,8
-    EDITTEXT        IDC_EDIT1,143,227,35,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "Generate tensor field",IDC_BUTTON_GENTENFROMBRUSH,27,
-                    243,88,12
-    CONTROL         "Combined with previous tensor field ",
-                    IDC_CHECK_COMBINEWITHPREVIOUSTENSOR,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,32,260,132,10
-    PUSHBUTTON      "Save brush",IDC_BUTTON_SAVEBRUSH,170,244,42,12
-    PUSHBUTTON      "Load brush",IDC_BUTTON_LOADBRUSH,170,257,42,12
-    GROUPBOX        "Smoothing",IDC_STATIC,7,339,211,36
-    CONTROL         "Region smoothing",IDC_CHECK_REGIONSMOOTHON,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,17,352,73,10
-    PUSHBUTTON      "Smooth Once",IDC_BUTTON_SMOOTHONCE,93,352,62,11
-    PUSHBUTTON      "Undo",IDC_BUTTON_UNDO,43,382,61,14
-    PUSHBUTTON      "Redo",IDC_BUTTON_REDO,105,382,65,14
-    CONTROL         "Wedge",IDC_RADIO_ADDAWEDGE,"Button",BS_AUTORADIOBUTTON | 
-                    WS_GROUP,20,64,39,10
-    CONTROL         "Trisector",IDC_RADIO_ADDATRISECTOR,"Button",
-                    BS_AUTORADIOBUTTON,20,74,44,10
-    CONTROL         "Node",IDC_RADIO_ADDANODE,"Button",BS_AUTORADIOBUTTON,20,
-                    53,33,10
-    CONTROL         "Center",IDC_RADIO_ADDACENTER,"Button",
-                    BS_AUTORADIOBUTTON,20,42,38,10
-    CONTROL         "Saddle",IDC_RADIO_ADDASADDLE,"Button",
-                    BS_AUTORADIOBUTTON,20,84,37,10
-    CONTROL         "Regular",IDC_RADIO_ADDAREGULAR,"Button",
-                    BS_AUTORADIOBUTTON,20,32,41,10
-    COMBOBOX        IDC_COMBO_DIFFREGIONS,19,120,48,44,CBS_DROPDOWN | 
-                    CBS_SORT | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Choose region to design",IDC_STATIC,15,110,82,10,NOT 
-                    WS_VISIBLE
-    GROUPBOX        "Save/load tensor field",IDC_STATIC,7,399,211,48
-    PUSHBUTTON      "Save pervertex",IDC_BUTTON_SAVEFIELDPERVER,25,413,73,12
-    GROUPBOX        "",IDC_STATIC,21,407,81,34
-    PUSHBUTTON      "Load pervertex",IDC_BUTTON_LOADFIELDPERVERT,25,426,73,
-                    12
-    GROUPBOX        "Sketch based",IDC_STATIC,94,12,120,171
-    CONTROL         "Sketch roads",IDC_CHECK_USEDRAWSKETCHON,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,103,22,57,10
-    EDITTEXT        IDC_EDIT_CURRENTNUMSKETCHES,121,62,35,12,ES_AUTOHSCROLL
-    LTEXT           "Brushes",IDC_STATIC,162,64,26,8
-    CONTROL         "Show the sketches",IDC_CHECK_DISPLAYSKETCHES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,103,53,76,10
-    PUSHBUTTON      "Generate tensor field",IDC_BUTTON_SKETCHBASEDTENGEN,107,
-                    137,93,13
-    CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,32,228,110,12
-    PUSHBUTTON      "Clear all sketches",IDC_BUTTON_CLEARSKETCHES,107,150,93,
-                    12
-    PUSHBUTTON      "Save sketches",IDC_BUTTON_SAVESKETCHES,103,163,50,14
-    PUSHBUTTON      "Load sketches",IDC_BUTTON_LOADSKETCHES,154,163,50,14
-    PUSHBUTTON      "Segment region",IDC_BUTTON_SEGMENTREGION,107,124,93,12
-    GROUPBOX        "Operations",IDC_STATIC,99,115,109,65
-    CONTROL         "Sketch major roads",IDC_RADIO_SKETCHMAJORROADS,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,115,32,77,10
-    CONTROL         "Sketch highways",IDC_RADIO_SKETCHHIGHWAY,"Button",
-                    BS_AUTORADIOBUTTON,115,43,69,10
-    GROUPBOX        "",IDC_STATIC,12,12,80,117
+    GROUPBOX        "Design Element",IDC_STATIC,7,4,211,184,NOT WS_VISIBLE
+    CONTROL         "Design tensor field",IDC_CHECK_TENSORDESIGNON,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,15,20,75,10
+    GROUPBOX        "Edit Element",IDC_STATIC,7,285,211,48,NOT WS_VISIBLE
+    CONTROL         "Move an element",IDC_CHECK_MOVEELEM,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,23,295,71,10
+    CONTROL         "Edit an element",IDC_CHECK_EDITANELEM,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,23,307,65,10
+    CONTROL         "Remove elements",IDC_CHECK_REMOVEELEM,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,23,319,73,10
+    GROUPBOX        "Brush stroke interface",IDC_STATIC,7,194,211,85,NOT WS_VISIBLE
+    CONTROL         "Activate Brush stroke interface",IDC_CHECK_ACTIVATEBRUSH,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,23,205,115,10
+    LTEXT           "Brush width (# of grid intervals)",IDC_STATIC,35,218,103,8,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT1,143,227,35,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    PUSHBUTTON      "Generate tensor field",IDC_BUTTON_GENTENFROMBRUSH,27,243,88,12,NOT WS_VISIBLE
+    CONTROL         "Combined with previous tensor field ",IDC_CHECK_COMBINEWITHPREVIOUSTENSOR,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,32,260,132,10
+    PUSHBUTTON      "Save brush",IDC_BUTTON_SAVEBRUSH,170,244,42,12,NOT WS_VISIBLE
+    PUSHBUTTON      "Load brush",IDC_BUTTON_LOADBRUSH,170,257,42,12,NOT WS_VISIBLE
+    GROUPBOX        "Smoothing",IDC_STATIC,7,339,211,36,NOT WS_VISIBLE
+    CONTROL         "Region smoothing",IDC_CHECK_REGIONSMOOTHON,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,17,352,73,10
+    PUSHBUTTON      "Smooth Once",IDC_BUTTON_SMOOTHONCE,93,352,62,11,NOT WS_VISIBLE
+    PUSHBUTTON      "Undo",IDC_BUTTON_UNDO,43,382,61,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Redo",IDC_BUTTON_REDO,105,382,65,14,NOT WS_VISIBLE
+    CONTROL         "Wedge",IDC_RADIO_ADDAWEDGE,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP,20,64,39,10
+    CONTROL         "Trisector",IDC_RADIO_ADDATRISECTOR,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE,20,74,44,10
+    CONTROL         "Node",IDC_RADIO_ADDANODE,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE,20,53,33,10
+    CONTROL         "Center",IDC_RADIO_ADDACENTER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE,20,42,38,10
+    CONTROL         "Saddle",IDC_RADIO_ADDASADDLE,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE,20,84,37,10
+    CONTROL         "Regular",IDC_RADIO_ADDAREGULAR,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE,20,32,41,10
+    COMBOBOX        IDC_COMBO_DIFFREGIONS,19,120,48,44,CBS_DROPDOWN | CBS_SORT | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Choose region to design",IDC_STATIC,15,110,82,10,NOT WS_VISIBLE
+    GROUPBOX        "Save/load tensor field",IDC_STATIC,7,399,211,48,NOT WS_VISIBLE
+    PUSHBUTTON      "Save pervertex",IDC_BUTTON_SAVEFIELDPERVER,25,413,73,12,NOT WS_VISIBLE
+    GROUPBOX        "",IDC_STATIC,21,407,81,34,NOT WS_VISIBLE
+    PUSHBUTTON      "Load pervertex",IDC_BUTTON_LOADFIELDPERVERT,25,426,73,12,NOT WS_VISIBLE
+    GROUPBOX        "Sketch based",IDC_STATIC,94,12,120,171,NOT WS_VISIBLE
+    CONTROL         "Sketch roads",IDC_CHECK_USEDRAWSKETCHON,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,103,22,57,10
+    EDITTEXT        IDC_EDIT_CURRENTNUMSKETCHES,121,62,35,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    LTEXT           "Brushes",IDC_STATIC,162,64,26,8,NOT WS_VISIBLE
+    CONTROL         "Show the sketches",IDC_CHECK_DISPLAYSKETCHES,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,103,53,76,10
+    PUSHBUTTON      "Generate tensor field",IDC_BUTTON_SKETCHBASEDTENGEN,107,137,93,13,NOT WS_VISIBLE
+    CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | NOT WS_VISIBLE | WS_TABSTOP,32,228,110,12
+    PUSHBUTTON      "Clear all sketches",IDC_BUTTON_CLEARSKETCHES,107,150,93,12,NOT WS_VISIBLE
+    PUSHBUTTON      "Save sketches",IDC_BUTTON_SAVESKETCHES,103,163,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Load sketches",IDC_BUTTON_LOADSKETCHES,154,163,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Segment region",IDC_BUTTON_SEGMENTREGION,107,124,93,12,NOT WS_VISIBLE
+    GROUPBOX        "Operations",IDC_STATIC,99,115,109,65,NOT WS_VISIBLE
+    CONTROL         "Sketch major roads",IDC_RADIO_SKETCHMAJORROADS,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP,115,32,77,10
+    CONTROL         "Sketch highways",IDC_RADIO_SKETCHHIGHWAY,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE,115,43,69,10
+    GROUPBOX        "",IDC_STATIC,12,12,80,117,NOT WS_VISIBLE
     CONTROL         "Use boundaries as roads",IDC_CHECK_USEBOUNDARYASROADS,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,103,88,95,10
-    PUSHBUTTON      "Clear tensor field",IDC_BUTTON_CLEARTHEFIELD,19,106,62,
-                    15
-    CONTROL         "Use major roads to segment",
-                    IDC_CHECK_USEMAJROADSASSKETCHES,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,103,101,106,10
-    CONTROL         "Design a heighfield",IDC_CHECK_DESIGNSCALARFIELD,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,142,76,10
-    GROUPBOX        "",IDC_STATIC,11,132,80,51
-    CONTROL         "Maximum",IDC_RADIO_SCALARMAXIMUM,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,21,156,45,10
-    CONTROL         "Minimum",IDC_RADIO_SCALARMINIMUM,"Button",
-                    BS_AUTORADIOBUTTON,21,168,43,10
-    CONTROL         "Show segment graph",IDC_CHECK_SHOWSEGMENTGRAPH,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,119,76,83,10
-    GROUPBOX        "",IDC_STATIC,110,407,90,34
-    PUSHBUTTON      "Save design elements",IDC_BUTTON_SAVEDESIGNELEMS,116,
-                    413,76,12
-    PUSHBUTTON      "Load design elements",IDC_BUTTON_LOADDESIGNELEMS,116,
-                    426,76,12
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,103,88,95,10
+    PUSHBUTTON      "Clear tensor field",IDC_BUTTON_CLEARTHEFIELD,19,106,62,15,NOT WS_VISIBLE
+    CONTROL         "Use major roads to segment",IDC_CHECK_USEMAJROADSASSKETCHES,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,103,101,106,10
+    CONTROL         "Design a heighfield",IDC_CHECK_DESIGNSCALARFIELD,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,15,142,76,10
+    GROUPBOX        "",IDC_STATIC,11,132,80,51,NOT WS_VISIBLE
+    CONTROL         "Maximum",IDC_RADIO_SCALARMAXIMUM,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP,21,156,45,10
+    CONTROL         "Minimum",IDC_RADIO_SCALARMINIMUM,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE,21,168,43,10
+    CONTROL         "Show segment graph",IDC_CHECK_SHOWSEGMENTGRAPH,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,119,76,83,10
+    GROUPBOX        "",IDC_STATIC,110,407,90,34,NOT WS_VISIBLE
+    PUSHBUTTON      "Save design elements",IDC_BUTTON_SAVEDESIGNELEMS,116,413,76,12,NOT WS_VISIBLE
+    PUSHBUTTON      "Load design elements",IDC_BUTTON_LOADDESIGNELEMS,116,426,76,12,NOT WS_VISIBLE
 END
 
 IDD_DIALOG2 DIALOGEX 0, 0, 230, 393
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    CONTROL         "Show degenerate points / singularities",
-                    IDC_CHECK_SHOWSINGULARITY,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,21,17,138,10
-    CONTROL         "Show regular elements",IDC_CHECK_SHOWREGULARELEM,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,21,30,89,10
-    GROUPBOX        "",IDC_STATIC,14,7,196,80
-    GROUPBOX        "",IDC_STATIC,14,94,196,223
-    CONTROL         "Show tensor lines",IDC_CHECK_SHOWTENSORLINES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,21,44,72,10
-    CONTROL         "Display street network (graph)",
-                    IDC_CHECK_SHOWSTREETGRAPH,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,26,171,114,10
-    CONTROL         "Show road map",IDC_CHECK_SHOWRAODMAP,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,26,108,65,10
-    PUSHBUTTON      "Save as .bmp",IDC_BUTTON_SAVETOBMP,23,344,56,22
-    CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,81,150,80,12
-    LTEXT           "Road width",IDC_STATIC,40,151,37,8
-    CONTROL         "Show the geography map",IDC_CHECK_SHOWTHEMAP,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,26,223,98,10
-    CONTROL         "Show the extracted boundaries",
-                    IDC_CHECK_SHOWEXTRACTEDBOUNDARIES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,39,236,117,10
-    CONTROL         "Show the end points of the graph",
-                    IDC_CHECK_SHOWENDPOINTS,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,41,201,123,10
-    GROUPBOX        "",IDC_STATIC,19,101,186,117
-    CONTROL         "Show the population density map",
-                    IDC_CHECK_SHOWPOPDENSITYMAP,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,26,264,122,10
-    CONTROL         "Show IBFV visualization",IDC_CHECK_SHOWIBFV,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,26,279,91,10
+    CONTROL         "Show degenerate points / singularities",IDC_CHECK_SHOWSINGULARITY,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,21,17,138,10
+    CONTROL         "Show regular elements",IDC_CHECK_SHOWREGULARELEM,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,21,30,89,10
+    GROUPBOX        "",IDC_STATIC,14,7,196,80,NOT WS_VISIBLE
+    GROUPBOX        "",IDC_STATIC,14,94,196,223,NOT WS_VISIBLE
+    CONTROL         "Show tensor lines",IDC_CHECK_SHOWTENSORLINES,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,21,44,72,10
+    CONTROL         "Display street network (graph)",IDC_CHECK_SHOWSTREETGRAPH,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,26,171,114,10
+    CONTROL         "Show road map",IDC_CHECK_SHOWRAODMAP,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,26,108,65,10
+    PUSHBUTTON      "Save as .bmp",IDC_BUTTON_SAVETOBMP,23,344,56,22,NOT WS_VISIBLE
+    CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | NOT WS_VISIBLE | WS_TABSTOP,81,150,80,12
+    LTEXT           "Road width",IDC_STATIC,40,151,37,8,NOT WS_VISIBLE
+    CONTROL         "Show the geography map",IDC_CHECK_SHOWTHEMAP,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,26,223,98,10
+    CONTROL         "Show the extracted boundaries",IDC_CHECK_SHOWEXTRACTEDBOUNDARIES,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,39,236,117,10
+    CONTROL         "Show the end points of the graph",IDC_CHECK_SHOWENDPOINTS,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,41,201,123,10
+    GROUPBOX        "",IDC_STATIC,19,101,186,117,NOT WS_VISIBLE
+    CONTROL         "Show the population density map",IDC_CHECK_SHOWPOPDENSITYMAP,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,26,264,122,10
+    CONTROL         "Show IBFV visualization",IDC_CHECK_SHOWIBFV,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,26,279,91,10
     CONTROL         "Show intersections",IDC_CHECK_SHOWINTERSECTIONSON,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,41,186,76,10
-    CONTROL         "Display streets using street network",
-                    IDC_CHECK_SHOWSTREETUSENETWORK,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,26,136,131,10
-    CONTROL         "Show line-style streets",
-                    IDC_CHECK_SHOWLINESTYLESTREESON,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,40,121,89,10
-    CONTROL         "Show the scalar field",IDC_CHECK_SHOWSCALARFIELD,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,26,293,82,10
-    PUSHBUTTON      "Test scalar field",IDC_BUTTON_TESTSCALARFIELD,125,290,
-                    59,12,NOT WS_VISIBLE
-    CONTROL         "Show major roads",IDC_CHECK_SHOWMAJROADS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,36,57,73,10
-    EDITTEXT        IDC_EDIT_ROADWIDTH,163,149,31,13,ES_AUTOHSCROLL
-    CONTROL         "Show vegetation map",IDC_CHECK_SHOWVEGMAP,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,26,249,85,10
-    CONTROL         "Show major roads with google style",
-                    IDC_CHECK_USEGOOGLESTYLE,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,52,70,129,10
-    CONTROL         "Turn on anti-aliasing",IDC_CHECK_ANTIALIASINGON,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,26,325,81,10
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,41,186,76,10
+    CONTROL         "Display streets using street network",IDC_CHECK_SHOWSTREETUSENETWORK,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,26,136,131,10
+    CONTROL         "Show line-style streets",IDC_CHECK_SHOWLINESTYLESTREESON,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,40,121,89,10
+    CONTROL         "Show the scalar field",IDC_CHECK_SHOWSCALARFIELD,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,26,293,82,10
+    PUSHBUTTON      "Test scalar field",IDC_BUTTON_TESTSCALARFIELD,125,290,59,12,NOT WS_VISIBLE
+    CONTROL         "Show major roads",IDC_CHECK_SHOWMAJROADS,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,36,57,73,10
+    EDITTEXT        IDC_EDIT_ROADWIDTH,163,149,31,13,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    CONTROL         "Show vegetation map",IDC_CHECK_SHOWVEGMAP,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,26,249,85,10
+    CONTROL         "Show major roads with google style",IDC_CHECK_USEGOOGLESTYLE,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,52,70,129,10
+    CONTROL         "Turn on anti-aliasing",IDC_CHECK_ANTIALIASINGON,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,26,325,81,10
 END
 
 IDD_DIALOG_STREETNETPANEL DIALOGEX 0, 0, 230, 472
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    GROUPBOX        "Tensor line placement",IDC_STATIC,7,174,208,105
-    LTEXT           "major density",IDC_STATIC,17,186,44,8
-    EDITTEXT        IDC_EDIT_MAJORDENSITY,64,185,35,13,ES_AUTOHSCROLL
-    LTEXT           "minor density",IDC_STATIC,18,201,44,8
-    EDITTEXT        IDC_EDIT_MINORDENSITY,64,199,35,14,ES_AUTOHSCROLL
-    PUSHBUTTON      "Trace streets...",IDC_BUTTON_PLACETENSORLINES,143,247,
-                    60,19
-    PUSHBUTTON      "Compute street network",IDC_BUTTON_COMPUTESTREETNETWORK,
-                    17,298,83,12
-    GROUPBOX        "Street graph computation",IDC_STATIC,7,285,208,39
-    CONTROL         "Edit street graph (move intersections)",
-                    IDC_CHECK_EDITSTREETGRAPHON,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,19,419,137,10
-    PUSHBUTTON      "Load geography map...",IDC_BUTTON_LOADAWATERMAP,24,23,
-                    89,11
-    CONTROL         "Turn on mean filter",IDC_CHECK_MEANFILTERON,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,29,39,77,10
-    GROUPBOX        "Load maps...",IDC_STATIC,7,7,208,127
-    CONTROL         "Generate tensor fields",
-                    IDC_CHECK_GENTENSORBASEDONEXTRACTBOUNDARIES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,29,65,87,10
-    CONTROL         "Use all boundaries to obtain regular elements",
-                    IDC_CHECK_USEALLBOUNDARIES,"Button",BS_AUTOCHECKBOX | 
-                    NOT WS_VISIBLE | WS_TABSTOP,42,81,160,10
-    CONTROL         "",IDC_SLIDER_BOUNDARYWIDTH,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | NOT WS_VISIBLE | WS_TABSTOP,47,79,98,13
-    LTEXT           "Width of each boundary region",IDC_STATIC,41,83,100,8,
-                    NOT WS_VISIBLE
-    LTEXT           "Minimal length",IDC_STATIC,15,217,46,8
-    EDITTEXT        IDC_EDIT_MINTENSORLINELENGTH,64,215,35,14,ES_AUTOHSCROLL
-    CONTROL         "Turn on the grid",IDC_CHECK_GRIDON,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,17,267,67,10
-    LTEXT           "Street levels (totally 3)",IDC_STATIC,140,182,74,8
-    EDITTEXT        IDC_EDIT_STREETLEVEL,146,193,41,14,ES_AUTOHSCROLL
-    CONTROL         "Connect the ends (may not be visually pleasing)",
-                    IDC_CHECK_CONNECTDEADENDON,"Button",BS_AUTOCHECKBOX | 
-                    NOT WS_VISIBLE | WS_TABSTOP,35,456,169,10
-    CONTROL         "",IDC_SPIN_TRACINGLEVEL,"msctls_updown32",UDS_ARROWKEYS | 
-                    NOT WS_VISIBLE | WS_DISABLED,189,27,10,14
-    PUSHBUTTON      "Connect dead ends",IDC_BUTTON_CONNECTDEADEND,7,454,83,
-                    12,NOT WS_VISIBLE
-    PUSHBUTTON      "Compute region blocks",IDC_BUTTON_COMPUTEREGIONBLOCKS,
-                    117,293,84,12
-    CONTROL         "Show region blocks",IDC_CHECK_SHOWREGIONBLOCKS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,119,308,77,10
-    PUSHBUTTON      "Test subregion design",IDC_BUTTON_TESTDIFFREGIONDESIGN,
-                    108,448,86,13,NOT WS_VISIBLE | WS_DISABLED
-    GROUPBOX        "",IDC_STATIC,16,14,191,79
-    PUSHBUTTON      "Load population density map...",
-                    IDC_BUTTON_LOADPOPDENSITYMAP,20,99,113,11
+    GROUPBOX        "Tensor line placement",IDC_STATIC,7,174,208,105,NOT WS_VISIBLE
+    LTEXT           "major density",IDC_STATIC,17,186,44,8,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_MAJORDENSITY,64,185,35,13,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    LTEXT           "minor density",IDC_STATIC,18,201,44,8,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_MINORDENSITY,64,199,35,14,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    PUSHBUTTON      "Trace streets...",IDC_BUTTON_PLACETENSORLINES,143,247,60,19,NOT WS_VISIBLE
+    PUSHBUTTON      "Compute street network",IDC_BUTTON_COMPUTESTREETNETWORK,17,298,83,12,NOT WS_VISIBLE
+    GROUPBOX        "Street graph computation",IDC_STATIC,7,285,208,39,NOT WS_VISIBLE
+    CONTROL         "Edit street graph (move intersections)",IDC_CHECK_EDITSTREETGRAPHON,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,19,419,137,10
+    PUSHBUTTON      "Load geography map...",IDC_BUTTON_LOADAWATERMAP,24,23,89,11,NOT WS_VISIBLE
+    CONTROL         "Turn on mean filter",IDC_CHECK_MEANFILTERON,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,29,39,77,10
+    GROUPBOX        "Load maps...",IDC_STATIC,7,7,208,127,NOT WS_VISIBLE
+    CONTROL         "Generate tensor fields",IDC_CHECK_GENTENSORBASEDONEXTRACTBOUNDARIES,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,29,65,87,10
+    CONTROL         "Use all boundaries to obtain regular elements",IDC_CHECK_USEALLBOUNDARIES,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,42,81,160,10
+    CONTROL         "",IDC_SLIDER_BOUNDARYWIDTH,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | NOT WS_VISIBLE | WS_TABSTOP,47,79,98,13
+    LTEXT           "Width of each boundary region",IDC_STATIC,41,83,100,8,NOT WS_VISIBLE
+    LTEXT           "Minimal length",IDC_STATIC,15,217,46,8,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_MINTENSORLINELENGTH,64,215,35,14,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    CONTROL         "Turn on the grid",IDC_CHECK_GRIDON,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,17,267,67,10
+    LTEXT           "Street levels (totally 3)",IDC_STATIC,140,182,74,8,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_STREETLEVEL,146,193,41,14,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    CONTROL         "Connect the ends (may not be visually pleasing)",IDC_CHECK_CONNECTDEADENDON,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,35,456,169,10
+    CONTROL         "",IDC_SPIN_TRACINGLEVEL,"msctls_updown32",UDS_ARROWKEYS | NOT WS_VISIBLE | WS_DISABLED,189,27,10,14
+    PUSHBUTTON      "Connect dead ends",IDC_BUTTON_CONNECTDEADEND,7,454,83,12,NOT WS_VISIBLE
+    PUSHBUTTON      "Compute region blocks",IDC_BUTTON_COMPUTEREGIONBLOCKS,117,293,84,12,NOT WS_VISIBLE
+    CONTROL         "Show region blocks",IDC_CHECK_SHOWREGIONBLOCKS,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,119,308,77,10
+    PUSHBUTTON      "Test subregion design",IDC_BUTTON_TESTDIFFREGIONDESIGN,108,448,86,13,NOT WS_VISIBLE | WS_DISABLED
+    GROUPBOX        "",IDC_STATIC,16,14,191,79,NOT WS_VISIBLE
+    PUSHBUTTON      "Load population density map...",IDC_BUTTON_LOADPOPDENSITYMAP,20,99,113,11,NOT WS_VISIBLE
     CONTROL         "Combine population density",IDC_CHECK_COMBINEDENSITYMAP,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,254,104,10
-    CONTROL         "Generate tensor field from the sketches",
-                    IDC_CHECK_GENTEN_SKETCHBASED,"Button",BS_AUTOCHECKBOX | 
-                    NOT WS_VISIBLE | WS_DISABLED | WS_TABSTOP,44,456,143,10
-    CONTROL         "Close loops",IDC_CHECK_CLOSELOOP,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,17,243,52,10
-    PUSHBUTTON      "Export street network",IDC_BUTTON_EXPORTSTREETNETWORK,
-                    14,439,99,13
-    GROUPBOX        "",IDC_STATIC,16,91,191,23
-    PUSHBUTTON      "Load height field ...",IDC_BUTTON_LOADHEIGHTFIELD,134,
-                    99,69,11,NOT WS_VISIBLE
-    PUSHBUTTON      "Add noise to the field",IDC_BUTTON_ADDNOISETOFIELD,13,
-                    151,75,11
-    PUSHBUTTON      "Add noise to all roads",IDC_BUTTON_ADDNOISETOROADS,90,
-                    151,77,11
-    LTEXT           "meters",IDC_STATIC,101,187,23,8
-    LTEXT           "meters",IDC_STATIC,101,203,23,8
-    LTEXT           "meters",IDC_STATIC,101,218,23,8
-    CONTROL         "Use boundaries to segment the region",
-                    IDC_CHECK_USEBOUNDARIESASSKETCHES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,29,52,138,10
-    EDITTEXT        IDC_EDIT_WIDTHBOUNDARY,163,62,40,12,ES_AUTOHSCROLL | NOT 
-                    WS_VISIBLE
-    GROUPBOX        "Noise operation (global)",IDC_STATIC,7,139,208,29
-    EDITTEXT        IDC_EDIT2,142,38,34,12,ES_AUTOHSCROLL
-    LTEXT           "(Filter size",IDC_STATIC,108,39,34,8
-    LTEXT           "pixels)",IDC_STATIC,179,41,22,8
-    PUSHBUTTON      "Major road setting...",IDC_BUTTON_MAJROADSETTING,135,
-                    214,72,11
-    CONTROL         "Show initial seeds",IDC_CHECK_SHOWINITSEEDS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,29,78,72,10
-    PUSHBUTTON      "Seed point setting ...",IDC_BUTTON_SEEDSETTING,115,77,
-                    75,12
-    PUSHBUTTON      "Load vegetation map...",IDC_BUTTON_LOADVEGMAP,20,117,98,
-                    11
-    CONTROL         "Apply rotation field",IDC_CHECK_APPLYASYMFLD,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,17,230,77,10
-    PUSHBUTTON      "setting...",IDC_BUTTON_NOISESETTING,171,151,35,11
-    PUSHBUTTON      "Minor road setting...",IDC_BUTTON_MINROADSETTING,135,
-                    229,72,11
-    CONTROL         "Remove major road dead ends",
-                    IDC_CHECK_REMOVEMAJDEADEDNON,"Button",BS_AUTOCHECKBOX | 
-                    NOT WS_VISIBLE | WS_TABSTOP,87,456,114,10
-    PUSHBUTTON      "Import street network",IDC_BUTTON_IMPORTSTREETNETWORK,
-                    116,439,92,13
-    EDITTEXT        IDC_EDIT_MINBOUNDARYLEN,133,22,43,14,ES_AUTOHSCROLL
-    GROUPBOX        "Street graph local editing",IDC_STATIC,7,329,208,104
-    CONTROL         "Select region to edit",IDC_CHECK_SELREGTOEDITON,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,18,339,80,10
-    PUSHBUTTON      "Add noise inside (field)",
-                    IDC_BUTTON_ADDNOISETOLOCALFIELD,15,351,81,12
-    PUSHBUTTON      "Add noise inside (roads)",IDC_BUTTON_ADDNOISELOCALROADS,
-                    98,351,84,12
-    GROUPBOX        "Replace streets inside",IDC_STATIC,17,367,191,48
-    PUSHBUTTON      "Remove streets inside",IDC_BUTTON_REMOVESTREETSINREG,32,
-                    376,95,11
-    PUSHBUTTON      "Replace streets inside",IDC_BUTTON_REPLACESTREETSINSIDE,
-                    32,387,95,12
-    PUSHBUTTON      "Compute street network inside",
-                    IDC_BUTTON_COMPSTREETNETINSIDE,27,400,108,12
-    CONTROL         "Brush like region selection",
-                    IDC_CHECK_USEBRUSHLIKEREGSEL,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,105,340,98,10
-    CONTROL         "Method 1",IDC_RADIO_CONMETHOD1,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,149,393,46,10
-    CONTROL         "Method 2",IDC_RADIO_CONMETHOD2,"Button",
-                    BS_AUTORADIOBUTTON,149,403,46,10
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,17,254,104,10
+    CONTROL         "Generate tensor field from the sketches",IDC_CHECK_GENTEN_SKETCHBASED,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_DISABLED | WS_TABSTOP,44,456,143,10
+    CONTROL         "Close loops",IDC_CHECK_CLOSELOOP,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,17,243,52,10
+    PUSHBUTTON      "Export street network",IDC_BUTTON_EXPORTSTREETNETWORK,14,439,99,13,NOT WS_VISIBLE
+    GROUPBOX        "",IDC_STATIC,16,91,191,23,NOT WS_VISIBLE
+    PUSHBUTTON      "Load height field ...",IDC_BUTTON_LOADHEIGHTFIELD,134,99,69,11,NOT WS_VISIBLE
+    PUSHBUTTON      "Add noise to the field",IDC_BUTTON_ADDNOISETOFIELD,13,151,75,11,NOT WS_VISIBLE
+    PUSHBUTTON      "Add noise to all roads",IDC_BUTTON_ADDNOISETOROADS,90,151,77,11,NOT WS_VISIBLE
+    LTEXT           "meters",IDC_STATIC,101,187,23,8,NOT WS_VISIBLE
+    LTEXT           "meters",IDC_STATIC,101,203,23,8,NOT WS_VISIBLE
+    LTEXT           "meters",IDC_STATIC,101,218,23,8,NOT WS_VISIBLE
+    CONTROL         "Use boundaries to segment the region",IDC_CHECK_USEBOUNDARIESASSKETCHES,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,29,52,138,10
+    EDITTEXT        IDC_EDIT_WIDTHBOUNDARY,163,62,40,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    GROUPBOX        "Noise operation (global)",IDC_STATIC,7,139,208,29,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT2,142,38,34,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    LTEXT           "(Filter size",IDC_STATIC,108,39,34,8,NOT WS_VISIBLE
+    LTEXT           "pixels)",IDC_STATIC,179,41,22,8,NOT WS_VISIBLE
+    PUSHBUTTON      "Major road setting...",IDC_BUTTON_MAJROADSETTING,135,214,72,11,NOT WS_VISIBLE
+    CONTROL         "Show initial seeds",IDC_CHECK_SHOWINITSEEDS,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,29,78,72,10
+    PUSHBUTTON      "Seed point setting ...",IDC_BUTTON_SEEDSETTING,115,77,75,12,NOT WS_VISIBLE
+    PUSHBUTTON      "Load vegetation map...",IDC_BUTTON_LOADVEGMAP,20,117,98,11,NOT WS_VISIBLE
+    CONTROL         "Apply rotation field",IDC_CHECK_APPLYASYMFLD,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,17,230,77,10
+    PUSHBUTTON      "setting...",IDC_BUTTON_NOISESETTING,171,151,35,11,NOT WS_VISIBLE
+    PUSHBUTTON      "Minor road setting...",IDC_BUTTON_MINROADSETTING,135,229,72,11,NOT WS_VISIBLE
+    CONTROL         "Remove major road dead ends",IDC_CHECK_REMOVEMAJDEADEDNON,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,87,456,114,10
+    PUSHBUTTON      "Import street network",IDC_BUTTON_IMPORTSTREETNETWORK,116,439,92,13,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_MINBOUNDARYLEN,133,22,43,14,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    GROUPBOX        "Street graph local editing",IDC_STATIC,7,329,208,104,NOT WS_VISIBLE
+    CONTROL         "Select region to edit",IDC_CHECK_SELREGTOEDITON,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,18,339,80,10
+    PUSHBUTTON      "Add noise inside (field)",IDC_BUTTON_ADDNOISETOLOCALFIELD,15,351,81,12,NOT WS_VISIBLE
+    PUSHBUTTON      "Add noise inside (roads)",IDC_BUTTON_ADDNOISELOCALROADS,98,351,84,12,NOT WS_VISIBLE
+    GROUPBOX        "Replace streets inside",IDC_STATIC,17,367,191,48,NOT WS_VISIBLE
+    PUSHBUTTON      "Remove streets inside",IDC_BUTTON_REMOVESTREETSINREG,32,376,95,11,NOT WS_VISIBLE
+    PUSHBUTTON      "Replace streets inside",IDC_BUTTON_REPLACESTREETSINSIDE,32,387,95,12,NOT WS_VISIBLE
+    PUSHBUTTON      "Compute street network inside",IDC_BUTTON_COMPSTREETNETINSIDE,27,400,108,12,NOT WS_VISIBLE
+    CONTROL         "Brush like region selection",IDC_CHECK_USEBRUSHLIKEREGSEL,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,105,340,98,10
+    CONTROL         "Method 1",IDC_RADIO_CONMETHOD1,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP,149,393,46,10
+    CONTROL         "Method 2",IDC_RADIO_CONMETHOD2,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE,149,403,46,10
 END
 
 IDD_DIALOG_STREETEDITPANEL DIALOGEX 0, 0, 218, 367
@@ -392,27 +296,20 @@ BEGIN
     GROUPBOX        "Local editing",IDC_STATIC,11,7,194,139
     CONTROL         "Select region to edit",IDC_CHECK_SELSTREETREGTOEDIT,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,20,80,10
-    PUSHBUTTON      "Remove the streets inside",IDC_BUTTON_REMOVESELREGION,
-                    36,45,90,12
-    PUSHBUTTON      "Place streets in the region",
-                    IDC_BUTTON_TRACEINSIDEREGION,36,57,90,12
-    PUSHBUTTON      "Compute street network in the region",
-                    IDC_BUTTON_COMSTREETNETINREG,36,70,127,12
+    PUSHBUTTON      "Remove the streets inside",IDC_BUTTON_REMOVESELREGION,36,45,90,12
+    PUSHBUTTON      "Place streets in the region",IDC_BUTTON_TRACEINSIDEREGION,36,57,90,12
+    PUSHBUTTON      "Compute street network in the region",IDC_BUTTON_COMSTREETNETINREG,36,70,127,12
     GROUPBOX        "Replace",IDC_STATIC,19,33,178,56
     GROUPBOX        "Add noise",IDC_STATIC,19,95,178,44
-    PUSHBUTTON      "Add noise to the roads inside",
-                    IDC_BUTTON_ADDNOISETOROADSINREG,36,120,100,13
-    CONTROL         "Select and replace an intersection",
-                    IDC_CHECK_EDITSTREETGRAPHON,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,21,183,124,10
-    PUSHBUTTON      "Add noise to the field inside",
-                    IDC_BUTTON_ADDNOISETOFIELDINREG,36,107,100,12
+    PUSHBUTTON      "Add noise to the roads inside",IDC_BUTTON_ADDNOISETOROADSINREG,36,120,100,13
+    CONTROL         "Select and replace an intersection",IDC_CHECK_EDITSTREETGRAPHON,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,183,124,10
+    PUSHBUTTON      "Add noise to the field inside",IDC_BUTTON_ADDNOISETOFIELDINREG,36,107,100,12
     PUSHBUTTON      "Setting...",IDC_BUTTON_NOISESETTING,152,122,35,11
 END
 
 IDD_DIALOG_MAJROADSETTING DIALOGEX 0, 0, 250, 231
-STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU | 
-    WS_THICKFRAME
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
 CAPTION "Major road setting"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
@@ -420,49 +317,38 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,140,210,50,14,NOT WS_VISIBLE
     CONTROL         "Allow major roads to cross rivers",IDC_CHECK_CROSSRIVER,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,14,120,10
-    CONTROL         "Allow major roads to follow the boundaries",
-                    IDC_CHECK_MAJROADFOLLOWBOUNDARIES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,17,67,152,10
-    LTEXT           "Distance threshold for crossing rivers",IDC_STATIC,35,
-                    27,120,8
+    CONTROL         "Allow major roads to follow the boundaries",IDC_CHECK_MAJROADFOLLOWBOUNDARIES,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,67,152,10
+    LTEXT           "Distance threshold for crossing rivers",IDC_STATIC,35,27,120,8
     LTEXT           "meters",IDC_STATIC,210,26,23,8
-    LTEXT           "Maximal angle for crossing rivers",IDC_STATIC,50,40,105,
-                    8
+    LTEXT           "Maximal angle for crossing rivers",IDC_STATIC,50,40,105,8
     LTEXT           "degree",IDC_STATIC,210,40,24,8
     GROUPBOX        "",IDC_STATIC,7,4,236,52
     EDITTEXT        IDC_EDIT_DISCROSSRIVERS,163,25,40,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_EDIT_ANGCROSSINGRIVERS,163,39,40,12,ES_AUTOHSCROLL
     GROUPBOX        "",IDC_STATIC,7,58,236,44
-    LTEXT           "How far do we follow the boundaries",IDC_STATIC,36,82,
-                    118,8
+    LTEXT           "How far do we follow the boundaries",IDC_STATIC,36,82,118,8
     LTEXT           "meters",IDC_STATIC,211,83,23,8
     EDITTEXT        IDC_EDIT_DISFOLLOWBOUNDARIES,161,82,44,12,ES_AUTOHSCROLL
     CONTROL         "Show major road network",IDC_CHECK_SHOWMAJROADNETWORK,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,181,98,10
-    CONTROL         "Allow major roads to cross singularities",
-                    IDC_CHECK_ALLOWCROSSDEGPTS,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,18,108,139,10
-    PUSHBUTTON      "Clean major road dead ends",
-                    IDC_BUTTON_CLEANMAJRAODDEADENDS,19,140,101,12
+    CONTROL         "Allow major roads to cross singularities",IDC_CHECK_ALLOWCROSSDEGPTS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,108,139,10
+    PUSHBUTTON      "Clean major road dead ends",IDC_BUTTON_CLEANMAJRAODDEADENDS,19,140,101,12
     GROUPBOX        "Major road editing",IDC_STATIC,7,126,236,51
-    LTEXT           "Select and edit a major road (extend / move/ delete)",
-                    IDC_STATIC,53,160,170,8
-    CONTROL         "Enable Jobard's method",IDC_CHECK_JOBARDMETHOD,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,18,194,92,10
+    LTEXT           "Select and edit a major road (extend / move/ delete)",IDC_STATIC,53,160,170,8
+    CONTROL         "Enable Jobard's method",IDC_CHECK_JOBARDMETHOD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,194,92,10
 END
 
 IDD_DIALOG_SEEDPOINTCTRLDLG DIALOGEX 0, 0, 238, 102
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Seed point control"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,181,81,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,131,81,50,14,NOT WS_VISIBLE
-    LTEXT           "Distance away from the boundaries",IDC_STATIC,15,11,114,
-                    8
-    EDITTEXT        IDC_EDIT1_SEEDDISTAWAYBOUNDARY,137,9,50,12,
-                    ES_AUTOHSCROLL
+    LTEXT           "Distance away from the boundaries",IDC_STATIC,15,11,114,8
+    EDITTEXT        IDC_EDIT1_SEEDDISTAWAYBOUNDARY,137,9,50,12,ES_AUTOHSCROLL
     LTEXT           "meters",IDC_STATIC,194,11,23,8
     LTEXT           "Select a seed",IDC_STATIC,16,32,44,8
     LTEXT           "Change its weight",IDC_STATIC,34,44,58,8
@@ -470,29 +356,23 @@ BEGIN
 END
 
 IDD_DIALOG_MINROADSETTING DIALOGEX 0, 0, 250, 176
-STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU | 
-    WS_THICKFRAME
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
 CAPTION "Minor road setting"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,193,155,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,125,155,50,14,NOT WS_VISIBLE
-    CONTROL         "Allow minor roads overlapped with major roads",
-                    IDC_CHECK_MINCLOSETOMAJ,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,15,15,165,10
-    CONTROL         "Remove dead ends during tracing",
-                    IDC_CHECK_AUTOREMOVEDEADENDS,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,15,31,123,10
-    LTEXT           "Noise to control the randomly generated dead ends",
-                    IDC_STATIC,27,76,166,8
-    CONTROL         "Use new method to remove dead ends",
-                    IDC_CHECK_USENEWMEDREMDEADENDS,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,15,47,139,10
+    CONTROL         "Allow minor roads overlapped with major roads",IDC_CHECK_MINCLOSETOMAJ,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,15,165,10
+    CONTROL         "Remove dead ends during tracing",IDC_CHECK_AUTOREMOVEDEADENDS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,31,123,10
+    LTEXT           "Noise to control the randomly generated dead ends",IDC_STATIC,27,76,166,8
+    CONTROL         "Use new method to remove dead ends",IDC_CHECK_USENEWMEDREMDEADENDS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,47,139,10
 END
 
 IDD_DIALOG_NOISECTRLPANEL DIALOGEX 0, 0, 232, 95
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Noise control panel"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
@@ -500,17 +380,14 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,112,74,50,14,NOT WS_VISIBLE
     LTEXT           "Frequency",IDC_STATIC,13,15,35,8
     LTEXT           "Amplitude",IDC_STATIC,15,34,32,8
-    CONTROL         "",IDC_SLIDER_NOISEFREQ,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,57,14,87,13
-    CONTROL         "",IDC_SLIDER_NOISEAMP,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,57,34,87,13
+    CONTROL         "",IDC_SLIDER_NOISEFREQ,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,57,14,87,13
+    CONTROL         "",IDC_SLIDER_NOISEAMP,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,57,34,87,13
     EDITTEXT        IDC_EDIT_NOISEFREQ,149,15,40,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_EDIT_NOISEAMP,150,33,40,12,ES_AUTOHSCROLL
 END
 
 IDD_DIALOG_SAVEPROJSETTING DIALOGEX 0, 0, 221, 358
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Save project setting"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
@@ -520,37 +397,25 @@ BEGIN
     GROUPBOX        "Brush strokes",IDC_STATIC,17,123,150,45
     GROUPBOX        "Major road network",IDC_STATIC,18,175,150,52
     GROUPBOX        "Others",IDC_STATIC,17,278,151,40
-    CONTROL         "Not save",IDC_RADIO_SAVEDESIGNELEMNONE,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,33,27,45,10
-    CONTROL         "Save as elements",IDC_RADIO_SAVEASELEMS,"Button",
-                    BS_AUTORADIOBUTTON,33,39,72,10
+    CONTROL         "Not save",IDC_RADIO_SAVEDESIGNELEMNONE,"Button",BS_AUTORADIOBUTTON | WS_GROUP,33,27,45,10
+    CONTROL         "Save as elements",IDC_RADIO_SAVEASELEMS,"Button",BS_AUTORADIOBUTTON,33,39,72,10
     CONTROL         "Save as per vertex field",IDC_RADIO_SAVEASPERVERFIELD,
                     "Button",BS_AUTORADIOBUTTON,33,52,93,10
-    CONTROL         "Not save",IDC_RADIO_NOTSAVESKETCHES,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,33,86,45,10
-    CONTROL         "Save",IDC_RADIO_SAVESKETCHES,"Button",
-                    BS_AUTORADIOBUTTON,33,98,32,10
-    CONTROL         "Not save",IDC_RADIO_NOTSAVEBRUSHES,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,33,134,45,10
-    CONTROL         "Save",IDC_RADIO_SAVEBRUSHES,"Button",BS_AUTORADIOBUTTON,
-                    33,147,32,10
-    CONTROL         "Not save",IDC_RADIO_NOTSAVEMAJROADS,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,34,187,45,10
+    CONTROL         "Not save",IDC_RADIO_NOTSAVESKETCHES,"Button",BS_AUTORADIOBUTTON | WS_GROUP,33,86,45,10
+    CONTROL         "Save",IDC_RADIO_SAVESKETCHES,"Button",BS_AUTORADIOBUTTON,33,98,32,10
+    CONTROL         "Not save",IDC_RADIO_NOTSAVEBRUSHES,"Button",BS_AUTORADIOBUTTON | WS_GROUP,33,134,45,10
+    CONTROL         "Save",IDC_RADIO_SAVEBRUSHES,"Button",BS_AUTORADIOBUTTON,33,147,32,10
+    CONTROL         "Not save",IDC_RADIO_NOTSAVEMAJROADS,"Button",BS_AUTORADIOBUTTON | WS_GROUP,34,187,45,10
     CONTROL         "Save as tensor lines",IDC_RADIO_SAVEMAJROADSASTENLINES,
                     "Button",BS_AUTORADIOBUTTON,34,198,80,10
-    CONTROL         "Save as street network (graph)",
-                    IDC_RADIO_SAVEMAJROADSASGRAPH,"Button",
-                    BS_AUTORADIOBUTTON | WS_DISABLED,34,211,117,10
-    CONTROL         "Not save",IDC_RADIO_NOTSAVEOTHERSETTING,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,34,290,45,10
-    CONTROL         "Save",IDC_RADIO_SAVEOTHERSETTING,"Button",
-                    BS_AUTORADIOBUTTON,33,302,32,10
+    CONTROL         "Save as street network (graph)",IDC_RADIO_SAVEMAJROADSASGRAPH,
+                    "Button",BS_AUTORADIOBUTTON | WS_DISABLED,34,211,117,10
+    CONTROL         "Not save",IDC_RADIO_NOTSAVEOTHERSETTING,"Button",BS_AUTORADIOBUTTON | WS_GROUP,34,290,45,10
+    CONTROL         "Save",IDC_RADIO_SAVEOTHERSETTING,"Button",BS_AUTORADIOBUTTON,33,302,32,10
     PUSHBUTTON      "Save",IDC_BUTTON_SAVEPROJECT,100,337,55,14
     GROUPBOX        "Street network",IDC_STATIC,16,233,152,38
-    CONTROL         "Not save",IDC_RADIO_NOTSAVESTREETNETWORK,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,33,244,45,10
-    CONTROL         "Save street network",IDC_RADIO_SAVESTREETNETWORK,"Button",
-                    BS_AUTORADIOBUTTON,33,257,81,10
+    CONTROL         "Not save",IDC_RADIO_NOTSAVESTREETNETWORK,"Button",BS_AUTORADIOBUTTON | WS_GROUP,33,244,45,10
+    CONTROL         "Save street network",IDC_RADIO_SAVESTREETNETWORK,"Button",BS_AUTORADIOBUTTON,33,257,81,10
 END
 
 
@@ -599,7 +464,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -612,9 +477,9 @@ BEGIN
     IDD_IBFV2D_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 784
+        RIGHTMARGIN, 474
         TOPMARGIN, 7
-        BOTTOMMARGIN, 511
+        BOTTOMMARGIN, 465
     END
 
     IDD_DIALOG1, DIALOG
@@ -697,7 +562,7 @@ END
 // Menu
 //
 
-IDR_DIALOG_MENU MENU 
+IDR_DIALOG_MENU MENU
 BEGIN
     POPUP "File"
     BEGIN
@@ -725,12 +590,12 @@ END
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_ABOUTBOX            "&About IBFV2D..."
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

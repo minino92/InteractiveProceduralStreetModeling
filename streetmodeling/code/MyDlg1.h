@@ -86,4 +86,5 @@ public:
 	afx_msg void OnBnClickedCheckShowsegmentgraph();
 	afx_msg void OnBnClickedButtonSavedesignelems();
 	afx_msg void OnBnClickedButtonLoaddesignelems();
+	CButton Trace;
 };

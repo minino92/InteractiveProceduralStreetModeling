@@ -40,23 +40,26 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel1.Controls.Add(this.gbParameters, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.pictureZone, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.gbParameters, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(875, 409);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1465, 1045);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // gbParameters
             // 
             this.gbParameters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbParameters.Location = new System.Drawing.Point(615, 3);
+            this.gbParameters.Location = new System.Drawing.Point(1161, 4);
+            this.gbParameters.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gbParameters.Name = "gbParameters";
-            this.gbParameters.Size = new System.Drawing.Size(257, 383);
+            this.gbParameters.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbParameters.Size = new System.Drawing.Size(300, 471);
             this.gbParameters.TabIndex = 0;
             this.gbParameters.TabStop = false;
             this.gbParameters.Text = "User Parameters";
@@ -65,19 +68,21 @@
             // 
             this.pictureZone.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureZone.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureZone.Location = new System.Drawing.Point(3, 3);
+            this.pictureZone.Location = new System.Drawing.Point(4, 4);
+            this.pictureZone.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureZone.Name = "pictureZone";
-            this.pictureZone.Size = new System.Drawing.Size(606, 383);
+            this.pictureZone.Size = new System.Drawing.Size(1017, 1012);
             this.pictureZone.TabIndex = 1;
             this.pictureZone.TabStop = false;
             // 
             // IPSM
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(875, 409);
+            this.ClientSize = new System.Drawing.Size(1465, 1045);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "IPSM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "IPSM";

@@ -86,4 +86,11 @@ public:
 
 	SaveProjSettingDlg *saveprojsetDlg;
 	int saveprojsetDlgID;
+	afx_msg void OnTcnSelchangeMytab(NMHDR *pNMHDR, LRESULT *pResult);
+	CButton trace;
+	afx_msg void OnBnClickedCancel();
+	afx_msg void OnBnClickedButtonPlacetensorlines();
+	afx_msg void OnBnClickedCheckTensordesignon();
+	afx_msg void OnBnClickedRadioAddaregular();
+	afx_msg void OnBnClickedRadioAddacenter();
 };

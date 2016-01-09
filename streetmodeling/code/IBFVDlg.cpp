@@ -77,7 +77,7 @@ void init_sharedvars()
 	sharedvars.ShowSketchesOn=false;
 	sharedvars.CloseLoopOn=true;
 	sharedvars.ShowPopDensityMapOn=false;
-	sharedvars.ShowIBFVOn=false;
+	sharedvars.ShowIBFVOn=true;
 	sharedvars.EditStreetNetOn=false;
 	sharedvars.ShowIntersectsOn=true;
 	sharedvars.ShowStreetUseNetworkOn=false;
@@ -642,6 +642,7 @@ void CIBFVDlg::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_MYTAB, m_tbCtrl);
 	DDX_Control(pDX, IDC_OPENGLWIN, m_ctrlOpenGlWin);
+	DDX_Control(pDX, IDCANCEL, trace);
 }
 
 BEGIN_MESSAGE_MAP(CIBFVDlg, CDialog)
@@ -663,6 +664,12 @@ BEGIN_MESSAGE_MAP(CIBFVDlg, CDialog)
 	ON_COMMAND(ID_FILE_EXIT, OnFileExit)
 	ON_BN_CLICKED(IDC_BUTTON_SAVEPROJECT, OnBnClickedButtonSaveproject)
 	ON_BN_CLICKED(IDC_BUTTON_LOADPROJECT, OnBnClickedButtonLoadproject)
+	ON_NOTIFY(TCN_SELCHANGE, IDC_MYTAB, &CIBFVDlg::OnTcnSelchangeMytab)
+	ON_BN_CLICKED(IDCANCEL, &CIBFVDlg::OnBnClickedCancel)
+	ON_BN_CLICKED(IDC_BUTTON_PLACETENSORLINES, &CIBFVDlg::OnBnClickedButtonPlacetensorlines)
+	ON_BN_CLICKED(IDC_CHECK_TENSORDESIGNON, &CIBFVDlg::OnBnClickedCheckTensordesignon)
+	ON_BN_CLICKED(IDC_RADIO_ADDAREGULAR, &CIBFVDlg::OnBnClickedRadioAddaregular)
+	ON_BN_CLICKED(IDC_RADIO_ADDACENTER, &CIBFVDlg::OnBnClickedRadioAddacenter)
 END_MESSAGE_MAP()
 
 
@@ -2086,4 +2093,47 @@ void CIBFVDlg::OnBnClickedButtonLoadproject()
 
 		locate_degpts_cells_tranvec_quad();
 	}
+}
+
+
+void CIBFVDlg::OnTcnSelchangeMytab(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: Add your control notification handler code here
+	*pResult = 0;
+}
+
+
+void CIBFVDlg::OnBnClickedCancel()
+{
+	// TODO: Add your control notification handler code here
+	CDialog::OnCancel();
+	//StreetNetPanel::OnBnClickedButtonPlacetensorlines();
+}
+
+
+void CIBFVDlg::OnBnClickedButtonPlacetensorlines()
+{
+	// TODO: Add your control notification handler code here
+	g_streetnetpanel->OnBnClickedButtonPlacetensorlines();
+}
+
+
+void CIBFVDlg::OnBnClickedCheckTensordesignon()
+{
+	// TODO: Add your control notification handler code here
+	g_mydlg1->OnBnClickedCheckTensordesignon();
+}
+
+
+void CIBFVDlg::OnBnClickedRadioAddaregular()
+{
+	// TODO: Add your control notification handler code here
+	g_mydlg1->OnBnClickedRadioAddaregular();
+}
+
+
+void CIBFVDlg::OnBnClickedRadioAddacenter()
+{
+	// TODO: Add your control notification handler code here
+	g_mydlg1->OnBnClickedRadioAddacenter();
 }

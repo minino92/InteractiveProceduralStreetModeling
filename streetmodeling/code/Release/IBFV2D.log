@@ -1,0 +1,12 @@
+﻿Build started 04/01/2016 3:27:32.
+     1>Project "C:\Users\LaptopMSI\OneDrive\els meus documents\Aria\_Master\Modélisation et Animation\git\InteractiveProceduralStreetModeling\streetmodeling\code\IBFV2D.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D _WINDOWS /D NDEBUG /D _VC80_UPGRADE=0x0710 /D _MBCS /D _AFXDLL /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Release\IBFV2D.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\atlmfc\include\afxwin2.inl(362): error C2039: 'NotifyWinEvent' : is not a member of '`global namespace''
+     1>C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\atlmfc\include\afxwin2.inl(362): error C2660: 'CWnd::NotifyWinEvent' : function does not take 4 arguments
+     1>Done Building Project "C:\Users\LaptopMSI\OneDrive\els meus documents\Aria\_Master\Modélisation et Animation\git\InteractiveProceduralStreetModeling\streetmodeling\code\IBFV2D.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:01.73
