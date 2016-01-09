@@ -28,78 +28,74 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.gbParameters = new System.Windows.Forms.GroupBox();
             this.pictureZone = new System.Windows.Forms.PictureBox();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.log = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureZone)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel1.Controls.Add(this.pictureZone, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.gbParameters, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1465, 1045);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // gbParameters
-            // 
-            this.gbParameters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbParameters.Location = new System.Drawing.Point(1161, 4);
-            this.gbParameters.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.gbParameters.Name = "gbParameters";
-            this.gbParameters.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.gbParameters.Size = new System.Drawing.Size(300, 471);
-            this.gbParameters.TabIndex = 0;
-            this.gbParameters.TabStop = false;
-            this.gbParameters.Text = "User Parameters";
             // 
             // pictureZone
             // 
-            this.pictureZone.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureZone.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureZone.Location = new System.Drawing.Point(4, 4);
-            this.pictureZone.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureZone.Location = new System.Drawing.Point(13, 13);
+            this.pictureZone.Margin = new System.Windows.Forms.Padding(4);
             this.pictureZone.Name = "pictureZone";
-            this.pictureZone.Size = new System.Drawing.Size(1017, 1012);
+            this.pictureZone.Size = new System.Drawing.Size(69, 58);
+            this.pictureZone.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureZone.TabIndex = 1;
             this.pictureZone.TabStop = false;
+            this.pictureZone.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MouseClick);
+            // 
+            // log
+            // 
+            this.log.AutoSize = true;
+            this.log.Location = new System.Drawing.Point(87, 36);
+            this.log.Name = "log";
+            this.log.Size = new System.Drawing.Size(46, 17);
+            this.log.TabIndex = 2;
+            this.log.Text = "label1";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.log);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.groupBox1.Location = new System.Drawing.Point(1664, 0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(250, 1045);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
             // 
             // IPSM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1465, 1045);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ClientSize = new System.Drawing.Size(1914, 1045);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.pictureZone);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "IPSM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "IPSM";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.IPSM_FormClosing);
             this.Load += new System.EventHandler(this.IPSM_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.IPSM_Paint);
-            this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureZone)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.GroupBox gbParameters;
         private System.Windows.Forms.PictureBox pictureZone;
+        private System.Windows.Forms.Label log;
+        private System.Windows.Forms.GroupBox groupBox1;
+
+
     }
 }
 

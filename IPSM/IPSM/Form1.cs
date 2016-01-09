@@ -19,11 +19,15 @@ namespace IPSM
     {
         Thread th = null;
         Noise noise;
+        List<FieldTensor> listPositionFieldTensor;
+        private bool dragTensorField = false;
         public IPSM()
         {
             InitializeComponent();
+            listPositionFieldTensor = new List<FieldTensor>();
             noise = new Noise();
-
+            pictureZone.Size = new System.Drawing.Size(Noise.size, Noise.size);
+            Size = new System.Drawing.Size(Noise.size + 300, Noise.size+100);
         }
 
         private void IPSM_Load(object sender, EventArgs e)
@@ -33,8 +37,8 @@ namespace IPSM
 
         private void IPSM_Paint(object sender, PaintEventArgs e)
         {
-            pictureZone.Width = Noise.size;
-            pictureZone.Height = Noise.size;
+pictureZone.Size = new System.Drawing.Size(1000, 1000);
+         
             th = new Thread(() =>
             {
                 var g = pictureZone.CreateGraphics();
@@ -45,14 +49,24 @@ namespace IPSM
                         for (int i = 0; i < Noise.size; i++ )
                         {
                             for (int j = 0; j < Noise.size; j++ )
-                            {
-                                
+                            {                                
                                 bmp.SetPixel(i, j, Color.FromArgb(noise.noiseTable[i,j],noise.noiseTable[i,j],noise.noiseTable[i,j]));  
                             }
                         }
                         g.DrawImage(bmp, new PointF(0, 0));
+
+                        foreach (FieldTensor fieldTensor in listPositionFieldTensor)
+                        {
+                            g.DrawRectangle(new Pen(Color.Red, 5), new Rectangle(fieldTensor.position, new System.Drawing.Size(7, 7)));
+                            if (fieldTensor.finalPosition != new System.Drawing.Point())
+                            {
+                                g.DrawLine(new Pen(Color.LightGreen, 3), fieldTensor.position, fieldTensor.finalPosition);
+                            }
+                        }
+                        
                     }
                 }
+
             });
             th.Start();             
         }
@@ -63,6 +77,28 @@ namespace IPSM
             {
                 th.Abort();
                 th = null;
+            }
+        }
+
+        private void MouseClick(object sender, MouseEventArgs e)
+        {
+            if (dragTensorField)
+            {
+                dragTensorField = false;
+                listPositionFieldTensor[listPositionFieldTensor.Count-1].finalPosition = e.Location;
+                Invalidate();
+            }
+            else
+            {
+                if (e.Location.X < Noise.size && e.Location.Y < Noise.size)
+                {
+                    FieldTensor field = new FieldTensor();
+                    field.position = e.Location;
+                    listPositionFieldTensor.Add(field);
+                    //log.Text = e.Location.ToString();
+                    dragTensorField = true;
+                    Invalidate();
+                }
             }
         }        
     }
