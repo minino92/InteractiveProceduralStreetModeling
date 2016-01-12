@@ -10,7 +10,7 @@ namespace IPSM
     {
 
         public int[,] noiseTable;
-        public static int size = 700;
+        public static int size = 400;
 
         public Noise()
         {

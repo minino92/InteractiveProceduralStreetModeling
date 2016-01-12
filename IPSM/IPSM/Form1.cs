@@ -37,34 +37,37 @@ namespace IPSM
 
         private void IPSM_Paint(object sender, PaintEventArgs e)
         {
-pictureZone.Size = new System.Drawing.Size(1000, 1000);
+            pictureZone.Size = new System.Drawing.Size(1000, 1000);
          
             th = new Thread(() =>
             {
                 var g = pictureZone.CreateGraphics();
                 using (var bmp = new Bitmap(Noise.size, Noise.size, g)) 
-                {                    
-                    using (var redPen = new Pen(Color.Red)) 
-                    {
-                        for (int i = 0; i < Noise.size; i++ )
-                        {
-                            for (int j = 0; j < Noise.size; j++ )
-                            {                                
-                                bmp.SetPixel(i, j, Color.FromArgb(noise.noiseTable[i,j],noise.noiseTable[i,j],noise.noiseTable[i,j]));  
-                            }
-                        }
-                        g.DrawImage(bmp, new PointF(0, 0));
+                {
+                    TensorField tf = new TensorField(Noise.size);
+                    tf.generateGridTensorField(bmp,g);
+                    g.DrawImage(bmp, new PointF(0, 0));
+                    //using (var redPen = new Pen(Color.Red)) 
+                    //{
+                    //    for (int i = 0; i < Noise.size; i++ )
+                    //    {
+                    //        for (int j = 0; j < Noise.size; j++ )
+                    //        {                                
+                    //            bmp.SetPixel(i, j, Color.FromArgb(noise.noiseTable[i,j],noise.noiseTable[i,j],noise.noiseTable[i,j]));  
+                    //        }
+                    //    }
+                    //    g.DrawImage(bmp, new PointF(0, 0));
 
-                        foreach (FieldTensor fieldTensor in listPositionFieldTensor)
-                        {
-                            g.DrawRectangle(new Pen(Color.Red, 5), new Rectangle(fieldTensor.position, new System.Drawing.Size(7, 7)));
-                            if (fieldTensor.finalPosition != new System.Drawing.Point())
-                            {
-                                g.DrawLine(new Pen(Color.LightGreen, 3), fieldTensor.position, fieldTensor.finalPosition);
-                            }
-                        }
+                    //    foreach (FieldTensor fieldTensor in listPositionFieldTensor)
+                    //    {
+                    //        g.DrawRectangle(new Pen(Color.Red, 5), new Rectangle(fieldTensor.position, new System.Drawing.Size(7, 7)));
+                    //        if (fieldTensor.finalPosition != new System.Drawing.Point())
+                    //        {
+                    //            g.DrawLine(new Pen(Color.LightGreen, 3), fieldTensor.position, fieldTensor.finalPosition);
+                    //        }
+                    //    }
                         
-                    }
+                    //}
                 }
 
             });
