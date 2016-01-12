@@ -44,58 +44,50 @@ namespace IPSM
     }
     class TensorField
     {
-        private Tensor[,] mData;
-        private EigenVector[,] mEigenVectors;
-        private EigenValue[,] mEigenValues;
-        private bool mFieldIsFilled;
-        private bool mEigenIsComputed;
+        private Tensor[,] matrixTensors;
+        private EigenVector[,] matrixEigenVectors;
+        private EigenValue[,] matrixEigenValues;
+        private bool matrixFieldIsFilled;
+        private bool matrixEigenIsComputed;
+        private int numberOfTensorsToDisplay;
+
+        public int NumberOfTensorsToDisplay
+        {
+            get { return numberOfTensorsToDisplay; }
+            set { numberOfTensorsToDisplay = value; }
+        }
 
         public TensorField(int size)
         {
-            mData = new Tensor[Noise.size, Noise.size];
-            mFieldIsFilled = false;
-            mEigenIsComputed = false;
-            mEigenVectors = null;
-            mEigenValues = null;
+            matrixTensors = new Tensor[Noise.size, Noise.size];
+            matrixFieldIsFilled = false;
+            matrixEigenIsComputed = false;
+            matrixEigenVectors = null;
+            matrixEigenValues = null;
         }
-        /// <summary>
-        /// get tensor at position (i,j)
-        /// </summary>
-        /// <param name="i">ligne</param>
-        /// <param name="j">colonne</param>
-        /// <returns></returns>
-        public Tensor getTensor(int i, int j)
+
+        //get tensor of the row and column entered
+        public Tensor getTensor(int row, int column)
         {
-            return mData[i, j];
+            return matrixTensors[row, column];
         }
-        /// <summary>
-        /// set tensor at position (i,j) to tensor
-        /// </summary>
-        /// <param name="i"></param>
-        /// <param name="j"></param>
-        /// <param name="tensor"></param>
-        public void setTensor(int i, int j,Tensor tensor)
+
+        //add tensor in the row and column entered
+        public void setTensor(int row, int column,Tensor tensor)
         {
-            mData[i, j] = tensor;
+            matrixTensors[row, column] = tensor;
         }
-        /// <summary>
-        /// Génération du tensorfield
-        /// </summary>
-        /// <param name="theta"></param>
-        /// <param name="l"></param>
+
+        //basic function to create, compute and get a bitmap
         public void generateGridTensorField(Bitmap bmp,Graphics g,float theta)
         {            
-            fillGridBasisField(theta, 1);
+            fillMatrixBasisField(theta, 1);
             computeTensorsEigenDecomposition();
             exportEigenVectorsImage(bmp,g);
         }
-        /// <summary>
-        /// La formule est R*(X Y Z W)
-        /// on ajoute un tenseur à chaque pixel
-        /// </summary>
-        /// <param name="theta"></param>
-        /// <param name="l"></param>
-        public void fillGridBasisField(float theta,int l)
+
+        //fill the matrix with the theta and value L entered
+        public void fillMatrixBasisField(float theta,int valueL)
         {
             for (int i = 0; i < Noise.size; i++)
             {
@@ -106,115 +98,98 @@ namespace IPSM
                     t.Y = Math.Sin(2 * theta);
                     t.Z = Math.Sin(2 * theta);
                     t.W = -Math.Cos(2 * theta);
-                    t *= l;
+                    t *= valueL;
                     t.theta = theta;
-                    mData[i, j] = t;
+                    matrixTensors[i, j] = t;
                 }
             }
-            mFieldIsFilled = true;
+            matrixFieldIsFilled = true;
         }
-        public void exportEigenVectorsImage(Bitmap bmp,Graphics g)
-        {
-            if (bmp == null) throw new NullReferenceException("Bitmap null dans exportEigenVectorsImage");
-            if (!mFieldIsFilled)
-            {
-                throw new NotImplementedException("Tenseur field n'est pas encore prêt");
-            }
-            PointF origine = new PointF(0.5f, 0.5f);
-            int numberOfTensorsToDisplay = 16;
-            //longueur des vecteurs
-            int scaleI =(Noise.size/numberOfTensorsToDisplay)*3;
-            int scaleJ = (Noise.size/numberOfTensorsToDisplay)*3;
-            //we increment i and j according to the scaleI and scaleJ so that we can visualize 
-            //one tensor each (i+scaleI,j+scaleJ) position
-            for(int i=0; i<Noise.size ; i=i+scaleI)
-            {
-                for(int j=0; j<Noise.size; j=j+scaleJ)
-                {
-                    PointF temp=new PointF(j*0.5f, i*0.5f);
-                        PointF b =new PointF(origine.X+temp.X,origine.Y+temp.Y);
-                        
-                        EigenVector eigenMajorVector = mEigenVectors[i,j];
-                        eigenMajorVector.X = eigenMajorVector.X * 0.5 / 2.0f * scaleI * 0.8;
-                        eigenMajorVector.Y = eigenMajorVector.Y * 0.5 / 2.0f * scaleJ * 0.8;                    
-                        PointF tip =new PointF(b.X+(float)eigenMajorVector.X,b.Y+(float)eigenMajorVector.Y);
-                        temp.X=b.X;
-                        temp.Y=b.Y;
-                        b =new PointF(temp.X-(float) eigenMajorVector.X,temp.Y-(float)eigenMajorVector.Y);
-                        g.DrawLine(new Pen(Color.Red),b,tip);
-                        //roundVector2D(base);
-                        //roundVector2D(tip);
-                        //// Flip the y axis because the painter system has its origin
-                        //// on the top left corner and the y axis points down
-                        //painter.drawLine(base.x(),imageSize - base.y(),tip.x(),imageSize - tip.y());
-                        PointF temp_ = new PointF(j * 0.5f, i * 0.5f);
-                        PointF b_ = new PointF(origine.X + temp_.X, origine.Y + temp_.Y);
 
-                        EigenVector eigenMinorVector = mEigenVectors[i, j];
-                        eigenMajorVector.X = eigenMinorVector.Z * 0.5 / 2.0f * scaleI * 0.8;
-                        eigenMajorVector.Y = eigenMinorVector.W * 0.5 / 2.0f * scaleJ * 0.8;
-                        PointF tip_ = new PointF(b_.X + (float)eigenMinorVector.Z, b_.Y + (float)eigenMinorVector.W);
-                        temp_.X = b_.X;
-                        temp_.Y = b_.Y;
-                        b_ = new PointF(temp.X - (float)eigenMajorVector.X, temp.Y - (float)eigenMajorVector.Y);
-                        g.DrawLine(new Pen(Color.Black), b_, tip_);
-                    //roundVector2D(base);
-                    //roundVector2D(tip);
-                    //// Flip the y axis because the painter system has its origin
-                    //// on the top left corner and the y axis points down
-                    //painter.drawLine(base.x(),imageSize - base.y(),tip.x(),imageSize - tip.y());
-                    //if(drawVector2)
-                    //{
-                    //    painter.setPen(pen2);
-                    //    QVector2D base = origin + QVector2D(j*dv, i*du);
-                    //    QVector2D eigenVector = getTensorMinorEigenVector(mData[i][j]);
-                    //    eigenVector.setX(eigenVector.x()*du/2.0f*scaleI*0.8);
-                    //    eigenVector.setY(eigenVector.y()*dv/2.0f*scaleJ*0.8);
-                    //    QVector2D tip = base + eigenVector;
-                    //    base -= eigenVector;
-                    //    roundVector2D(base);
-                    //    roundVector2D(tip);
-                    //    // Flip the y axis because the painter system has its origin
-                    //    // on the top left corner and the y axis points down
-                    //    painter.drawLine(base.x(),imageSize - base.y(),tip.x(),imageSize - tip.y());
-                    //}
-                }
-            }
-
-            //à traiter            
-        }
+        //function that calculates the eigenVector and eigenValue of each point in the matrix and returns the number of degenerate points of the matrix
         public int computeTensorsEigenDecomposition()
         {
-            if (!mFieldIsFilled)
+            if (!matrixFieldIsFilled)
             {
                 throw new NotImplementedException("Erreur dans le calcul des points degénérés");
             }
-            //initialisation
-            if (mEigenVectors == null || mEigenValues == null)
+            if (matrixEigenVectors == null || matrixEigenValues == null)
             {
-                mEigenVectors = new EigenVector[Noise.size, Noise.size];
-                mEigenValues = new EigenValue[Noise.size, Noise.size];
+                matrixEigenVectors = new EigenVector[Noise.size, Noise.size];
+                matrixEigenValues = new EigenValue[Noise.size, Noise.size];
             }
             int numberOfDegeneratePoints = 0;
             for (int i = 0; i < Noise.size; i++)
             {
                 for (int j = 0; j < Noise.size; j++)
                 {
-                    EigenVector v = new EigenVector { X = Math.Cos(mData[i, j].theta), Y = Math.Sin(mData[i, j].theta), Z = Math.Cos(mData[i, j].theta + Math.PI / 2), W = Math.Sin(mData[i, j].theta + Math.PI / 2) };
-                    mEigenVectors[i, j] = v;
-                    mEigenValues[i, j] = new EigenValue { X = 1, Y = -1 };
-                    if (isDegenerate(mEigenVectors[i,j]))
+                    EigenVector v = new EigenVector { X = Math.Cos(matrixTensors[i, j].theta), Y = Math.Sin(matrixTensors[i, j].theta), Z = Math.Cos(matrixTensors[i, j].theta + Math.PI / 2), W = Math.Sin(matrixTensors[i, j].theta + Math.PI / 2) };
+                    matrixEigenVectors[i, j] = v;
+                    matrixEigenValues[i, j] = new EigenValue { X = 1, Y = -1 };
+                    if (isDegenerate(matrixEigenVectors[i, j]))
                     {
                         numberOfDegeneratePoints++;
                     }
                 }
             }
-            mEigenIsComputed = true;
+            matrixEigenIsComputed = true;
             return numberOfDegeneratePoints;
-        }       
+        }   
+
+        //return back a bitmap with the final tensor field
+        public void exportEigenVectorsImage(Bitmap bmp,Graphics g)
+        {
+            if (g == null)
+            {
+                throw new NotImplementedException("graphics are not initialed");
+            }
+            if (bmp == null)
+            {
+                bmp = new Bitmap(Noise.size, Noise.size, g);
+            }
+            if (!matrixFieldIsFilled)
+            {
+                throw new NotImplementedException("Matrix is not filled");
+            }
+
+            PointF origin = new PointF(0.5f, 0.5f);
+            int scaleI = Convert.ToInt32(Noise.size / numberOfTensorsToDisplay);//size between tensors to display
+            int scaleJ = scaleI;
+            for(int i=5; i<Noise.size ; i=i+scaleI)
+            {                
+                for(int j=5; j<Noise.size; j=j+scaleJ)
+                {
+                    //Eigen Major Vector
+                    PointF temp=new PointF(j, i);
+                    PointF initPosLineMajor =new PointF(origin.X+temp.X,origin.Y+temp.Y);                        
+                    EigenVector eigenMajorVector = matrixEigenVectors[i,j];
+                    eigenMajorVector.X = eigenMajorVector.X * 0.5 / 2.0f * scaleI * 0.8;
+                    eigenMajorVector.Y = eigenMajorVector.Y * 0.5 / 2.0f * scaleJ * 0.8;                    
+                    PointF finalPosLineMajor =new PointF(initPosLineMajor.X+(float)eigenMajorVector.X,initPosLineMajor.Y+(float)eigenMajorVector.Y);
+                    temp.X=initPosLineMajor.X;
+                    temp.Y=initPosLineMajor.Y;
+                    initPosLineMajor =new PointF(temp.X-(float) eigenMajorVector.X,temp.Y-(float)eigenMajorVector.Y);
+                    g.DrawLine(new Pen(Color.Red),initPosLineMajor,finalPosLineMajor);
+
+                    temp = new PointF(j , i);
+                    PointF initPosLineMinor = new PointF(origin.X + temp.X, origin.Y + temp.Y);
+                    //Eigen Minor Vector
+                    EigenVector eigenMinorVector = matrixEigenVectors[i, j];
+                    eigenMajorVector.X = eigenMinorVector.Z * 0.5 / 2.0f * scaleI * 0.8;
+                    eigenMajorVector.Y = eigenMinorVector.W * 0.5 / 2.0f * scaleJ * 0.8;
+                    PointF finalPosLineMinor = new PointF(initPosLineMinor.X + (float)eigenMinorVector.Z, initPosLineMinor.Y + (float)eigenMinorVector.W);
+                    temp.X = initPosLineMinor.X;
+                    temp.Y = initPosLineMinor.Y;
+                    initPosLineMinor = new PointF(temp.X - (float)eigenMajorVector.X, temp.Y - (float)eigenMajorVector.Y);
+                    g.DrawLine(new Pen(Color.Black), initPosLineMinor, finalPosLineMinor);
+                }
+            }         
+        }    
+
+        //function that says if a eigenVector is defenerate or not
         public static bool isDegenerate(EigenVector ev)
         {
-            double epsilon=1e-5;
+            const double epsilon=1e-5;
             return ev.X < epsilon && ev.Y < epsilon && ev.Z < epsilon && ev.W < epsilon;
         }
     }

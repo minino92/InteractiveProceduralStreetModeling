@@ -21,13 +21,15 @@ namespace IPSM
         Noise noise;
         List<FieldTensor> listPositionFieldTensor;
         private bool dragTensorField = false;
+
         public IPSM()
         {
             InitializeComponent();
             listPositionFieldTensor = new List<FieldTensor>();
             noise = new Noise();
             pictureZone.Size = new System.Drawing.Size(Noise.size, Noise.size);
-            Size = new System.Drawing.Size(Noise.size + 300, Noise.size+100);
+            Size = new System.Drawing.Size(Noise.size + 250, Noise.size+50);
+            numberTensorFields.Value = 16;
         }
 
         private void IPSM_Load(object sender, EventArgs e)
@@ -37,14 +39,16 @@ namespace IPSM
 
         private void IPSM_Paint(object sender, PaintEventArgs e)
         {
-            pictureZone.Size = new System.Drawing.Size(1000, 1000);
+            //pictureZone.Size = new System.Drawing.Size(1000, 1000);
          
             th = new Thread(() =>
             {
                 var g = pictureZone.CreateGraphics();
+                g.Clear(Color.White);
                 using (var bmp = new Bitmap(Noise.size, Noise.size, g)) 
                 {
                     TensorField tf = new TensorField(Noise.size);
+                    tf.NumberOfTensorsToDisplay = (int) numberTensorFields.Value;
                     tf.generateGridTensorField(bmp,g,(float)Math.PI*8/6);
                     g.DrawImage(bmp, new PointF(0, 0));
                     //using (var redPen = new Pen(Color.Red)) 
@@ -103,6 +107,11 @@ namespace IPSM
                     Invalidate();
                 }
             }
+        }
+
+        private void ChangeNumberTensorFieldToDisplay(object sender, EventArgs e)
+        {
+            Invalidate();
         }        
     }
 }
