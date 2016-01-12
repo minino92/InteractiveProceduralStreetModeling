@@ -105,6 +105,75 @@ namespace IPSM
             }
             matrixFieldIsFilled = true;
         }
+<<<<<<< HEAD
+        public void exportEigenVectorsImage(Bitmap bmp,Graphics g)
+        {
+            if (bmp == null) throw new NullReferenceException("Bitmap null dans exportEigenVectorsImage");
+            if (!mFieldIsFilled)
+            {
+                throw new NotImplementedException("Tenseur field n'est pas encore prêt");
+            }
+            PointF origine = new PointF(0.5f, 0.5f);
+            int numberOfTensorsToDisplay = 16;
+            //longueur des vecteurs
+            int scaleI =(Noise.size/numberOfTensorsToDisplay)*3;
+            int scaleJ = (Noise.size/numberOfTensorsToDisplay)*3;
+            //we increment i and j according to the scaleI and scaleJ so that we can visualize 
+            //one tensor each (i+scaleI,j+scaleJ) position
+            for(int i=0; i<Noise.size ; i=i+scaleI)
+            {
+                for(int j=0; j<Noise.size; j=j+scaleJ)
+                {
+                    PointF temp=new PointF(j*0.5f, i*0.5f);
+                        PointF b =new PointF(origine.X+temp.X,origine.Y+temp.Y);
+                        
+                        EigenVector eigenMajorVector = mEigenVectors[i,j];
+                        eigenMajorVector.X = eigenMajorVector.X * 0.5 / 2.0f * scaleI * 0.8;
+                        eigenMajorVector.Y = eigenMajorVector.Y * 0.5 / 2.0f * scaleJ * 0.8;                    
+                        PointF tip =new PointF(b.X+(float)eigenMajorVector.X,b.Y+(float)eigenMajorVector.Y);
+                        temp.X=b.X;
+                        temp.Y=b.Y;
+                        b =new PointF(temp.X-(float) eigenMajorVector.X,temp.Y-(float)eigenMajorVector.Y);
+                        g.DrawLine(new Pen(Color.Red),b,tip);
+                        //roundVector2D(base);
+                        //roundVector2D(tip);
+                        //// Flip the y axis because the painter system has its origin
+                        //// on the top left corner and the y axis points down
+                        //painter.drawLine(base.x(),imageSize - base.y(),tip.x(),imageSize - tip.y());
+                        PointF temp_ = new PointF(j * 0.5f, i * 0.5f);
+                        PointF b_ = new PointF(origine.X + temp_.X, origine.Y + temp_.Y);
+                        EigenVector eigenMinorVector = mEigenVectors[i, j];
+                        eigenMinorVector.Z = eigenMinorVector.Z * 0.5 / 2.0f * scaleI * 0.8;
+                        eigenMinorVector.W = eigenMinorVector.W * 0.5 / 2.0f * scaleJ * 0.8;
+                        PointF tip_ = new PointF(b_.X + (float)eigenMinorVector.Z, b_.Y + (float)eigenMinorVector.W);
+                        temp_.X = b_.X;
+                        temp_.Y = b_.Y;
+                        b_ = new PointF(temp.X - (float)eigenMinorVector.Z, temp.Y - (float)eigenMinorVector.W);
+                        g.DrawLine(new Pen(Color.Black), b_, tip_);
+                    //roundVector2D(base);
+                    //roundVector2D(tip);
+                    //// Flip the y axis because the painter system has its origin
+                    //// on the top left corner and the y axis points down
+                    //painter.drawLine(base.x(),imageSize - base.y(),tip.x(),imageSize - tip.y());
+                    //if(drawVector2)
+                    //{
+                    //    painter.setPen(pen2);
+                    //    QVector2D base = origin + QVector2D(j*dv, i*du);
+                    //    QVector2D eigenVector = getTensorMinorEigenVector(mData[i][j]);
+                    //    eigenVector.setX(eigenVector.x()*du/2.0f*scaleI*0.8);
+                    //    eigenVector.setY(eigenVector.y()*dv/2.0f*scaleJ*0.8);
+                    //    QVector2D tip = base + eigenVector;
+                    //    base -= eigenVector;
+                    //    roundVector2D(base);
+                    //    roundVector2D(tip);
+                    //    // Flip the y axis because the painter system has its origin
+                    //    // on the top left corner and the y axis points down
+                    //    painter.drawLine(base.x(),imageSize - base.y(),tip.x(),imageSize - tip.y());
+                    //}
+                }
+            }
+=======
+>>>>>>> origin/testVectorField
 
         //function that calculates the eigenVector and eigenValue of each point in the matrix and returns the number of degenerate points of the matrix
         public int computeTensorsEigenDecomposition()

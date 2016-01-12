@@ -109,9 +109,15 @@ namespace IPSM
             }
         }
 
+<<<<<<< HEAD
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+=======
         private void ChangeNumberTensorFieldToDisplay(object sender, EventArgs e)
         {
             Invalidate();
+>>>>>>> origin/testVectorField
         }        
     }
 }
