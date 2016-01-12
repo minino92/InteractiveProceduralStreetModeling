@@ -49,29 +49,10 @@ namespace IPSM
                 {
                     TensorField tf = new TensorField(Noise.size);
                     tf.NumberOfTensorsToDisplay = (int) numberTensorFields.Value;
-                    tf.generateGridTensorField(bmp,g,(float)Math.PI*8/6);
+                    tf.generateGridTensorField(bmp,g,(float)Math.PI/6);
                     g.DrawImage(bmp, new PointF(0, 0));
-                    //using (var redPen = new Pen(Color.Red)) 
-                    //{
-                    //    for (int i = 0; i < Noise.size; i++ )
-                    //    {
-                    //        for (int j = 0; j < Noise.size; j++ )
-                    //        {                                
-                    //            bmp.SetPixel(i, j, Color.FromArgb(noise.noiseTable[i,j],noise.noiseTable[i,j],noise.noiseTable[i,j]));  
-                    //        }
-                    //    }
-                    //    g.DrawImage(bmp, new PointF(0, 0));
-
-                    //    foreach (FieldTensor fieldTensor in listPositionFieldTensor)
-                    //    {
-                    //        g.DrawRectangle(new Pen(Color.Red, 5), new Rectangle(fieldTensor.position, new System.Drawing.Size(7, 7)));
-                    //        if (fieldTensor.finalPosition != new System.Drawing.Point())
-                    //        {
-                    //            g.DrawLine(new Pen(Color.LightGreen, 3), fieldTensor.position, fieldTensor.finalPosition);
-                    //        }
-                    //    }
-                        
-                    //}                    
+                    StreetGraph sg = new StreetGraph(new PointF(0, Noise.size), new PointF(Noise.size, 0), tf, 30f);
+                    sg.computeMajorHyperstreamlines(bmp, g);
                 }
 
             });
@@ -111,7 +92,7 @@ namespace IPSM
 
         private void ChangeNumberTensorFieldToDisplay(object sender, EventArgs e)
         {
-            Invalidate();
+            //Invalidate();
         }        
     }
 }

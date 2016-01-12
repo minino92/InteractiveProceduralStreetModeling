@@ -45,7 +45,7 @@ namespace IPSM
     class TensorField
     {
         private Tensor[,] matrixTensors;
-        private EigenVector[,] matrixEigenVectors;
+        public EigenVector[,] matrixEigenVectors;
         private EigenValue[,] matrixEigenValues;
         private bool matrixFieldIsFilled;
         private bool matrixEigenIsComputed;
@@ -83,7 +83,7 @@ namespace IPSM
         {            
             fillMatrixBasisField(theta, 1);
             computeTensorsEigenDecomposition();
-            exportEigenVectorsImage(bmp,g);
+            //exportEigenVectorsImage(bmp,g);
         }
 
         //fill the matrix with the theta and value L entered

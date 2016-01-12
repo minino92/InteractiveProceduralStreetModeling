@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace IPSM
 {
-    enum RoadType
+    public enum RoadType
     {
         Principal, Secondary
     }
@@ -30,6 +30,7 @@ namespace IPSM
         private TensorField mtf;
         private Dictionary<int, Node> mNodes;
         private Dictionary<int, Road> mRoads;
+        //the number of random points to start drawing hyperstreamlines
         private List<PointF> mSeeds;
         private PointF mBottomLeft;
         private PointF mTopRight;
@@ -39,7 +40,7 @@ namespace IPSM
         private float mDistSeparation;
         private int mSeedInitMethod;
         private Size mRegionSize;
-        
+        public int Scale;
         public StreetGraph(PointF bottomLeft,PointF topRight,TensorField tf,float distSeparation)
         {
             mtf = tf;
@@ -51,10 +52,11 @@ namespace IPSM
             mSeedInitMethod = 0;
             mRegionSize = new Size(Noise.size,Noise.size);
             mSeeds = new List<PointF>();
+            Scale = Convert.ToInt32(Noise.size / mtf.NumberOfTensorsToDisplay);
         }
         public void createRandomSeedList(int numberOfSeeds, bool append)
         {
-            if (!append)
+            if (mSeeds!=null)
             {
                 mSeeds.Clear();
             }
@@ -73,15 +75,29 @@ namespace IPSM
         {
             return false;
         }
-        public void computeMajorHyperstreamlines(bool clearStorage)
+        public void computeMajorHyperstreamlines(Bitmap bmp,Graphics g)
         {
-
+            createRandomSeedList(10,false);
+            //int scaleI = Convert.ToInt32(Noise.size / mtf.NumberOfTensorsToDisplay);//size between tensors to display
+            //int scaleJ = scaleI;
+            PointF currentSeed = mSeeds[0];
+            for (int i = 0; i < mSeeds.Count; i++)
+            {                
+                //Major vectors
+                EigenVector ev = mtf.matrixEigenVectors[Convert.ToInt32(Math.Floor(mSeeds[i].X)), Convert.ToInt32(Math.Floor(mSeeds[i].Y))];                
+                PointF fin =drawMajor(mSeeds[i],ev,mSeeds[i]);
+                g.DrawRectangle(new Pen(Color.Red), mSeeds[i].X, mSeeds[i].Y, 2f, 2f);
+                g.DrawLine(new Pen(Color.Red), mSeeds[i], fin);
+                //Minor vectors
+                fin = drawMinor(mSeeds[i], ev, mSeeds[i]);
+                g.DrawLine(new Pen(Color.Black), mSeeds[i], fin);
+            }
         }
         public void computeStreetGraph(bool clearStorage)
         {
             if (clearStorage) clearStoredStreetGraph();
             if (mtf == null) throw new NullReferenceException("TensorField reference null");
-            generateSeedListWithUIMethod();
+            generateSeedListWithUIMethod();//here we create the seeds
             bool majorGrowth = true;
             for (int k = 0; k < mSeeds.Count; k++)
             {
@@ -130,6 +146,52 @@ namespace IPSM
         public void growRoad(Road road, Node startNode, bool growInMajorDirection, bool growInOppositeDirection, bool useExceedLenStopCond)
         {
 
+        }
+        private bool distance2SeedsOK(PointF a, PointF b,float dist)
+        {
+            System.Windows.Vector v = new System.Windows.Vector(b.X - a.X, b.Y - a.Y);
+            if (Math.Sqrt(v.X * v.X + v.Y * v.Y) < dist) return false;
+            return true;
+        }
+        private PointF drawMajor(PointF point,EigenVector prev,PointF prevP)
+        {
+            if (point.X > Noise.size || point.X<0 || point.Y<0 || point.Y > Noise.size)
+            {
+                return prevP;
+            }
+            //Prendre Ev sur point
+            EigenVector ev = mtf.matrixEigenVectors[Convert.ToInt32(Math.Floor(point.X)), Convert.ToInt32(Math.Floor(point.Y))];
+            if ((prev.X != ev.X && prev.Y != ev.Y))
+            {
+                return point;
+            }
+            PointF temp = new PointF(point.X, point.Y);
+            point.X = temp.X + (float)ev.X * Scale;
+            point.Y = temp.Y + (float)ev.Y * Scale;
+            prev = ev;
+            prevP = temp;
+            PointF fin=drawMajor(point, prev,prevP);
+            return fin;
+        }
+        private PointF drawMinor(PointF point, EigenVector prev, PointF prevP)
+        {
+            if (point.X > Noise.size || point.X < 0 || point.Y < 0 || point.Y > Noise.size)
+            {
+                return prevP;
+            }
+            //Prendre Ev sur point
+            EigenVector ev = mtf.matrixEigenVectors[Convert.ToInt32(Math.Floor(point.X)), Convert.ToInt32(Math.Floor(point.Y))];
+            if ((prev.Z != ev.Z&& prev.W != ev.W))
+            {
+                return point;
+            }
+            PointF temp = new PointF(point.X, point.Y);
+            point.X = temp.X + (float)ev.Z * Scale;
+            point.Y = temp.Y + (float)ev.W * Scale;
+            prev = ev;
+            prevP = temp;
+            PointF fin = drawMinor(point, prev, prevP);
+            return fin;
         }
     }
 }
