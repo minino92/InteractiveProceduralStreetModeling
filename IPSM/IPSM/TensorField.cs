@@ -149,14 +149,13 @@ namespace IPSM
                         //painter.drawLine(base.x(),imageSize - base.y(),tip.x(),imageSize - tip.y());
                         PointF temp_ = new PointF(j * 0.5f, i * 0.5f);
                         PointF b_ = new PointF(origine.X + temp_.X, origine.Y + temp_.Y);
-
                         EigenVector eigenMinorVector = mEigenVectors[i, j];
-                        eigenMajorVector.X = eigenMinorVector.Z * 0.5 / 2.0f * scaleI * 0.8;
-                        eigenMajorVector.Y = eigenMinorVector.W * 0.5 / 2.0f * scaleJ * 0.8;
+                        eigenMinorVector.Z = eigenMinorVector.Z * 0.5 / 2.0f * scaleI * 0.8;
+                        eigenMinorVector.W = eigenMinorVector.W * 0.5 / 2.0f * scaleJ * 0.8;
                         PointF tip_ = new PointF(b_.X + (float)eigenMinorVector.Z, b_.Y + (float)eigenMinorVector.W);
                         temp_.X = b_.X;
                         temp_.Y = b_.Y;
-                        b_ = new PointF(temp.X - (float)eigenMajorVector.X, temp.Y - (float)eigenMajorVector.Y);
+                        b_ = new PointF(temp.X - (float)eigenMinorVector.Z, temp.Y - (float)eigenMinorVector.W);
                         g.DrawLine(new Pen(Color.Black), b_, tip_);
                     //roundVector2D(base);
                     //roundVector2D(tip);
