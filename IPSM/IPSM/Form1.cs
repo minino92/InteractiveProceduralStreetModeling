@@ -45,7 +45,7 @@ namespace IPSM
                 using (var bmp = new Bitmap(Noise.size, Noise.size, g)) 
                 {
                     TensorField tf = new TensorField(Noise.size);
-                    tf.generateGridTensorField(bmp,g);
+                    tf.generateGridTensorField(bmp,g,(float)Math.PI*8/6);
                     g.DrawImage(bmp, new PointF(0, 0));
                     //using (var redPen = new Pen(Color.Red)) 
                     //{

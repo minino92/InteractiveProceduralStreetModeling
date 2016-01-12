@@ -83,9 +83,9 @@ namespace IPSM
         /// </summary>
         /// <param name="theta"></param>
         /// <param name="l"></param>
-        public void generateGridTensorField(Bitmap bmp,Graphics g)
-        {
-            fillGridBasisField((float)Math.PI / 3, 1);
+        public void generateGridTensorField(Bitmap bmp,Graphics g,float theta)
+        {            
+            fillGridBasisField(theta, 1);
             computeTensorsEigenDecomposition();
             exportEigenVectorsImage(bmp,g);
         }
@@ -121,11 +121,12 @@ namespace IPSM
                 throw new NotImplementedException("Tenseur field n'est pas encore prêt");
             }
             PointF origine = new PointF(0.5f, 0.5f);
-            int numberOfTensorsToDisplay = 5;
+            int numberOfTensorsToDisplay = 16;
             //longueur des vecteurs
-            int scaleI =(Noise.size/numberOfTensorsToDisplay)*4;
-            int scaleJ = (Noise.size/numberOfTensorsToDisplay)*4;
-
+            int scaleI =(Noise.size/numberOfTensorsToDisplay)*3;
+            int scaleJ = (Noise.size/numberOfTensorsToDisplay)*3;
+            //we increment i and j according to the scaleI and scaleJ so that we can visualize 
+            //one tensor each (i+scaleI,j+scaleJ) position
             for(int i=0; i<Noise.size ; i=i+scaleI)
             {
                 for(int j=0; j<Noise.size; j=j+scaleJ)
@@ -134,8 +135,8 @@ namespace IPSM
                         PointF b =new PointF(origine.X+temp.X,origine.Y+temp.Y);
                         
                         EigenVector eigenMajorVector = mEigenVectors[i,j];
-                        eigenMajorVector.X=eigenMajorVector.X*0.5/2.0f*scaleI*0.8;
-                        eigenMajorVector.Y=eigenMajorVector.Y*0.5/2.0f*scaleJ*0.8;
+                        eigenMajorVector.X = eigenMajorVector.X * 0.5 / 2.0f * scaleI * 0.8;
+                        eigenMajorVector.Y = eigenMajorVector.Y * 0.5 / 2.0f * scaleJ * 0.8;                    
                         PointF tip =new PointF(b.X+(float)eigenMajorVector.X,b.Y+(float)eigenMajorVector.Y);
                         temp.X=b.X;
                         temp.Y=b.Y;
