@@ -35,6 +35,15 @@ namespace IPSM
         public double Y { get; set; }
         public double Z { get; set; }
         public double W { get; set; }
+        public static EigenVector operator *(EigenVector ev, int l)
+        {
+            EigenVector res = new EigenVector();
+            res.X= ev.X * -1;
+            res.Y=ev.Y * -1;
+            res.Z=ev.Z * -1;
+            res.W=ev.W * -1;
+            return res;
+        }
     }
     public class EigenValue
     {

@@ -77,20 +77,37 @@ namespace IPSM
         }
         public void computeMajorHyperstreamlines(Bitmap bmp,Graphics g)
         {
-            createRandomSeedList(10,false);
+            createRandomSeedList(40,false);
             //int scaleI = Convert.ToInt32(Noise.size / mtf.NumberOfTensorsToDisplay);//size between tensors to display
             //int scaleJ = scaleI;
             PointF currentSeed = mSeeds[0];
             for (int i = 0; i < mSeeds.Count; i++)
-            {                
-                //Major vectors
-                EigenVector ev = mtf.matrixEigenVectors[Convert.ToInt32(Math.Floor(mSeeds[i].X)), Convert.ToInt32(Math.Floor(mSeeds[i].Y))];                
-                PointF fin =drawMajor(mSeeds[i],ev,mSeeds[i]);
-                g.DrawRectangle(new Pen(Color.Red), mSeeds[i].X, mSeeds[i].Y, 2f, 2f);
-                g.DrawLine(new Pen(Color.Red), mSeeds[i], fin);
-                //Minor vectors
-                fin = drawMinor(mSeeds[i], ev, mSeeds[i]);
-                g.DrawLine(new Pen(Color.Black), mSeeds[i], fin);
+            {
+                try
+                {
+                    //Major vectors
+                    EigenVector ev = mtf.matrixEigenVectors[Convert.ToInt32(Math.Floor(mSeeds[i].X)), Convert.ToInt32(Math.Floor(mSeeds[i].Y))];
+                        //first direction
+                    PointF fin = drawMajor(mSeeds[i], ev, mSeeds[i]);
+                    g.DrawRectangle(new Pen(Color.Red), mSeeds[i].X, mSeeds[i].Y, 2f, 2f);
+                    g.DrawLine(new Pen(Color.Red), mSeeds[i], fin);
+                        //second direction
+                    fin = drawMajor(mSeeds[i], ev, mSeeds[i],false);
+                    g.DrawLine(new Pen(Color.Gold), mSeeds[i], fin);
+                    //-----------------------------
+                    //Minor vectors
+                        //first direction
+                    fin = drawMinor(mSeeds[i], ev, mSeeds[i]);
+                    g.DrawLine(new Pen(Color.Black), mSeeds[i], fin);
+                        //second direction
+                    fin = drawMinor(mSeeds[i], ev, mSeeds[i],false);
+                    g.DrawLine(new Pen(Color.Gold), mSeeds[i], fin);
+                }
+                catch (Exception e)
+                {
+                    //there are some errors that we have to handle but we do not
+                    //that is why sometime the number of the seeds points are not correct.
+                }                
             }
         }
         public void computeStreetGraph(bool clearStorage)
@@ -153,8 +170,8 @@ namespace IPSM
             if (Math.Sqrt(v.X * v.X + v.Y * v.Y) < dist) return false;
             return true;
         }
-        private PointF drawMajor(PointF point,EigenVector prev,PointF prevP)
-        {
+        private PointF drawMajor(PointF point,EigenVector prev,PointF prevP,bool other=true)
+        {           
             if (point.X > Noise.size || point.X<0 || point.Y<0 || point.Y > Noise.size)
             {
                 return prevP;
@@ -166,14 +183,22 @@ namespace IPSM
                 return point;
             }
             PointF temp = new PointF(point.X, point.Y);
-            point.X = temp.X + (float)ev.X * Scale;
-            point.Y = temp.Y + (float)ev.Y * Scale;
+            if (other)
+            {
+                point.X = temp.X + (float)ev.X * Scale;
+                point.Y = temp.Y + (float)ev.Y * Scale;
+            }
+            else
+            {
+                point.X = temp.X + (float)ev.X * Scale*(-1);
+                point.Y = temp.Y + (float)ev.Y * Scale*(-1);
+            }
             prev = ev;
             prevP = temp;
-            PointF fin=drawMajor(point, prev,prevP);
+            PointF fin=drawMajor(point, prev,prevP,other);
             return fin;
         }
-        private PointF drawMinor(PointF point, EigenVector prev, PointF prevP)
+        private PointF drawMinor(PointF point, EigenVector prev, PointF prevP,bool other=true)
         {
             if (point.X > Noise.size || point.X < 0 || point.Y < 0 || point.Y > Noise.size)
             {
@@ -186,11 +211,19 @@ namespace IPSM
                 return point;
             }
             PointF temp = new PointF(point.X, point.Y);
-            point.X = temp.X + (float)ev.Z * Scale;
-            point.Y = temp.Y + (float)ev.W * Scale;
+            if (other)
+            {
+                point.X = temp.X + (float)ev.Z * Scale;
+                point.Y = temp.Y + (float)ev.W * Scale;
+            }
+            else
+            {
+                point.X = temp.X + (float)ev.Z * Scale*(-1);
+                point.Y = temp.Y + (float)ev.W * Scale * (-1);
+            }           
             prev = ev;
             prevP = temp;
-            PointF fin = drawMinor(point, prev, prevP);
+            PointF fin = drawMinor(point, prev, prevP,other);
             return fin;
         }
     }

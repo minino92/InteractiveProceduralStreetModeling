@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace IPSM
 {
@@ -22,6 +21,7 @@ namespace IPSM
         List<FieldTensor> listPositionFieldTensor;
         private bool dragTensorField = false;
         private bool visualizaChoice = false;
+        private double theta;
         public IPSM()
         {
             InitializeComponent();
@@ -31,6 +31,7 @@ namespace IPSM
             pictureZone.Size = new System.Drawing.Size(Noise.size, Noise.size);
             Size = new System.Drawing.Size(Noise.size + 250, Noise.size+50);
             numberTensorFields.Value = 16;
+            theta = Math.PI / 2;
         }
 
         private void IPSM_Load(object sender, EventArgs e)
@@ -50,7 +51,7 @@ namespace IPSM
                 {
                     TensorField tf = new TensorField(Noise.size);
                     tf.NumberOfTensorsToDisplay = (int)numberTensorFields.Value;
-                    tf.generateGridTensorField(bmp, g, (float)Math.PI / 6);
+                    tf.generateGridTensorField(bmp, g, (float)theta);
                     g.DrawImage(bmp, new PointF(0, 0));                   
                     if (!visualizaChoice)
                     {
@@ -100,7 +101,7 @@ namespace IPSM
 
         private void ChangeNumberTensorFieldToDisplay(object sender, EventArgs e)
         {
-            //Invalidate();
+            Invalidate();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -108,6 +109,29 @@ namespace IPSM
             if (comboBox1.SelectedIndex == 0) visualizaChoice = false;
             else visualizaChoice = true;
             Invalidate();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            
+
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                try
+                {
+                    double angle = double.Parse(textBox1.Text) * Math.PI / 180;
+                    theta = angle;
+                    Invalidate();
+                }
+                catch (Exception ex)
+                {
+                    theta = Math.PI / 2;
+                }
+            }
         }        
     }
 }
