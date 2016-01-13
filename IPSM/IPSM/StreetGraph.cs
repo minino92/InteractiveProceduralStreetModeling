@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace IPSM
 {
-    enum RoadType
+    public enum RoadType
     {
         Principal, Secondary
     }

@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace IPSM
 {
@@ -45,11 +44,13 @@ namespace IPSM
             {
                 var g = pictureZone.CreateGraphics();
                 g.Clear(Color.White);
-                using (var bmp = new Bitmap(Noise.size, Noise.size, g)) 
+                Bitmap bmp = new Bitmap(Noise.size, Noise.size, g);
+                using (bmp ) 
                 {
                     TensorField tf = new TensorField(Noise.size);
                     tf.NumberOfTensorsToDisplay = (int) numberTensorFields.Value;
                     tf.generateGridTensorField(bmp,g,(float)Math.PI*8/6);
+                    tf.CreatePlanarVisualitzation(bmp,g,noise);
                     g.DrawImage(bmp, new PointF(0, 0));
                     //using (var redPen = new Pen(Color.Red)) 
                     //{
