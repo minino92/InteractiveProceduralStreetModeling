@@ -31,9 +31,9 @@
             this.pictureZone = new System.Windows.Forms.PictureBox();
             this.log = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.numberTensorFields = new System.Windows.Forms.NumericUpDown();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.numberTensorFields = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.pictureZone)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numberTensorFields)).BeginInit();
@@ -75,26 +75,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
-            // numberTensorFields
-            // 
-            this.numberTensorFields.Location = new System.Drawing.Point(126, 25);
-            this.numberTensorFields.Name = "numberTensorFields";
-            this.numberTensorFields.Size = new System.Drawing.Size(42, 20);
-            this.numberTensorFields.TabIndex = 3;
-            this.numberTensorFields.ValueChanged += new System.EventHandler(this.ChangeNumberTensorFieldToDisplay);
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Tensor field",
-            "Stream line"});
-            this.comboBox1.Location = new System.Drawing.Point(90, 68);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(98, 21);
-            this.comboBox1.TabIndex = 4;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -103,6 +83,27 @@
             this.label1.Size = new System.Drawing.Size(68, 13);
             this.label1.TabIndex = 5;
             this.label1.Text = "Choose view";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Tensor field",
+            "Stream line",
+            "Flow Visualization"});
+            this.comboBox1.Location = new System.Drawing.Point(90, 68);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(98, 21);
+            this.comboBox1.TabIndex = 4;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // numberTensorFields
+            // 
+            this.numberTensorFields.Location = new System.Drawing.Point(126, 25);
+            this.numberTensorFields.Name = "numberTensorFields";
+            this.numberTensorFields.Size = new System.Drawing.Size(42, 20);
+            this.numberTensorFields.TabIndex = 3;
+            this.numberTensorFields.ValueChanged += new System.EventHandler(this.ChangeNumberTensorFieldToDisplay);
             // 
             // IPSM
             // 

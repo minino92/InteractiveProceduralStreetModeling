@@ -20,7 +20,8 @@ namespace IPSM
         Noise noise;
         List<FieldTensor> listPositionFieldTensor;
         private bool dragTensorField = false;
-        private bool visualizaChoice = false;
+        private int selectedChoice = 0;
+        private ibfv vis;
         public IPSM()
         {
             InitializeComponent();
@@ -30,6 +31,8 @@ namespace IPSM
             pictureZone.Size = new System.Drawing.Size(Noise.size, Noise.size);
             Size = new System.Drawing.Size(Noise.size + 250, Noise.size+50);
             numberTensorFields.Value = 16;
+            vis = new ibfv();
+            vis.makePatterns();
         }
 
         private void IPSM_Load(object sender, EventArgs e)
@@ -50,17 +53,24 @@ namespace IPSM
                     TensorField tf = new TensorField(Noise.size);
                     tf.NumberOfTensorsToDisplay = (int) numberTensorFields.Value;
                     tf.generateGridTensorField(bmp,g,(float)Math.PI*8/6);
-                    //tf.CreatePlanarVisualitzation(bmp,g,noise);
-                    g.DrawImage(bmp, new PointF(0, 0));                   
-                    if (!visualizaChoice)
+            
+                                       
+                    
+
+                    switch (selectedChoice)
                     {
-                        tf.exportEigenVectorsImage(bmp, g);
+                        case 1:
+                            StreetGraph sg = new StreetGraph(new PointF(0, Noise.size), new PointF(Noise.size, 0), tf, 30f);
+                            sg.computeMajorHyperstreamlines(bmp, g);
+                            break;
+                        case 2:
+                            vis.display(bmp, g, tf.matrixEigenVectors);
+                            break;
+                        default:
+                            tf.exportEigenVectorsImage(bmp, g);
+                            break;
                     }
-                    else
-                    {
-                        StreetGraph sg = new StreetGraph(new PointF(0, Noise.size), new PointF(Noise.size, 0), tf, 30f);
-                        sg.computeMajorHyperstreamlines(bmp, g);
-                    }
+                    g.DrawImage(bmp, new PointF(0, 0));
                 }
 
             });
@@ -105,8 +115,9 @@ namespace IPSM
 
         void comboBox1_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            if (comboBox1.SelectedIndex == 0) visualizaChoice = false;
-            else visualizaChoice = true;
+            /*if (comboBox1.SelectedIndex == 0) visualizaChoice = false;
+            else visualizaChoice = true;*/
+            selectedChoice = comboBox1.SelectedIndex;
             Invalidate();
         }
     }
