@@ -1,12 +1,3 @@
-C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\bin\Debug\IPSM.exe.config
-C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.exe
-C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.pdb
-C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\bin\Debug\IPSM.exe
-C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\bin\Debug\IPSM.pdb
-C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.csprojResolveAssemblyReference.cache
-C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.IPSM.resources
-C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.Properties.Resources.resources
-C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.csproj.GenerateResource.Cache
 C:\Users\LaptopMSI\OneDrive\els meus documents\Aria\_Master\Modélisation et Animation\git\InteractiveProceduralStreetModeling\IPSM\IPSM\bin\Debug\IPSM.exe.config
 C:\Users\LaptopMSI\OneDrive\els meus documents\Aria\_Master\Modélisation et Animation\git\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.exe
 C:\Users\LaptopMSI\OneDrive\els meus documents\Aria\_Master\Modélisation et Animation\git\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.pdb
@@ -16,3 +7,10 @@ C:\Users\LaptopMSI\OneDrive\els meus documents\Aria\_Master\Modélisation et Ani
 C:\Users\LaptopMSI\OneDrive\els meus documents\Aria\_Master\Modélisation et Animation\git\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.csproj.GenerateResource.Cache
 C:\Users\LaptopMSI\OneDrive\els meus documents\Aria\_Master\Modélisation et Animation\git\InteractiveProceduralStreetModeling\IPSM\IPSM\bin\Debug\IPSM.exe
 C:\Users\LaptopMSI\OneDrive\els meus documents\Aria\_Master\Modélisation et Animation\git\InteractiveProceduralStreetModeling\IPSM\IPSM\bin\Debug\IPSM.pdb
+C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\bin\Debug\IPSM.exe
+C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\bin\Debug\IPSM.pdb
+C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.IPSM.resources
+C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.Properties.Resources.resources
+C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.csproj.GenerateResource.Cache
+C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.exe
+C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.pdb

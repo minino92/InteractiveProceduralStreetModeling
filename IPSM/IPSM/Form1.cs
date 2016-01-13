@@ -32,6 +32,7 @@ namespace IPSM
             Size = new System.Drawing.Size(Noise.size + 250, Noise.size+50);
             numberTensorFields.Value = 16;
             vis = new ibfv();
+            theta = Math.PI / 2;
             vis.makePatterns();
         }
 
@@ -52,7 +53,7 @@ namespace IPSM
                 {
                     TensorField tf = new TensorField(Noise.size);
                     tf.NumberOfTensorsToDisplay = (int) numberTensorFields.Value;
-                    tf.generateGridTensorField(bmp,g,(float)Math.PI*8/6);
+                    tf.generateGridTensorField(bmp, g, (float)theta);
             
                                        
                     
@@ -113,12 +114,35 @@ namespace IPSM
             Invalidate();
         }
 
-        void comboBox1_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             /*if (comboBox1.SelectedIndex == 0) visualizaChoice = false;
             else visualizaChoice = true;*/
             selectedChoice = comboBox1.SelectedIndex;
             Invalidate();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            
+
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                try
+                {
+                    double angle = double.Parse(textBox1.Text) * Math.PI / 180;
+                    theta = angle;
+                    Invalidate();
+                }
+                catch (Exception ex)
+                {
+                    theta = Math.PI / 2;
+                }
+            }
         }
     }
 }
