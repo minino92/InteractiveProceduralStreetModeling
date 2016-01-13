@@ -53,7 +53,7 @@ namespace IPSM
     }
     class TensorField
     {
-        private Tensor[,] matrixTensors;
+        public Tensor[,] matrixTensors;
         public EigenVector[,] matrixEigenVectors;
         private EigenValue[,] matrixEigenValues;
         private bool matrixFieldIsFilled;

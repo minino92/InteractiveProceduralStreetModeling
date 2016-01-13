@@ -31,7 +31,7 @@ namespace IPSM
             pictureZone.Size = new System.Drawing.Size(Noise.size, Noise.size);
             Size = new System.Drawing.Size(Noise.size + 250, Noise.size+50);
             numberTensorFields.Value = 16;
-            theta = Math.PI / 2;
+            theta = Math.PI / 3;
         }
 
         private void IPSM_Load(object sender, EventArgs e)
@@ -59,8 +59,11 @@ namespace IPSM
                     }
                     else
                     {
-                        StreetGraph sg = new StreetGraph(new PointF(0, Noise.size), new PointF(Noise.size, 0), tf, 30f);
-                        sg.computeMajorHyperstreamlines(bmp, g);
+                        StreetGraph sg = new StreetGraph(new PointF(0, Noise.size), new PointF(Noise.size, 0), tf, 30.0);
+                        //sg.computeMajorHyperstreamlines(bmp, g);
+                        sg.createRandomSeedList(50, false);
+                        //sg.computeMajorHyperStreamLinesWithDist(bmp, g, 75.0f, new PointF(160, 144));
+                        sg.computeMajorHyperStreamLinesNew(bmp, g, 75f,tf);
                     }
                 }
 

@@ -23,3 +23,4 @@ C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\I
 C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.csproj.GenerateResource.Cache
 C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.exe
 C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.pdb
+C:\Users\ralambomahay1\Downloads\IPSM\InteractiveProceduralStreetModeling\IPSM\IPSM\obj\Debug\IPSM.csprojResolveAssemblyReference.cache

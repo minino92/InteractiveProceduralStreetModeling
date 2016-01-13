@@ -31,17 +31,21 @@ namespace IPSM
         private Dictionary<int, Node> mNodes;
         private Dictionary<int, Road> mRoads;
         //the number of random points to start drawing hyperstreamlines
-        private List<PointF> mSeeds;
+        public List<PointF> mSeeds;
         private PointF mBottomLeft;
         private PointF mTopRight;
         private int mLastNodeID;
         private int mLastRoadID;
+        private List<PointF[]> totalRoads;
         //Distance for road density
-        private float mDistSeparation;
+        private double mDistSeparation;
         private int mSeedInitMethod;
         private Size mRegionSize;
         public int Scale;
-        public StreetGraph(PointF bottomLeft,PointF topRight,TensorField tf,float distSeparation)
+        private int recursif = 0;
+        private Dictionary<PointF, bool> positionToHandle;
+
+        public StreetGraph(PointF bottomLeft,PointF topRight,TensorField tf,double distSeparation)
         {
             mtf = tf;
             mBottomLeft = bottomLeft;
@@ -53,6 +57,8 @@ namespace IPSM
             mRegionSize = new Size(Noise.size,Noise.size);
             mSeeds = new List<PointF>();
             Scale = Convert.ToInt32(Noise.size / mtf.NumberOfTensorsToDisplay);
+            totalRoads=new List<PointF[]>();
+            positionToHandle = new Dictionary<PointF, bool>();
         }
         public void createRandomSeedList(int numberOfSeeds, bool append)
         {
@@ -67,6 +73,7 @@ namespace IPSM
                 float randY = rd.Next(0, mRegionSize.Height);
                 mSeeds.Add(new PointF(mBottomLeft.X+randX,mBottomLeft.Y-randY));
             }
+            
         }
         public void createDensityConstrainedSeedList(int numberOfSeeds, bool append)
         {
@@ -75,33 +82,80 @@ namespace IPSM
         {
             return false;
         }
+        public void computeMajorHyperStreamLinesWithDist(Bitmap b, Graphics g, float dist,PointF next)
+        {
+            if (recursif < mSeeds.Count)
+            {
+                try
+                {
+                    PointF currentPoint = next;
+                    //Major vectors
+                    EigenVector ev = mtf.matrixEigenVectors[Convert.ToInt32(Math.Floor(currentPoint.X)), Convert.ToInt32(Math.Floor(currentPoint.Y))];
+                    //first direction
+                    PointF fin = drawMajor(currentPoint, ev, currentPoint);
+                    g.DrawRectangle(new Pen(Color.Red), currentPoint.X, currentPoint.Y, 2f, 2f);
+                    g.DrawLine(new Pen(Color.Gold), currentPoint, fin);
+                    //second direction
+                    fin = drawMajor(currentPoint, ev, currentPoint, false);
+                    g.DrawLine(new Pen(Color.Gold), currentPoint, fin);
+                    //-----------------------------
+                    //Minor vectors
+                    //first direction
+                    fin = drawMinor(currentPoint, ev, currentPoint);
+                    g.DrawLine(new Pen(Color.Black), currentPoint, fin);
+                    //second direction
+                    fin = drawMinor(currentPoint, ev, currentPoint, false);
+                    g.DrawLine(new Pen(Color.Black), currentPoint, fin);
+                    recursif++;
+                    PointF temp = currentPoint;
+                    currentPoint = new PointF(temp.X + dist, temp.Y + dist);
+                    computeMajorHyperStreamLinesWithDist(b, g, dist, currentPoint);
+                }
+                catch (Exception e)
+                {
+
+                }                
+            }            
+        }
+        public void computeMajorHyperStreamLinesNew(Bitmap b, Graphics g,float dist,TensorField t)
+        {
+            drawSomething(mSeeds[0], dist, b,g,t.matrixTensors);
+        }
         public void computeMajorHyperstreamlines(Bitmap bmp,Graphics g)
         {
-            createRandomSeedList(40,false);
+            createRandomSeedList(10,false);
             //int scaleI = Convert.ToInt32(Noise.size / mtf.NumberOfTensorsToDisplay);//size between tensors to display
             //int scaleJ = scaleI;
             PointF currentSeed = mSeeds[0];
+            PointF previousSeed = mSeeds[0];
             for (int i = 0; i < mSeeds.Count; i++)
             {
                 try
                 {
+                    PointF[] temp = new PointF[5];
+                    temp[0] = mSeeds[i];
                     //Major vectors
                     EigenVector ev = mtf.matrixEigenVectors[Convert.ToInt32(Math.Floor(mSeeds[i].X)), Convert.ToInt32(Math.Floor(mSeeds[i].Y))];
                         //first direction
                     PointF fin = drawMajor(mSeeds[i], ev, mSeeds[i]);
                     g.DrawRectangle(new Pen(Color.Red), mSeeds[i].X, mSeeds[i].Y, 2f, 2f);
-                    g.DrawLine(new Pen(Color.Red), mSeeds[i], fin);
+                    g.DrawLine(new Pen(Color.Gold), mSeeds[i], fin);
+                    temp[1] = fin;
                         //second direction
                     fin = drawMajor(mSeeds[i], ev, mSeeds[i],false);
                     g.DrawLine(new Pen(Color.Gold), mSeeds[i], fin);
+                    temp[2] = fin;
                     //-----------------------------
                     //Minor vectors
                         //first direction
                     fin = drawMinor(mSeeds[i], ev, mSeeds[i]);
                     g.DrawLine(new Pen(Color.Black), mSeeds[i], fin);
+                    temp[3] = fin;
                         //second direction
                     fin = drawMinor(mSeeds[i], ev, mSeeds[i],false);
-                    g.DrawLine(new Pen(Color.Gold), mSeeds[i], fin);
+                    g.DrawLine(new Pen(Color.Black), mSeeds[i], fin);
+                    temp[4] = fin;
+                    totalRoads.Add(temp);
                 }
                 catch (Exception e)
                 {
@@ -109,61 +163,9 @@ namespace IPSM
                     //that is why sometime the number of the seeds points are not correct.
                 }                
             }
+            //we have to sort every road now with the distance
         }
-        public void computeStreetGraph(bool clearStorage)
-        {
-            if (clearStorage) clearStoredStreetGraph();
-            if (mtf == null) throw new NullReferenceException("TensorField reference null");
-            generateSeedListWithUIMethod();//here we create the seeds
-            bool majorGrowth = true;
-            for (int k = 0; k < mSeeds.Count; k++)
-            {
-                Node node1 = mNodes[++mLastNodeID];
-                node1.position = mSeeds[k];
-
-                Road road = mRoads[++mLastRoadID];
-                node1.connectedRoadIDs.Add(mLastRoadID);
-                road.type = RoadType.Principal;
-                road.nodeID1 = mLastNodeID;
-
-                Road road2 = mRoads[++mLastRoadID];
-                node1.connectedRoadIDs.Add(mLastRoadID);
-                road2.type = RoadType.Principal;
-                road2.nodeID1 = mLastNodeID;
-
-                growRoad(road, node1, majorGrowth, false, false);
-                growRoad(road2, node1, majorGrowth, true, false);
-
-                majorGrowth = !majorGrowth;
-            }
-        }
-        public void generateStreetGraph()
-        {
-            computeStreetGraph(true);
-            drawStreetGraph(true, false);
-        }
-
-        public void drawStreetGraph(bool p1, bool p2)
-        {
-            throw new NotImplementedException();
-        }
-        public void clearStoredStreetGraph()
-        {
-            mNodes.Clear();
-            mRoads.Clear();
-            mLastNodeID = 0;
-            mLastRoadID = 0;
-        }
-        public void generateSeedListWithUIMethod()
-        {
-            //there are 3 types which can be used
-            //we only consider one case
-            createRandomSeedList(100, false);
-        }
-        public void growRoad(Road road, Node startNode, bool growInMajorDirection, bool growInOppositeDirection, bool useExceedLenStopCond)
-        {
-
-        }
+       
         private bool distance2SeedsOK(PointF a, PointF b,float dist)
         {
             System.Windows.Vector v = new System.Windows.Vector(b.X - a.X, b.Y - a.Y);
@@ -225,6 +227,56 @@ namespace IPSM
             prevP = temp;
             PointF fin = drawMinor(point, prev, prevP,other);
             return fin;
+        }
+        private void drawSomething(PointF position,float dist,Bitmap b,Graphics g,Tensor[,] mtx)
+        {
+            if ((position.X >= 0 && position.X < Noise.size) && (position.Y >= 0 && position.Y < Noise.size))
+            {
+                if (!positionToHandle.ContainsKey(position))
+                {
+                    try
+                    {
+                        positionToHandle.Add(position, true);
+                        //Draw
+                        PointF currentPoint = position;
+                        //Major vectors
+                        EigenVector ev = mtf.matrixEigenVectors[Convert.ToInt32(Math.Floor(currentPoint.X)), Convert.ToInt32(Math.Floor(currentPoint.Y))];
+                        //first direction
+                        PointF fin = drawMajor(currentPoint, ev, currentPoint);
+                        g.DrawRectangle(new Pen(Color.Red), currentPoint.X, currentPoint.Y, 2f, 2f);
+                        g.DrawLine(new Pen(Color.Gold), currentPoint, fin);
+                        //second direction
+                        fin = drawMajor(currentPoint, ev, currentPoint, false);
+                        g.DrawLine(new Pen(Color.Gold), currentPoint, fin);
+                        //-----------------------------
+                        //Minor vectors
+                        //first direction
+                        fin = drawMinor(currentPoint, ev, currentPoint);
+                        g.DrawLine(new Pen(Color.Black), currentPoint, fin);
+                        //second direction
+                        fin = drawMinor(currentPoint, ev, currentPoint, false);
+                        g.DrawLine(new Pen(Color.Black), currentPoint, fin);
+                        //call this function for each neigbour
+                        Tensor ts = mtx[Convert.ToInt32(Math.Floor(position.X)), Convert.ToInt32(Math.Floor(position.Y))];
+                        PointF[] nb = new PointF[4];
+                        //nb[0] = new PointF(position.X + dist * (float)Math.Cos(ts.theta), position.Y + dist * (float)Math.Sin(ts.theta));
+                        //nb[1] = new PointF(position.X + dist * (float)Math.Cos(ts.theta + Math.PI/2), position.Y + dist * (float)Math.Sin(ts.theta + Math.PI/2));
+                        //nb[2] = new PointF(position.X + dist * (float)Math.Cos(ts.theta + Math.PI), position.Y + dist * (float)Math.Sin(ts.theta + Math.PI));
+                        //nb[3] = new PointF(position.X + dist * (float)Math.Cos(ts.theta + 1.5*Math.PI), position.Y + dist * (float)Math.Sin(ts.theta + 1.5*Math.PI));
+                        nb[0] = new PointF(position.X + dist * (float)Math.Cos(ts.theta), position.Y + dist * (float)Math.Sin(ts.theta));
+                        nb[1] = new PointF(position.X + dist * (float)Math.Cos(ts.theta ), position.Y - dist * (float)Math.Sin(ts.theta ));
+                        nb[2] = new PointF(position.X - dist * (float)Math.Cos(ts.theta ), position.Y + dist * (float)Math.Sin(ts.theta ));
+                        nb[3] = new PointF(position.X - dist * (float)Math.Cos(ts.theta ), position.Y - dist * (float)Math.Sin(ts.theta ));
+                        drawSomething(nb[0], dist, b, g, mtx);
+                        drawSomething(nb[1], dist, b, g, mtx);
+                        drawSomething(nb[2], dist, b, g, mtx);
+                        drawSomething(nb[3], dist, b, g, mtx);
+                    }
+                    catch (Exception e) 
+                    {
+                    }                    
+                }                
+            }            
         }
     }
 }
