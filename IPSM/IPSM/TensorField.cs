@@ -83,7 +83,7 @@ namespace IPSM
         {            
             fillMatrixBasisField(theta, 1);
             computeTensorsEigenDecomposition();
-            //exportEigenVectorsImage(bmp,g);
+            //exportEigenVectorsImage(bmp,g);//we have isolate this function so that we can have controll about visualizing 2 views
         }
 
         //fill the matrix with the theta and value L entered

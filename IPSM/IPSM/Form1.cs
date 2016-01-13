@@ -21,10 +21,11 @@ namespace IPSM
         Noise noise;
         List<FieldTensor> listPositionFieldTensor;
         private bool dragTensorField = false;
-
+        private bool visualizaChoice = false;
         public IPSM()
         {
             InitializeComponent();
+            comboBox1.SelectedIndex = 0;
             listPositionFieldTensor = new List<FieldTensor>();
             noise = new Noise();
             pictureZone.Size = new System.Drawing.Size(Noise.size, Noise.size);
@@ -48,11 +49,18 @@ namespace IPSM
                 using (var bmp = new Bitmap(Noise.size, Noise.size, g)) 
                 {
                     TensorField tf = new TensorField(Noise.size);
-                    tf.NumberOfTensorsToDisplay = (int) numberTensorFields.Value;
-                    tf.generateGridTensorField(bmp,g,(float)Math.PI/6);
-                    g.DrawImage(bmp, new PointF(0, 0));
-                    StreetGraph sg = new StreetGraph(new PointF(0, Noise.size), new PointF(Noise.size, 0), tf, 30f);
-                    sg.computeMajorHyperstreamlines(bmp, g);
+                    tf.NumberOfTensorsToDisplay = (int)numberTensorFields.Value;
+                    tf.generateGridTensorField(bmp, g, (float)Math.PI / 6);
+                    g.DrawImage(bmp, new PointF(0, 0));                   
+                    if (!visualizaChoice)
+                    {
+                        tf.exportEigenVectorsImage(bmp, g);
+                    }
+                    else
+                    {
+                        StreetGraph sg = new StreetGraph(new PointF(0, Noise.size), new PointF(Noise.size, 0), tf, 30f);
+                        sg.computeMajorHyperstreamlines(bmp, g);
+                    }
                 }
 
             });
@@ -93,6 +101,13 @@ namespace IPSM
         private void ChangeNumberTensorFieldToDisplay(object sender, EventArgs e)
         {
             //Invalidate();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedIndex == 0) visualizaChoice = false;
+            else visualizaChoice = true;
+            Invalidate();
         }        
     }
 }
