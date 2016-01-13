@@ -24,6 +24,7 @@ namespace IPSM
         public IPSM()
         {
             InitializeComponent();
+            comboBox1.SelectedIndex = 0;
             listPositionFieldTensor = new List<FieldTensor>();
             noise = new Noise();
             pictureZone.Size = new System.Drawing.Size(Noise.size, Noise.size);
@@ -44,14 +45,12 @@ namespace IPSM
             {
                 var g = pictureZone.CreateGraphics();
                 g.Clear(Color.White);
-                Bitmap bmp = new Bitmap(Noise.size, Noise.size, g);
-                using (bmp ) 
                 using (var bmp = new Bitmap(Noise.size, Noise.size, g)) 
                 {
                     TensorField tf = new TensorField(Noise.size);
                     tf.NumberOfTensorsToDisplay = (int) numberTensorFields.Value;
                     tf.generateGridTensorField(bmp,g,(float)Math.PI*8/6);
-                    tf.CreatePlanarVisualitzation(bmp,g,noise);
+                    //tf.CreatePlanarVisualitzation(bmp,g,noise);
                     g.DrawImage(bmp, new PointF(0, 0));                   
                     if (!visualizaChoice)
                     {
@@ -102,6 +101,13 @@ namespace IPSM
         private void ChangeNumberTensorFieldToDisplay(object sender, EventArgs e)
         {
             Invalidate();
-        }        
+        }
+
+        void comboBox1_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            if (comboBox1.SelectedIndex == 0) visualizaChoice = false;
+            else visualizaChoice = true;
+            Invalidate();
+        }
     }
 }
