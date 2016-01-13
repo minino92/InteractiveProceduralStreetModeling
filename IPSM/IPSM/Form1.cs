@@ -42,7 +42,10 @@ namespace IPSM
         private void IPSM_Paint(object sender, PaintEventArgs e)
         {
             //pictureZone.Size = new System.Drawing.Size(1000, 1000);
-         
+            if (th != null)
+            {
+                th.Abort();
+            }
             th = new Thread(() =>
             {
                 var g = pictureZone.CreateGraphics();
@@ -61,9 +64,9 @@ namespace IPSM
                     {
                         StreetGraph sg = new StreetGraph(new PointF(0, Noise.size), new PointF(Noise.size, 0), tf, 30.0);
                         //sg.computeMajorHyperstreamlines(bmp, g);
-                        sg.createRandomSeedList(50, false);
+                        sg.createRandomSeedList(10, false);
                         //sg.computeMajorHyperStreamLinesWithDist(bmp, g, 75.0f, new PointF(160, 144));
-                        sg.computeMajorHyperStreamLinesNew(bmp, g, 75f,tf);
+                        sg.computeMajorHyperStreamLinesNew(bmp, g, 100f,tf);
                     }
                 }
 
