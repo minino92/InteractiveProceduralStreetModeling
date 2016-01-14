@@ -22,6 +22,7 @@ namespace IPSM
         private bool dragTensorField = false;
         private int selectedChoice = 0;
         private ibfv vis;
+        private double theta;
         public IPSM()
         {
             InitializeComponent();
@@ -54,10 +55,6 @@ namespace IPSM
                     TensorField tf = new TensorField(Noise.size);
                     tf.NumberOfTensorsToDisplay = (int) numberTensorFields.Value;
                     tf.generateGridTensorField(bmp, g, (float)theta);
-            
-                                       
-                    
-
                     switch (selectedChoice)
                     {
                         case 1:
@@ -136,6 +133,7 @@ namespace IPSM
                 {
                     double angle = double.Parse(textBox1.Text) * Math.PI / 180;
                     theta = angle;
+                    vis.makePatterns();
                     Invalidate();
                 }
                 catch (Exception ex)

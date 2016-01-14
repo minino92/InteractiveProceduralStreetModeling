@@ -103,9 +103,9 @@ namespace IPSM
                 {
                     for (j = 0; j < Noise.size; j++)
                     {
-                        //getDP(i, j, px, py);
-                        Vector dir = new Vector(mEigenVector[i, j].X, mEigenVector[i, j].Y) * 2;
+                        Vector dir = new Vector(mEigenVector[i, j].X, mEigenVector[i, j].Y);
                         //dir.Normalize();
+                        //dir+=new Vector(1,1);
                         px = (int)(i + dir.X);
                         py = (int)(j + dir.Y);
                         if (px < Noise.size && py < Noise.size && px >= 0 && py >= 0)
