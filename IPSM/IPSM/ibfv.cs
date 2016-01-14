@@ -16,13 +16,13 @@ namespace IPSM
         //double DM;
         int NPIX = 512;
         double SCALE = 4.0;
-        int iframe = 0;
+        //int iframe = 0;
         int Npat = 32;
         double alpha = (0.12 * 255);
-        double sa;
+        //double sa;
         double tmax;
         double dmax;
-        double M_PI = 3.14;
+        //double M_PI = 3.14;
         byte[, ,] pat;
 
         public ibfv()

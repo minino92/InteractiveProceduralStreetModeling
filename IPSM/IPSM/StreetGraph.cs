@@ -121,7 +121,7 @@ namespace IPSM
         }
         public void computeMajorHyperStreamLinesNew(Bitmap b, Graphics g,float dist,TensorField t)
         {
-            drawSomething(mSeeds[0], dist, b,g,t.matrixTensors);
+            drawSomething(mSeeds[0], dist, b,g,t.matrixTensors,-1);
         }
         public void computeMajorHyperstreamlines(Bitmap bmp,Graphics g)
         {
@@ -230,20 +230,52 @@ namespace IPSM
             PointF fin = drawMinor(point, prev, prevP,other);
             return fin;
         }
-        private void drawSomething(PointF position,float dist,Bitmap b,Graphics g,Tensor[,] mtx)
+        private bool drawSomething(PointF position,float dist,Bitmap b,Graphics g,Tensor[,] mtx, int previousPosition)
         {
-            if (index_recursif > max_recursif) return;
+            if (index_recursif > max_recursif) return false;
             if ((position.X >= 0 && position.X < Noise.size) && (position.Y >= 0 && position.Y < Noise.size))
             {
                 if (!positionToHandle.ContainsKey(position))
                 {
-
-
                     try
                     {
                         positionToHandle.Add(position, true);
-                        //Draw
+                        //call this function for each neigbour
+                        Tensor ts = mtx[Convert.ToInt32(Math.Floor(position.X)), Convert.ToInt32(Math.Floor(position.Y))];
+                        PointF[] nb = new PointF[4];
+                        double trueAngle = (Math.PI / 2) - ts.theta;
+                        nb[0] = new PointF(around(position.X - dist * (float)Math.Sin(trueAngle)), around(position.Y - dist * (float)Math.Cos(trueAngle)));
+                        nb[1] = new PointF(around(position.X + dist * (float)Math.Cos(trueAngle)), around(position.Y - dist * (float)Math.Sin(trueAngle)));
+                        nb[2] = new PointF(around(position.X + dist * (float)Math.Sin(trueAngle)), around(position.Y + dist * (float)Math.Cos(trueAngle)));
+                        nb[3] = new PointF(around(position.X - dist * (float)Math.Cos(trueAngle)), around(position.Y + dist * (float)Math.Sin(trueAngle)));
+
+                        index_recursif++;
+                        bool drawLine = false;
                         PointF currentPoint = position;
+                        g.DrawRectangle(new Pen(Color.Red), currentPoint.X, currentPoint.Y, 2f, 2f);
+                        if (previousPosition != 2)
+                        {
+                            drawLine = drawSomething(nb[0], dist, b, g, mtx, 0);
+                            g.DrawLine(new Pen(Color.Gold), currentPoint, nb[0]);
+                        }
+                        if (previousPosition != 3)
+                        {
+                            drawLine = drawSomething(nb[1], dist, b, g, mtx, 1);
+                            g.DrawLine(new Pen(Color.Black), currentPoint, nb[1]);
+                        }
+                        if (previousPosition != 0)
+                        {
+                            drawLine = drawSomething(nb[2], dist, b, g, mtx, 2);
+                            g.DrawLine(new Pen(Color.Gold), currentPoint, nb[2]);
+                        }
+                        if (previousPosition != 1)
+                        {
+                            drawLine = drawSomething(nb[3], dist, b, g, mtx, 3);
+                            g.DrawLine(new Pen(Color.Black), currentPoint, nb[3]);
+                        }
+                        /*
+                        //Draw
+                        //PointF currentPoint = position;
                         //Major vectors
                         EigenVector ev = mtf.matrixEigenVectors[Convert.ToInt32(Math.Floor(currentPoint.X)), Convert.ToInt32(Math.Floor(currentPoint.Y))];
                         //first direction
@@ -260,31 +292,16 @@ namespace IPSM
                         g.DrawLine(new Pen(Color.Black), currentPoint, fin);
                         //second direction
                         fin = drawMinor(currentPoint, ev, currentPoint, false);
-                        g.DrawLine(new Pen(Color.Black), currentPoint, fin);
-                        //call this function for each neigbour
-                        Tensor ts = mtx[Convert.ToInt32(Math.Floor(position.X)), Convert.ToInt32(Math.Floor(position.Y))];
-                        PointF[] nb = new PointF[4];
-                        //nb[0] = new PointF(position.X + dist * (float)Math.Cos(ts.theta), position.Y + dist * (float)Math.Sin(ts.theta));
-                        //nb[1] = new PointF(position.X + dist * (float)Math.Cos(ts.theta + Math.PI/2), position.Y + dist * (float)Math.Sin(ts.theta + Math.PI/2));
-                        //nb[2] = new PointF(position.X + dist * (float)Math.Cos(ts.theta + Math.PI), position.Y + dist * (float)Math.Sin(ts.theta + Math.PI));
-                        //nb[3] = new PointF(position.X + dist * (float)Math.Cos(ts.theta + 1.5*Math.PI), position.Y + dist * (float)Math.Sin(ts.theta + 1.5*Math.PI));
-                        double trueAngle = (Math.PI / 2) - ts.theta;
-                        nb[0] = new PointF(around(position.X - dist * (float)Math.Sin(trueAngle)), around(position.Y - dist * (float)Math.Cos(trueAngle)));
-                        nb[1] = new PointF(around(position.X + dist * (float)Math.Cos(trueAngle)), around(position.Y - dist * (float)Math.Sin(trueAngle)));
-                        nb[2] = new PointF(around(position.X + dist * (float)Math.Sin(trueAngle)), around(position.Y + dist * (float)Math.Cos(trueAngle)));
-                        nb[3] = new PointF(around(position.X - dist * (float)Math.Cos(trueAngle)), around(position.Y + dist * (float)Math.Sin(trueAngle)));
-
-                        index_recursif++;
-                        drawSomething(nb[0], dist, b, g, mtx);
-                        drawSomething(nb[1], dist, b, g, mtx);
-                        drawSomething(nb[2], dist, b, g, mtx);
-                        drawSomething(nb[3], dist, b, g, mtx);
+                        g.DrawLine(new Pen(Color.Black), currentPoint, fin);*/                            
+                        
+                        return true;
                     }
                     catch (Exception e)
                     {
                     }
                 }
-            }            
+            }
+            return false;
         }
 
         private float around(float a)
