@@ -93,32 +93,52 @@ namespace IPSM
         public void display(Bitmap bmp, Graphics g, EigenVector[,] mEigenVector)
         {
             int i, j;
-            int px, py;
+            int px, py,px1,py1;
             px = 0;
             py = 0;
-            sa = 0.010 * Math.Cos(iframe * 2.0 * M_PI / 200.0);
-            for (int k = 0; k < 5; k++)
+            px1 = 0;
+            py1 = 0;
+            //sa = 0.010 * Math.Cos(iframe * 2.0 * M_PI / 200.0);
+            for (int k = 0; k < 8; k++)
             {
                 for (i = 0; i < Noise.size; i++)
                 {
                     for (j = 0; j < Noise.size; j++)
                     {
                         Vector dir = new Vector(mEigenVector[i, j].X, mEigenVector[i, j].Y);
+                        dir.Normalize();
+                        dir = dir * 5;
                         //dir.Normalize();
                         //dir+=new Vector(1,1);
                         px = (int)(i + dir.X);
                         py = (int)(j + dir.Y);
+                        px1 = (int)(i - dir.X);
+                        py1 = (int)(j - dir.Y);
                         if (px < Noise.size && py < Noise.size && px >= 0 && py >= 0)
                         {
                             pat[px, py, 0] = (byte)((pat[i, j, 0] + pat[px, py, 0]) / 2);
                             pat[px, py, 1] = (byte)((pat[i, j, 1] + pat[px, py, 1]) / 2);
                             pat[px, py, 2] = (byte)((pat[i, j, 2] + pat[px, py, 2]) / 2);
-                            bmp.SetPixel(i, j, Color.FromArgb(pat[i, j, 0], pat[i, j, 1], pat[i, j, 2]));
+                            //bmp.SetPixel(i, j, Color.FromArgb(pat[i, j, 0], pat[i, j, 1], pat[i, j, 2]));
+                        }
+                        if (px1 < Noise.size && py1 < Noise.size && px1 >= 0 && py1 >= 0)
+                        {
+                            pat[px1, py1, 0] = (byte)((pat[i, j, 0] + pat[px1, py1, 0]) / 2);
+                            pat[px1, py1, 1] = (byte)((pat[i, j, 1] + pat[px1, py1, 1]) / 2);
+                            pat[px1, py1, 2] = (byte)((pat[i, j, 2] + pat[px1, py1, 2]) / 2);
+                            //bmp.SetPixel(i, j, Color.FromArgb(pat[i, j, 0], pat[i, j, 1], pat[i, j, 2]));
                         }
                     }
                 }
+                for (i = 0; i < Noise.size; i++)
+                {
+                    for (j = 0; j < Noise.size; j++)
+                    {
+                        bmp.SetPixel(i, j, Color.FromArgb(pat[i, j, 0], pat[i, j, 1], pat[i, j, 2]));
+                    }
+                }
             }
-            iframe = iframe + 1;
+            //iframe = iframe + 1;
         }
 
     }

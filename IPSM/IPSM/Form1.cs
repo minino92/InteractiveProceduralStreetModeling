@@ -32,7 +32,7 @@ namespace IPSM
             pictureZone.Size = new System.Drawing.Size(Noise.size, Noise.size);
             Size = new System.Drawing.Size(Noise.size + 250, Noise.size+50);
             numberTensorFields.Value = 16;
-            theta = Math.PI / 3;
+            theta = double.Parse(textBox1.Text) * Math.PI / 180;
             vis = new ibfv();
             vis.makePatterns();
         }
@@ -62,7 +62,8 @@ namespace IPSM
                     {
                         case 1:
                             StreetGraph sg = new StreetGraph(new PointF(0, Noise.size), new PointF(Noise.size, 0), tf, 30f);
-                            sg.computeMajorHyperstreamlines(bmp, g);
+                            sg.createRandomSeedList(10, false);
+                            sg.computeMajorHyperStreamLinesNew(bmp, g,(float) distanceSquare.Value, tf);
                             break;
                         case 2:
                             vis.display(bmp, g, tf.matrixEigenVectors);
@@ -144,6 +145,11 @@ namespace IPSM
                     theta = Math.PI / 2;
                 }
             }
+        }
+
+        private void SquareDistantanceChanged(object sender, EventArgs e)
+        {
+            Invalidate();
         }
     }
 }

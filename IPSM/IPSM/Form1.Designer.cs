@@ -36,9 +36,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.numberTensorFields = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.distanceSquare = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.pictureZone)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numberTensorFields)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.distanceSquare)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureZone
@@ -63,6 +66,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.distanceSquare);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
@@ -74,7 +79,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(200, 849);
+            this.groupBox1.Size = new System.Drawing.Size(200, 837);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
@@ -128,12 +133,34 @@
             this.numberTensorFields.TabIndex = 3;
             this.numberTensorFields.ValueChanged += new System.EventHandler(this.ChangeNumberTensorFieldToDisplay);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(7, 141);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(84, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Square distance";
+            // 
+            // distanceSquare
+            // 
+            this.distanceSquare.Location = new System.Drawing.Point(126, 139);
+            this.distanceSquare.Name = "distanceSquare";
+            this.distanceSquare.Size = new System.Drawing.Size(49, 20);
+            this.distanceSquare.TabIndex = 9;
+            this.distanceSquare.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.distanceSquare.ValueChanged += new System.EventHandler(this.SquareDistantanceChanged);
+            // 
             // IPSM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1436, 849);
+            this.ClientSize = new System.Drawing.Size(1436, 837);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureZone);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -147,6 +174,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numberTensorFields)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.distanceSquare)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -161,6 +189,8 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.NumericUpDown distanceSquare;
+        private System.Windows.Forms.Label label3;
 
 
     }

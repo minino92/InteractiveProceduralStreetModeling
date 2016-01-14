@@ -20,13 +20,9 @@ namespace IPSM
         Noise noise;
         List<FieldTensor> listPositionFieldTensor;
         private bool dragTensorField = false;
-<<<<<<< HEAD
         private int selectedChoice = 0;
         private ibfv vis;
-=======
-        private bool visualizaChoice = false;
         private double theta;
->>>>>>> origin/testVectorField2
         public IPSM()
         {
             InitializeComponent();
@@ -37,11 +33,12 @@ namespace IPSM
             Size = new System.Drawing.Size(Noise.size + 250, Noise.size+50);
             numberTensorFields.Value = 16;
 <<<<<<< HEAD
-            vis = new ibfv();
-            vis.makePatterns();
+            theta = Math.PI / 3;
 =======
+            vis = new ibfv();
             theta = Math.PI / 2;
->>>>>>> origin/testVectorField2
+            vis.makePatterns();
+>>>>>>> testVectorField
         }
 
         private void IPSM_Load(object sender, EventArgs e)
@@ -52,7 +49,10 @@ namespace IPSM
         private void IPSM_Paint(object sender, PaintEventArgs e)
         {
             //pictureZone.Size = new System.Drawing.Size(1000, 1000);
-         
+            if (th != null)
+            {
+                th.Abort();
+            }
             th = new Thread(() =>
             {
                 var g = pictureZone.CreateGraphics();
@@ -60,25 +60,21 @@ namespace IPSM
                 using (var bmp = new Bitmap(Noise.size, Noise.size, g)) 
                 {
                     TensorField tf = new TensorField(Noise.size);
-<<<<<<< HEAD
                     tf.NumberOfTensorsToDisplay = (int) numberTensorFields.Value;
-                    tf.generateGridTensorField(bmp,g,(float)Math.PI*8/6);
-            
-                                       
-                    
-
-                    switch (selectedChoice)
-=======
-                    tf.NumberOfTensorsToDisplay = (int)numberTensorFields.Value;
                     tf.generateGridTensorField(bmp, g, (float)theta);
-                    g.DrawImage(bmp, new PointF(0, 0));                   
-                    if (!visualizaChoice)
+                    switch (selectedChoice)
                     {
+<<<<<<< HEAD
                         tf.exportEigenVectorsImage(bmp, g);
                     }
                     else
->>>>>>> origin/testVectorField2
                     {
+                        StreetGraph sg = new StreetGraph(new PointF(0, Noise.size), new PointF(Noise.size, 0), tf, 30.0);
+                        //sg.computeMajorHyperstreamlines(bmp, g);
+                        sg.createRandomSeedList(10, false);
+                        //sg.computeMajorHyperStreamLinesWithDist(bmp, g, 75.0f, new PointF(160, 144));
+                        sg.computeMajorHyperStreamLinesNew(bmp, g, 100f,tf);
+=======
                         case 1:
                             StreetGraph sg = new StreetGraph(new PointF(0, Noise.size), new PointF(Noise.size, 0), tf, 30f);
                             sg.computeMajorHyperstreamlines(bmp, g);
@@ -89,6 +85,7 @@ namespace IPSM
                         default:
                             tf.exportEigenVectorsImage(bmp, g);
                             break;
+>>>>>>> testVectorField
                     }
                     g.DrawImage(bmp, new PointF(0, 0));
                 }
@@ -133,15 +130,13 @@ namespace IPSM
             Invalidate();
         }
 
-        void comboBox1_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             /*if (comboBox1.SelectedIndex == 0) visualizaChoice = false;
             else visualizaChoice = true;*/
             selectedChoice = comboBox1.SelectedIndex;
             Invalidate();
         }
-<<<<<<< HEAD
-=======
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -157,6 +152,7 @@ namespace IPSM
                 {
                     double angle = double.Parse(textBox1.Text) * Math.PI / 180;
                     theta = angle;
+                    vis.makePatterns();
                     Invalidate();
                 }
                 catch (Exception ex)
@@ -164,7 +160,6 @@ namespace IPSM
                     theta = Math.PI / 2;
                 }
             }
-        }        
->>>>>>> origin/testVectorField2
+        }
     }
 }
