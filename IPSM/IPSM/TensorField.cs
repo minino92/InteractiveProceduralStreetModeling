@@ -201,5 +201,84 @@ namespace IPSM
             const double epsilon=1e-5;
             return ev.X < epsilon && ev.Y < epsilon && ev.Z < epsilon && ev.W < epsilon;
         }
+
+        public void CreatePlanarVisualitzation(Bitmap bmp,Graphics g, Noise noise)
+        {
+            if (bmp == null)
+            {
+                bmp = new Bitmap(Noise.size, Noise.size, g);
+            }
+            for (int i = 0; i < Noise.size; i++)
+            {
+                for (int j = 0; j < Noise.size; j++)
+                {
+                    Vector Vx, Vy ;
+                    float theta = matrixTensors[i, j].theta;
+                    if (Math.Cos(theta) >= 0)
+                    {
+                        Vx = new Vector(Math.Cos(theta), Math.Sin(theta));
+                    }
+                    else
+                    {
+                        Vx = new Vector(-Math.Cos(theta), -Math.Sin(theta));
+                    }
+                    if (Math.Sin(theta) >= 0)
+                    {
+                        Vy = new Vector(Math.Cos(theta), Math.Sin(theta));
+                    }
+                    else
+                    {
+                        Vy = new Vector(-Math.Cos(theta), -Math.Sin(theta));
+                    }
+                    /*Vx.Normalize();
+                    Vy.Normalize();*/
+                    double Wx = 0.5 + 0.5*Math.Cos(2*theta);
+                    double Wy = 1 - Wx;
+                    Vector I = Wx * Vx + Wy * Vy;
+                    int finalColor = (int)(I.X * 255);
+                    bmp.SetPixel(i, j, Color.FromArgb(finalColor, finalColor, finalColor));
+                }
+            }
+        }
+
+        /*Bitmap applySobelX(Bitmap map)
+        {
+            System.Drawing.Size size = map.Size;
+            Bitmap newBitmap = new Bitmap(size.Width,size.Height);
+
+            float[] kii, mii;
+            kii[0] = -1.0f;
+            kii[1] = 0.0f;
+            kii[2] = 1.0f;
+            kii[3] = -2.0f;
+            kii[4] = 0.0f;
+            kii[5] = 2.0f;
+            kii[6] = -1.0f;
+            kii[7] = 0.0f;
+            kii[8] = 1.0f;
+
+            QMatrix3x3 kernel(kii);
+
+            for (int i=1; i<size.Width-2; i++)
+            {
+                for (int j=1; j<size.Height-2; j++)
+                {
+                    mii[0] = qBlue(map.pixel(i-1,j-1));
+                    mii[1] = qBlue(map.pixel(i,j-1));
+                    mii[2] = qBlue(map.pixel(i+1,j-1));
+                    mii[3] = qBlue(map.pixel(i-1,j));
+                    mii[4] = qBlue(map.pixel(i,j));
+                    mii[5] = qBlue(map.pixel(i+1,j));
+                    mii[6] = qBlue(map.pixel(i-1,j+1));
+                    mii[7] = qBlue(map.pixel(i,j+1));
+                    mii[8] = qBlue(map.pixel(i+1,j+1));
+                    QMatrix3x3 matrix(mii);
+
+                    newBitmap.setPixel(i,j,(sumMat3D(matrix,kernel)));
+                }
+            }
+            //sobelX.save("testx.png");
+            return newBitmap;
+        }*/       
     }
 }

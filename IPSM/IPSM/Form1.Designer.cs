@@ -85,7 +85,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(42, 20);
             this.textBox1.TabIndex = 7;
-            this.textBox1.Text = "60";
+            this.textBox1.Text = "90";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
             // 
@@ -112,7 +112,8 @@
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "Tensor field",
-            "Stream line"});
+            "Stream line",
+            "Flow visualization"});
             this.comboBox1.Location = new System.Drawing.Point(90, 107);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(98, 21);
