@@ -17,7 +17,7 @@ namespace WindowsFormsApplication1
     {
         private Graphics g;
         private float[] centreP;
-        private string path = @"Datas\cercle_5.txt";
+        private string path = @"Datas\coeur_30.txt";
         private List<PointF> points;
         private List<PointF> points_octants;
         public Form1()
@@ -37,7 +37,7 @@ namespace WindowsFormsApplication1
                     Bitmap map = new Bitmap(Width,Height,g);
                     g.DrawPolygon(new Pen(new SolidBrush(Color.Red), 10), new PointF[] { new PointF(0, 0), new PointF(0, 0) });
                     StreamReader reader = new StreamReader(path);
-                    string pattern = @"((?<x>-?\d),(?<y>-?\d))";
+                    string pattern = @"((?<x>-?\d+),(?<y>-?\d+))";
                     while (!reader.EndOfStream)
                     {
                         string line = reader.ReadLine();
@@ -49,20 +49,17 @@ namespace WindowsFormsApplication1
                             if (float.Parse(ms.Groups["x"].Value) >= 0 && float.Parse(ms.Groups["y"].Value) >= 0)
                             {
                                 map.SetPixel((int)position[0], (int)position[1], Color.Red);
+                                points_octants.Add(new PointF(float.Parse(ms.Groups["x"].Value), float.Parse(ms.Groups["y"].Value)));
                             }
                             else
                                 map.SetPixel((int)position[0],(int) position[1], Color.Black);
-                            //points.Add(new PointF(position[0], position[1]));
-                            if (float.Parse(ms.Groups["x"].Value) >= 0 && float.Parse(ms.Groups["y"].Value) >= 0)
-                            {
-                                points_octants.Add(new PointF(float.Parse(ms.Groups["x"].Value), float.Parse(ms.Groups["y"].Value)));
-                            }      
+                                
                             points.Add(new PointF(float.Parse(ms.Groups["x"].Value), float.Parse(ms.Groups["y"].Value)));
                         }
                         
                     }
-                    //segmentNaiveLine(new PointF(0, 0), new PointF(25, 25), 3, 8,-4, map);
-                    premierOctant(points_octants.ToArray(),map);
+                    segmentNaiveLine(new PointF(0, 0), new PointF(10, 10), 3, 5,0, map);
+                    //premierOctant(points_octants.ToArray(),map);
                     g.DrawImage(map, new Point(0, 0));
                 }
             }
@@ -82,8 +79,8 @@ namespace WindowsFormsApplication1
         {            
             float[] res = new float[2];
             //u=(5,0,0) et v=(0,-5,0) => 1px -> x unité
-            float[] u =new float[]{10,0,0};
-            float[] v=new float[]{0,-10,0};
+            float[] u =new float[]{5,0,0};
+            float[] v=new float[]{0,-5,0};
             float[] w=new float[]{0,0,0};//car on est en 2D
             res[0] = u[0] * x + v[0] * y + centreP[0];
             res[1] = u[1] * x + v[1] * y + centreP[1];
@@ -131,13 +128,19 @@ namespace WindowsFormsApplication1
             PointF m = E[0];//1er points de E
             PointF s0 = m, i0 = m;//points d'appui initial sup et inf
             PointF p = new PointF();
+            PointF dPoint = new PointF();
             bool segment = false;
             int r;
             while (i < E.Length)
             {
                 m = E[i];
-                r =(int) (a * m.X - b * m.Y);
-                segment = r >= mu - 1 && r <= mu+b;
+                //r =(int) (a * m.X - b * m.Y);
+                //segment = r >= mu - 1 && r <= mu+b;
+                //notion de distance vient de l'algo en anglais
+                dPoint = new PointF(E[i].X - E[i - 1].X, E[i].Y - E[i - 1].Y);
+                m.X += dPoint.X;
+                m.Y += dPoint.Y;
+                r = (int)(a * m.X - b * m.Y);
                 if (r == mu - 1 || r == mu + b)
                 {
                     if (r == mu - 1)
@@ -157,11 +160,90 @@ namespace WindowsFormsApplication1
                     b =(int)( m.X - p.X);
                     a=(int)(m.Y-p.Y);
                     mu =(int)( a * s0.X - b * s0.Y);
-                    float[] position = ChangeBase(p.X, p.Y);
-                    map.SetPixel((int)position[0],(int) position[1], Color.Black);
+                    //segmentNaiveLine(s0, p, a, b, mu, map);
+                    //float[] position = ChangeBase(p.X, p.Y);
+                    //map.SetPixel((int)position[0],(int) position[1], Color.Black);
                 }
                 i++;
             }
+        }
+        void ExchangeAxis(int alpha, int beta, int gama, int delta, int phi, int psi)
+        {
+            int temp;
+            temp = alpha; alpha = gama; gama = temp;
+            temp = beta; beta = delta; delta = temp;
+            temp = phi; phi = psi; psi = temp;
+        }
+        void ChangeVerticalAxis(int alpha, int beta, int gama, int delta, int phi, int psi)
+        {
+            if (delta != 0)
+            {
+                delta *= -1;
+                psi *= -1;
+            }
+            else if (beta != 0)
+            {
+                beta *= -1;
+                phi *= -1;
+            }
+        }
+        void ChangeHorizontalAxis(int alpha, int beta, int gama, int delta, int phi, int psi)
+        {
+            if (alpha != 0)
+            {
+                alpha *= -1;
+                phi *= -1;
+            }
+            else if (gama != 0)
+            {
+                gama *= -1;
+                psi *= -1;
+            }
+        }
+        void AdjustAxis(int dx, int dy, int ddx, int ddy,int alpha,int beta,int gama,int delta,int phi,int psi)
+        {
+            if (dy == 0 && ddx==dx && ddy==-dx)
+            {
+                ChangeVerticalAxis(alpha, beta, gama, delta, phi, psi);
+            }
+            else if (dx == 0 && ddx == dy && ddy == dy)
+            {
+                ChangeHorizontalAxis(alpha, beta, gama, delta, phi, psi);
+            }
+            else
+            {
+                if ((dx == dy && ddx == 0 && ddy == dy) || (dx == -dy && ddy == 0 && ddx == dy))
+                {
+                    ExchangeAxis(alpha, beta, gama, delta, phi, psi);
+                }
+            }
+        }
+        void Rotation(int xh, int yh, int dx, int dy, int alpha, int beta, int gama, int delta, int phi, int psi)
+        {
+            if(dx==1 && dy>=0)
+            {
+                alpha=1;beta=0;phi=-xh;
+                gama=0;delta=1;psi=-yh;
+            }
+            else if(dx<=0 && dy==1)
+            {
+                alpha=0;beta=1;phi=-yh;
+                gama=-1;delta=0;psi=xh;
+            }
+            else if (dx == -1 && dy < 0)
+            {
+                alpha = -1; beta = 0; phi = xh;
+                gama = 0; delta = -1; psi = yh;
+            }
+            else if (dx >= 0 && dy == -1)
+            {
+                alpha = 0; beta = -1; phi = yh;
+                gama = 1; delta = 0; psi = -xh;
+            }
+        }
+        void MovingFrame(int k, int xk, int yk, int alpha, int beta, int gama, int delta, int phi, int psi, int a, int b, int mu, int ux, int uy, int lx, int ly)
+        {
+            int dx, dy, ddy, ddx;
         }
     }
 }
