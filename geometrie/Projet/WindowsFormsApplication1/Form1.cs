@@ -18,12 +18,16 @@ namespace WindowsFormsApplication1
     public partial class Form1 : Form
     {
         List<PointF> points;
+        List<PointF> pointsGH;
+        List<PointF> pointsDH;
+        List<PointF> pointsDB;
+        List<PointF> pointsGB;
         private Graphics g;
         private float[] centerScreen;
         private int showObjetNum = 0;
         private int N;
         private Vector dM;
-        private string path = @"Datas\coeur_30.txt";
+        private string path = @"Datas\cercle_30.txt";
         private List<PointF> continu;
 
         public Form1()
@@ -31,6 +35,10 @@ namespace WindowsFormsApplication1
             InitializeComponent();
             centerScreen = new float[] { Width / 2, Height / 2 };
             points = new List<PointF>();
+            pointsGH = new List<PointF>();
+            pointsDH = new List<PointF>();
+            pointsDB = new List<PointF>();
+            pointsGB = new List<PointF>();
             continu = new List<PointF>();
         }
 
@@ -75,9 +83,20 @@ namespace WindowsFormsApplication1
                             //map.SetPixel((int)position[0], (int)position[1], Color.Black);
 
                             points.Add(new PointF(float.Parse(ms.Groups["x"].Value), float.Parse(ms.Groups["y"].Value)));
+                            //deplacer points
+                            if (x < 0 && y >= 0) pointsGH.Add(new PointF(x, y));
+                            else if (x >= 0 && y > 0) pointsDH.Add(new PointF(x, y));
+                            else if (x > 0 && y <= 0) pointsDB.Add(new PointF(x, y));
+                            else if (x <= 0 && y <= 0) pointsGB.Add(new PointF(x, y));
                         }
 
                     }
+                    points.Clear();
+                    points.AddRange(pointsGH);
+                    points.AddRange(pointsDH);
+                    points.AddRange(pointsDB);
+                    points.AddRange(pointsGB);
+
                     g.DrawPolygon(new Pen(new SolidBrush(Color.Red), 10), new PointF[] { new PointF(0, 0), new PointF(0, 0) });
 
                     N = points.Count;
