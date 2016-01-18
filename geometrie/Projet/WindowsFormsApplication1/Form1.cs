@@ -20,6 +20,10 @@ namespace WindowsFormsApplication1
         private string path = @"Datas\cercle_30.txt";
         private List<PointF> points;
         private List<PointF> points_octants;
+        //variable globales
+        private PointF X0;
+        private PointF dM;
+        private int N;//nombre de pixel dans E
         public Form1()
         {
             InitializeComponent();
@@ -51,7 +55,7 @@ namespace WindowsFormsApplication1
                             if ( x>= 0 &&  y>= 0 && y<x)
                             {
                                 //map.SetPixel((int)position[0], (int)position[1], Color.Red);
-                                g.DrawRectangle(new Pen(Color.Red), (int)position[0], (int)position[1], 2, 2);
+                                g.DrawRectangle(new Pen(Color.Black), (int)position[0], (int)position[1], 2, 2);
                                 points_octants.Add(new PointF(float.Parse(ms.Groups["x"].Value), float.Parse(ms.Groups["y"].Value)));
                             }
                             else
@@ -61,6 +65,12 @@ namespace WindowsFormsApplication1
                         }
                         
                     }
+                    //initialisation du variable globale
+                    N = points.Count;
+                    X0 = points[0];
+                    dM = new PointF(points[1].X - X0.X, points[1].Y - X0.Y);
+                    Console.WriteLine("nombre de points:" + N);
+                    Segmentation(X0, dM,map,g);
                     //segmentNaiveLine(new PointF(0, 0), new PointF(10, 10), 3, 5,0, map,g);
                     premierOctant(points_octants.ToArray(),map,g);
                     g.DrawImage(map, new Point(0, 0));
@@ -92,7 +102,7 @@ namespace WindowsFormsApplication1
         /// <summary>
         /// A segment of a naive line
         /// </summary>
-        private void segmentNaiveLine(PointF x0,PointF x1,int a,int b,int mu,Bitmap m,Graphics g)
+        private void segmentNaiveLine(PointF x0,PointF x1,int a,int b,int mu,Bitmap m,Graphics g,bool type=true)
         {
             PointF current = x0;
             int r = (int)(a * x0.X - b * x0.Y -mu);
@@ -112,18 +122,23 @@ namespace WindowsFormsApplication1
                 //difference leaning points
                 int xx = (int)position[0];
                 int yy = (int)position[1];
-                //points d'appui cf thèse partie 3.2
-                if (a * current.X - b * current.Y == mu)
+                if (type)
                 {
-                    //m.SetPixel(xx, yy, Color.Black);
-                    g.DrawRectangle(new Pen(Color.Black), xx, yy, 2, 2);
+                    //points d'appui cf thèse partie 3.2
+                    if (a * current.X - b * current.Y == mu)
+                    {
+                        //m.SetPixel(xx, yy, Color.Black);
+                        g.DrawRectangle(new Pen(Color.Black), xx, yy, 2, 2);
+                    }
+                    else if (a * current.X - b * current.Y == (mu + b - 1))
+                    {
+                        //m.SetPixel(xx, yy, Color.Blue);
+                        g.DrawRectangle(new Pen(Color.Blue), xx, yy, 2, 2);
+                    }
+                    else g.DrawRectangle(new Pen(Color.Red), xx, yy, 2, 2);//m.SetPixel(xx, yy, Color.Red);
                 }
-                else if (a * current.X - b * current.Y == (mu + b - 1))
-                {
-                    //m.SetPixel(xx, yy, Color.Blue);
-                    g.DrawRectangle(new Pen(Color.Blue), xx, yy, 2, 2);
-                }
-                else g.DrawRectangle(new Pen(Color.Red), xx, yy, 2, 2);//m.SetPixel(xx, yy, Color.Red);
+                else g.DrawRectangle(new Pen(Color.Green), xx, yy, 2, 2);
+                
             }
         }
         private void premierOctant(PointF[] E,Bitmap map,Graphics g)
@@ -270,32 +285,163 @@ namespace WindowsFormsApplication1
                 }
             }
         }
-        void Rotation(int xh, int yh, int dx, int dy, int alpha, int beta, int gama, int delta, int phi, int psi)
+        void Rotation(PointF xh, int dx, int dy, out int alpha, out int beta, out int gama, out int delta, out int phi, out int psi)
         {
+            alpha = beta = gama = delta = phi = psi = 0;
             if(dx==1 && dy>=0)
             {
-                alpha=1;beta=0;phi=-xh;
-                gama=0;delta=1;psi=-yh;
+                alpha=1;beta=0;phi=-(int)xh.X;
+                gama=0;delta=1;psi=-(int)xh.Y;
             }
             else if(dx<=0 && dy==1)
             {
-                alpha=0;beta=1;phi=-yh;
-                gama=-1;delta=0;psi=xh;
+                alpha=0;beta=1;phi=-(int)xh.Y;
+                gama=-1;delta=0;psi=(int)xh.X;
             }
             else if (dx == -1 && dy < 0)
             {
-                alpha = -1; beta = 0; phi = xh;
-                gama = 0; delta = -1; psi = yh;
+                alpha = -1; beta = 0; phi =(int) xh.X;
+                gama = 0; delta = -1; psi =(int) xh.Y;
             }
             else if (dx >= 0 && dy == -1)
             {
-                alpha = 0; beta = -1; phi = yh;
-                gama = 1; delta = 0; psi = -xh;
+                alpha = 0; beta = -1; phi = (int)xh.Y;
+                gama = 1; delta = 0; psi = -(int)xh.X;
             }
         }
-        void MovingFrame(int k, int xk, int yk, int alpha, int beta, int gama, int delta, int phi, int psi, int a, int b, int mu, int ux, int uy, int lx, int ly)
+        /// <summary>
+        /// This procedure returns index k et Mk coordinates
+        /// </summary>
+        /// <param name="k"></param>
+        /// <param name="xk"></param>
+        /// <param name="alpha"></param>
+        /// <param name="beta"></param>
+        /// <param name="gama"></param>
+        /// <param name="delta"></param>
+        /// <param name="phi"></param>
+        /// <param name="psi"></param>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="mu"></param>
+        /// <param name="U"></param>
+        /// <param name="L"></param>
+        void MovingFrame(out int k,out PointF xk, out int alpha, out int beta, out int gama, out int delta, out int phi, out int psi, out int a, out int b, out int mu, out PointF U, out PointF L,int h,PointF xh)
         {
-            int dx, dy, ddy, ddx;
+            int dx, dy, ddx, ddy;
+            k=h;
+            xk=xh;            
+            PointF dmh = CalucateDM(h + 1);
+            PointF dmk;
+            dx = (int)dmh.X;
+            dy = (int)dmh.Y;            
+            while (k < N && (int)(CalucateDM(k + 1).X) == dx && (int)(CalucateDM(k + 1).Y) == dy)
+            {               
+                k++;
+                xk.X += CalucateDM(k).X;
+                xk.Y += CalucateDM(k).Y;
+            }
+            Rotation(xh, dx, dy, out alpha, out beta, out gama, out delta, out phi, out psi);
+            if (k < N)
+            {
+                //here is the ddx and ddy
+                AdjustAxis(dx, dy, (int)CalucateDM(k + 1).X, (int)CalucateDM(k + 1).Y, alpha, beta, gama, delta, phi, psi);
+            }
+            L = new PointF();
+            U = new PointF(0,0);
+            if (dx == 0 || dy == 0)
+            {
+                L.X = k - h;
+            }
+            else
+            {
+                L.X = 0;
+            }
+            L.Y = 0;
+            a = 1;
+            b = (int)L.X + 1;
+            mu = 0;
+        }
+        PointF CalucateDM(int index)
+        {
+            PointF d;
+            if (index >= N - 1)
+            {
+                //what happen here
+                d = new PointF(points[0].X - points[N - 1].X, points[0].Y - points[N - 1].Y);
+            }
+            else
+            {
+                d = new PointF(points[index + 1].X - points[index].X, points[index + 1].Y - points[index].Y);
+            }
+            return d;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x0">provient du variable globale X0</param>
+        /// <param name="dm">la direction du courbe</param>
+        void Segmentation(PointF x0, PointF dm,Bitmap map,Graphics g)
+        {
+            int h = 0;
+            int k, a, b, mu;
+            int alpha, beta, gama, delta, phi, psi;
+            PointF xh=x0;//current point
+            PointF xk;
+            PointF U, L;
+            while (h < N)
+            {               
+                MovingFrame(out k,out xk, out alpha, out beta, out gama, out delta, out phi, out psi, out a, out b, out mu, out U, out L,h,xh);
+                RecognizeSegment(k,ref xk,ref a,ref b,ref mu, alpha, beta, gama, delta, phi, psi,ref U,ref L);
+                segmentNaiveLine(xh, xk, a, b, mu, map, g,false);
+                Console.WriteLine("h={0}/k={1}/mu={2}/a={3}/b={4}",h, k, mu, a, b);
+                h = k;
+                xh = xk;
+            }
+        }
+        /// <summary>
+        /// Give back vertex Mk
+        /// </summary>
+        /// <param name="k"></param>
+        /// <param name="xk"></param>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="mu"></param>
+        private void RecognizeSegment(int k,ref PointF xk,ref int a,ref int b,ref int mu,int alpha,int beta,int gama,int delta,int phi,int psi,ref PointF U,ref PointF L)
+        {
+            int r, ddx, ddy, ddx_loc, ddy_loc, xx, yy, x_loc, y_loc;
+            while (k < N)
+            {                
+                ddx = (int)CalucateDM(k + 1).X;
+                ddy = (int)CalucateDM(k + 1).Y;
+                ddx_loc = alpha * ddx + beta * ddy;
+                ddy_loc = gama * ddx + delta * ddy;
+                if (ddx_loc <= 0 || ddy_loc < 0) break;
+                xx = (int)xk.X + ddx;
+                yy = (int)xk.Y + ddy;
+                x_loc = alpha * xx+beta*yy+phi;
+                y_loc = gama * xx + delta * yy + psi;
+                r = a * x_loc - b * y_loc;
+                if (r < mu - 1 || r > mu + b) break;
+                k++;
+                xk.X = xx;
+                xk.Y = yy;
+                if (r == mu + b)
+                {
+                    U.X = x_loc - b;
+                    U.Y = y_loc + 1 - a;
+                    a = y_loc - (int)L.Y;
+                    b = x_loc - (int)L.X;
+                    mu = a * (int)L.X - b * (int)L.Y + 1;
+                }
+                else if (r == mu - 1)
+                {
+                    L.X = x_loc - b;
+                    L.Y = y_loc - 1 - a;
+                    a = y_loc - (int)U.Y;
+                    b = x_loc - (int)U.X;
+                    mu = a * (int)U.X - b * (int)U.Y;
+                }
+            }
         }
     }
 }
