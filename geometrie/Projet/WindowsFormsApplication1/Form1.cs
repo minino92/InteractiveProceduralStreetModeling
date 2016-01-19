@@ -27,7 +27,7 @@ namespace WindowsFormsApplication1
         private int showObjetNum = 0;
         private int N;
         private Vector dM;
-        private string path = @"Datas\cercle_30.txt";
+        private string path = @"Datas\coeur_30.txt";
         private List<PointF> continu;
 
         public Form1()
@@ -91,6 +91,7 @@ namespace WindowsFormsApplication1
                         }
 
                     }
+                    //this used to obtain the last image
                     points.Clear();
                     points.AddRange(pointsGH);
                     points.AddRange(pointsDH);
@@ -101,19 +102,13 @@ namespace WindowsFormsApplication1
 
                     N = points.Count;
                     CalculateDM(0);
-                    Segmentation((int)points[0].X, (int)points[0].Y, map,g);
-                    //for (int i = 0; i < points.Count; i++)
-                    //{
-                    //    int[] positionedPixel = ChangeToCenterScreen(points[i].X, points[i].Y);
-                    //    map.SetPixel(positionedPixel[0], positionedPixel[1], Color.Red);
-                    //}
-
-                    //NaiveLine(new PointF(0, 0), new PointF(25, 25), 3, 8, 0, map, Color.Red);
-                    //g.DrawPolygon(new Pen(Color.Red), continu.ToArray());
+                    Segmentation((int)points[0].X, (int)points[0].Y, map,g);                   
+                    //NaiveLine(new PointF(-29, 7), new PointF(-28, 3), 1, 9, 0, map, Color.Red, g,false);
+                    //NaiveLine(new PointF(-28,4), new PointF(-28, 15), 1, 3, 0, map, Color.Green, g, false);
                     g.DrawImage(map, new PointF(0, 0));
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
             }
         }
@@ -145,7 +140,7 @@ namespace WindowsFormsApplication1
         {
             PointF currentPoint = x0;
             int r = (int)(a * x0.X - b * x0.Y - mu);
-            while (currentPoint.X < x1.X)
+            while (currentPoint.X <= x1.X)
             {
                 if (r >= (b - a))
                 {
@@ -375,11 +370,13 @@ namespace WindowsFormsApplication1
             PointF temp = new PointF();
             temp.X = xh;
             temp.Y = yh;
+            int j = 1;
             while (h < N)
             {
                 MovingFrame(out k, out xk, out yk, out a, out b, out mu, h, xh, yh, out alfa, out beta, out gamma, out delta, out phi, out psi, out Ux, out Uy, out Lx, out Ly);
                 RecognizeSegment(k, xk, yk, a, b, mu, alfa, beta, gamma, delta, phi, psi, Ux, Uy, Lx, Ly);
-                NaiveLine(new PointF(xh, yh), new PointF(xk, yk), a, b, mu, map, Color.Blue,g,false);
+                Console.WriteLine("Droite {0}:a={1},b={2},mu={3},starting:({4},{5}),ending:({6},{7})", j, a, b, mu, xh, yh, xk, yk); j++;
+                NaiveLine(new PointF(xh, yh), new PointF(xk, yk), a, b, mu, map, Color.Red,g,false);
                 int[] pp = ChangeToCenterScreen(temp.X, temp.Y);
                 int[] pppp = ChangeToCenterScreen(xk, yk);
                 g.DrawLine(new Pen(Color.Red), new PointF(pp[0], pp[1]), new PointF(pppp[0], pppp[1]));
@@ -398,8 +395,7 @@ namespace WindowsFormsApplication1
                     xh = (int)(xk + dM.X);
                     yh = (int)(yk + dM.Y);
                 }
-            }
-
+            }        
         }       
     }
 }
