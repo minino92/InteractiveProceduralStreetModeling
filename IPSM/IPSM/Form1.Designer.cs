@@ -31,17 +31,18 @@
             this.pictureZone = new System.Windows.Forms.PictureBox();
             this.log = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.distanceSquare = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.numberTensorFields = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.distanceSquare = new System.Windows.Forms.NumericUpDown();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureZone)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numberTensorFields)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.distanceSquare)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberTensorFields)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureZone
@@ -66,6 +67,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBox1);
             this.groupBox1.Controls.Add(this.distanceSquare);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.textBox1);
@@ -83,6 +85,28 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
+            // 
+            // distanceSquare
+            // 
+            this.distanceSquare.Location = new System.Drawing.Point(126, 139);
+            this.distanceSquare.Name = "distanceSquare";
+            this.distanceSquare.Size = new System.Drawing.Size(49, 20);
+            this.distanceSquare.TabIndex = 9;
+            this.distanceSquare.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.distanceSquare.ValueChanged += new System.EventHandler(this.SquareDistantanceChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(7, 141);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(84, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Square distance";
             // 
             // textBox1
             // 
@@ -133,27 +157,16 @@
             this.numberTensorFields.TabIndex = 3;
             this.numberTensorFields.ValueChanged += new System.EventHandler(this.ChangeNumberTensorFieldToDisplay);
             // 
-            // label3
+            // checkBox1
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 141);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(84, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Square distance";
-            // 
-            // distanceSquare
-            // 
-            this.distanceSquare.Location = new System.Drawing.Point(126, 139);
-            this.distanceSquare.Name = "distanceSquare";
-            this.distanceSquare.Size = new System.Drawing.Size(49, 20);
-            this.distanceSquare.TabIndex = 9;
-            this.distanceSquare.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.distanceSquare.ValueChanged += new System.EventHandler(this.SquareDistantanceChanged);
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(14, 170);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(92, 17);
+            this.checkBox1.TabIndex = 11;
+            this.checkBox1.Text = "Draw Tensors";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // IPSM
             // 
@@ -173,8 +186,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureZone)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numberTensorFields)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.distanceSquare)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberTensorFields)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -191,6 +204,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.NumericUpDown distanceSquare;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox checkBox1;
 
 
     }

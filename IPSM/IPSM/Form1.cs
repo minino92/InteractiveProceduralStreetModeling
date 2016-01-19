@@ -55,9 +55,20 @@ namespace IPSM
                 g.Clear(Color.White);
                 using (var bmp = new Bitmap(Noise.size, Noise.size, g)) 
                 {
+                    foreach(FieldTensor fieldTensor in listPositionFieldTensor)
+                    {
+                        g.DrawRectangle(new Pen(Color.Red, 3), new Rectangle(fieldTensor.position, new System.Drawing.Size(5, 5)));
+                        if (fieldTensor.finalPosition != new System.Drawing.Point())
+                        {
+                            g.DrawLine(new Pen(Color.LightGreen, 3), fieldTensor.position, fieldTensor.finalPosition);
+                        }
+
+                    }
+
                     TensorField tf = new TensorField(Noise.size);
                     tf.NumberOfTensorsToDisplay = (int) numberTensorFields.Value;
                     tf.generateGridTensorField(bmp, g, (float)theta);
+
                     switch (selectedChoice)
                     {
                         case 1:
@@ -90,22 +101,29 @@ namespace IPSM
 
         private void MouseClick(object sender, MouseEventArgs e)
         {
-            if (dragTensorField)
+            if (checkBox1.Checked)
             {
-                dragTensorField = false;
-                listPositionFieldTensor[listPositionFieldTensor.Count-1].finalPosition = e.Location;
-                Invalidate();
-            }
-            else
-            {
-                if (e.Location.X < Noise.size && e.Location.Y < Noise.size)
+                if (dragTensorField)
                 {
-                    FieldTensor field = new FieldTensor();
-                    field.position = e.Location;
-                    listPositionFieldTensor.Add(field);
-                    //log.Text = e.Location.ToString();
-                    dragTensorField = true;
+                    dragTensorField = false;
+                    listPositionFieldTensor[listPositionFieldTensor.Count - 1].finalPosition = e.Location;
+                    listPositionFieldTensor[listPositionFieldTensor.Count - 1].CalculateAngle();
+                    textBox1.Text = ((int)(Math.Round(listPositionFieldTensor[listPositionFieldTensor.Count - 1].angle))).ToString();
+                    theta = double.Parse(textBox1.Text) * Math.PI / 180;
                     Invalidate();
+                }
+                else
+                {
+                    if (e.Location.X < Noise.size && e.Location.Y < Noise.size)
+                    {
+                        FieldTensor field = new FieldTensor();
+                        field.position = e.Location;
+                        listPositionFieldTensor.Add(field);
+                        //log.Text = e.Location.ToString();
+                        
+                        dragTensorField = true;
+                        Invalidate();
+                    }
                 }
             }
         }
@@ -150,6 +168,11 @@ namespace IPSM
         private void SquareDistantanceChanged(object sender, EventArgs e)
         {
             Invalidate();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

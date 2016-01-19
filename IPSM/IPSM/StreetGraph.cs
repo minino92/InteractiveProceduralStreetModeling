@@ -121,7 +121,8 @@ namespace IPSM
         }
         public void computeMajorHyperStreamLinesNew(Bitmap b, Graphics g,float dist,TensorField t)
         {
-            drawSomething(mSeeds[0], dist, b,g,t.matrixTensors,-1);
+            //drawSomething(mSeeds[0], dist, b,g,t.matrixTensors,-1);
+            drawSomething(new PointF(10,10), dist, b, g, t.matrixTensors, -1);
         }
         public void computeMajorHyperstreamlines(Bitmap bmp,Graphics g)
         {

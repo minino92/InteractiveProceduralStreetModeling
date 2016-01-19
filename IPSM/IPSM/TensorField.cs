@@ -103,6 +103,17 @@ namespace IPSM
                 for (int j = 0; j < Noise.size; j++)
                 {
                     Tensor t = new Tensor();
+                    if (i == 10 && j == 10)
+                    {
+                        t.X = Math.Cos(Math.PI/4);
+                        t.Y = Math.Sin(Math.PI / 4);
+                        t.Z = Math.Sin(Math.PI / 4);
+                        t.W = -Math.Cos(Math.PI / 4);
+                        t *= valueL;
+                        t.theta = (float)Math.PI / 4;
+                        matrixTensors[i, j] = t;
+                        continue;
+                    }
                     t.X = Math.Cos(2 * theta);
                     t.Y = Math.Sin(2 * theta);
                     t.Z = Math.Sin(2 * theta);

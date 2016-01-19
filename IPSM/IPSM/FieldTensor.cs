@@ -11,14 +11,21 @@ namespace IPSM
     {
         public System.Drawing.Point position;
         public System.Drawing.Point finalPosition;
-        public Vector[,] tensorField;
+        public double angle;
         public FieldTensor()
         {
-            tensorField = new Vector[Noise.size, Noise.size];
         }
-        public void generateBaseField()
+        public void CalculateAngle()
         {
-            
+            Vector direction = new Vector(finalPosition.X - position.X,finalPosition.Y - position.Y);
+            direction.Normalize();
+            Vector initDirection = new Vector(-1, 0);
+            initDirection.Normalize();
+            angle = Math.Acos(Vector.Multiply(initDirection, direction))*180/Math.PI -Math.PI/2;
+            if (direction.Y > 0)
+            {
+                angle = 360-angle;
+            }
         }
     }
 }
